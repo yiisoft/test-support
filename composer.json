@@ -40,6 +40,13 @@
             "dev-master": "3.0.x-dev"
         }
     },
+    "scripts": {
+        "test": [
+            "phpunit --colors=always",
+            "infection --no-progress",
+            "phan --no-progress-bar"
+        ]
+    },
     "config": {
         "sort-packages": true
     }
