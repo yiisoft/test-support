@@ -1,18 +1,19 @@
 {
-    "name": "yiisoft/_____",
+    "name": "yiisoft/test-support",
     "type": "library",
-    "description": "_____",
+    "description": "Supporting tools for testing",
     "keywords": [
-        "_____"
+        "yii",
+        "tests"
     ],
     "homepage": "https://www.yiiframework.com/",
     "license": "BSD-3-Clause",
     "support": {
-        "issues": "https://github.com/yiisoft/_____/issues?state=open",
+        "issues": "https://github.com/yiisoft/test-support/issues?state=open",
         "forum": "https://www.yiiframework.com/forum/",
         "wiki": "https://www.yiiframework.com/wiki/",
         "irc": "irc://irc.freenode.net/yii",
-        "source": "https://github.com/yiisoft/_____"
+        "source": "https://github.com/yiisoft/test-support"
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
@@ -26,12 +27,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Yiisoft\\_____\\": "src"
+            "Yiisoft\\Test\\Support\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Yiisoft\\_____\\Tests\\": "tests"
+            "Yiisoft\\Test\\Support\\Tests\\": "tests"
         }
     },
     "extra": {
