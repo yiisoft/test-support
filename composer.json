@@ -18,7 +18,8 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "require": {
-        "php": "^7.4|^8.0"
+        "php": "^7.4|^8.0",
+        "psr/container": "1.0.0"
     },
     "require-dev": {
         "infection/infection": "^0.16.3",
