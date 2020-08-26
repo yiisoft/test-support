@@ -8,7 +8,7 @@ use Exception;
 use Psr\Container\NotFoundExceptionInterface;
 use Throwable;
 
-class NotFoundException extends Exception implements NotFoundExceptionInterface
+final class NotFoundException extends Exception implements NotFoundExceptionInterface
 {
     private string $id;
 

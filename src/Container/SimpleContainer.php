@@ -7,7 +7,7 @@ namespace Yiisoft\Test\Support\Container;
 use Psr\Container\ContainerInterface;
 use Yiisoft\Test\Support\Container\Exception\NotFoundException;
 
-class SimpleContainer implements ContainerInterface
+final class SimpleContainer implements ContainerInterface
 {
     private array $definitions;
 
