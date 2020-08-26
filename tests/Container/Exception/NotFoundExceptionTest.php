@@ -7,9 +7,28 @@ namespace Yiisoft\Test\Support\Tests\Container\Exception;
 use Yiisoft\Test\Support\Container\Exception\NotFoundException;
 use PHPUnit\Framework\TestCase;
 
-class NotFoundExceptionTest extends TestCase
+final class NotFoundExceptionTest extends TestCase
 {
     private const DEFAULT_ID = 'Default id';
+
+    public function testInitialState()
+    {
+        $exception = new NotFoundException(self::DEFAULT_ID);
+
+        $this->assertSame(0, $exception->getCode());
+        $this->assertSame('', $exception->getMessage());
+        $this->assertNull($exception->getPrevious());
+    }
+
+    public function testExceptionConstructor()
+    {
+        $previous = new \Exception();
+        $exception = new NotFoundException(self::DEFAULT_ID, 'Test message.', 42, $previous);
+
+        $this->assertSame(42, $exception->getCode());
+        $this->assertSame('Test message.', $exception->getMessage());
+        $this->assertSame($previous, $exception->getPrevious());
+    }
 
     public function testGetId()
     {
