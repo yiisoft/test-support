@@ -20,17 +20,15 @@ The package is intended to simplify the process of testing application elements 
 
 The package could be installed with composer:
 
+```bash
+composer install yiisoft/test-support --dev
 ```
-composer install yiisoft/test-support
-```
-
-## General usage
 
 ## Unit testing
 
 The package is tested with [PHPUnit](https://phpunit.de/). To run tests:
 
-```php
+```bash
 ./vendor/bin/phpunit
 ```
 
@@ -38,7 +36,7 @@ The package is tested with [PHPUnit](https://phpunit.de/). To run tests:
 
 The package tests are checked with [Infection](https://infection.github.io/) mutation framework. To run it:
 
-```php
+```bash
 ./vendor/bin/infection
 ```
 
@@ -46,6 +44,6 @@ The package tests are checked with [Infection](https://infection.github.io/) mut
 
 The code is statically analyzed with [Phan](https://github.com/phan/phan/wiki). To run static analysis:
 
-```php
+```bash
 ./vendor/bin/phan
 ```
