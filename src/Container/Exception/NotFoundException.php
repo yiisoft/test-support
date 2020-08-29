@@ -6,16 +6,15 @@ namespace Yiisoft\Test\Support\Container\Exception;
 
 use Exception;
 use Psr\Container\NotFoundExceptionInterface;
-use Throwable;
 
 final class NotFoundException extends Exception implements NotFoundExceptionInterface
 {
     private string $id;
 
-    public function __construct(string $id, $message = "", $code = 0, Throwable $previous = null)
+    public function __construct(string $id)
     {
         $this->id = $id;
-        parent::__construct($message, $code, $previous);
+        parent::__construct("No definition for {$id}.");
     }
 
     public function getId(): string
