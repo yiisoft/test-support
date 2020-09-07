@@ -15,7 +15,6 @@ final class SimpleEventDispatcher implements EventDispatcherInterface
 
     /**
      * @param null|Closure $dispatcher Function that will handle each event.
-     * This function must return an object.
      */
     public function __construct(Closure $dispatcher = null)
     {
@@ -25,7 +24,8 @@ final class SimpleEventDispatcher implements EventDispatcherInterface
     public function dispatch(object $event): object
     {
         $this->events[] = $event;
-        return $this->dispatcher === null ? $event : ($this->dispatcher)($event);
+        $toReturn = $this->dispatcher === null ? $event : ($this->dispatcher)($event);
+        return is_object($toReturn) ? $toReturn : $event;
     }
 
     public function getEvents(): array

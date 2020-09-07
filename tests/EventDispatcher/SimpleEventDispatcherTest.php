@@ -25,14 +25,14 @@ class SimpleEventDispatcherTest extends TestCase
         $this->assertSame($toReturn, $modified);
     }
 
-    public function testDispatcherBadClosure(): void
+    public function testDispatcherClosureNotReturnsObject(): void
     {
         $event = new DateTime();
         $dispatcher = $this->prepareDispatcher(static fn(object $event) => null);
 
-        $this->expectException(TypeError::class);
+        $modified = $dispatcher->dispatch($event);
 
-        $dispatcher->dispatch($event);
+        $this->assertSame($event, $modified);
     }
 
     public function testIsClassTriggered(): void
