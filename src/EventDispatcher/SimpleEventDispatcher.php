@@ -6,26 +6,32 @@ namespace Yiisoft\Test\Support\EventDispatcher;
 
 use Closure;
 use Psr\EventDispatcher\EventDispatcherInterface;
+use Psr\EventDispatcher\StoppableEventInterface;
 
 final class SimpleEventDispatcher implements EventDispatcherInterface
 {
-    private ?Closure $dispatcher;
+    private iterable $listeners;
     /** @var object[] */
     private array $events = [];
 
     /**
-     * @param null|Closure $dispatcher Function that will handle each event.
+     * @param Closure ...$listeners Functions that will handle each event.
      */
-    public function __construct(Closure $dispatcher = null)
+    public function __construct(Closure ...$listeners)
     {
-        $this->dispatcher = $dispatcher;
+        $this->listeners = $listeners;
     }
 
     public function dispatch(object $event): object
     {
         $this->events[] = $event;
-        $toReturn = $this->dispatcher === null ? $event : ($this->dispatcher)($event);
-        return is_object($toReturn) ? $toReturn : $event;
+        foreach ($this->listeners as $listener) {
+            if ($event instanceof StoppableEventInterface && $event->isPropagationStopped()) {
+                return $event;
+            }
+            $listener($event);
+        }
+        return $event;
     }
 
     public function getEvents(): array
@@ -40,12 +46,12 @@ final class SimpleEventDispatcher implements EventDispatcherInterface
 
     public function isClassTriggered(string $class): bool
     {
-        return $this->walkBool(static fn (object $event): bool => get_class($event) === $class);
+        return $this->walkBool(static fn(object $event): bool => get_class($event) === $class);
     }
 
     public function isInstanceOfTriggered(string $class): bool
     {
-        return $this->walkBool(static fn (object $event): bool => $event instanceof $class);
+        return $this->walkBool(static fn(object $event): bool => $event instanceof $class);
     }
 
     private function walkBool(Closure $closure)

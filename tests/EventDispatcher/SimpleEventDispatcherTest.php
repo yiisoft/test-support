@@ -8,31 +8,100 @@ use Closure;
 use DateTime;
 use DateTimeImmutable;
 use DateTimeInterface;
-use TypeError;
+use RuntimeException;
 use Yiisoft\Test\Support\EventDispatcher\SimpleEventDispatcher;
 use PHPUnit\Framework\TestCase;
+use Yiisoft\Test\Support\Tests\EventDispatcher\Stub\StoppableEvent;
 
 class SimpleEventDispatcherTest extends TestCase
 {
-    public function testDispatcherClosure(): void
+    public function testListeners(): void
     {
         $event = new DateTime();
-        $toReturn = new DateTimeImmutable();
-        $dispatcher = $this->prepareDispatcher(static fn(object $event) => $toReturn);
+        $listener1 = false;
+        $listener2 = false;
+        $dispatcher = $this->prepareDispatcher(
+            static function (object $param) use (&$listener1, $event) {
+                $listener1 = $param === $event;
+            },
+            static function (object $param) use (&$listener2, $event) {
+                $listener2 = $param === $event;
+            }
+        );
 
-        $modified = $dispatcher->dispatch($event);
+        $dispatcher->dispatch($event);
 
-        $this->assertSame($toReturn, $modified);
+        self::assertTrue($listener1);
+        self::assertTrue($listener2);
     }
 
-    public function testDispatcherClosureNotReturnsObject(): void
+    public function testListenerThrowsException(): void
     {
         $event = new DateTime();
-        $dispatcher = $this->prepareDispatcher(static fn(object $event) => null);
+        $listener1 = false;
+        $listener2 = false;
+        $dispatcher = $this->prepareDispatcher(
+            static function (object $param) use (&$listener1, $event) {
+                $listener1 = $param === $event;
+                throw new RuntimeException();
+            },
+            static function (object $param) use (&$listener2, $event) {
+                $listener2 = $param === $event;
+            }
+        );
 
-        $modified = $dispatcher->dispatch($event);
+        $this->expectException(RuntimeException::class);
+        try {
+            $dispatcher->dispatch($event);
+        } catch (\Throwable $e) {
+            throw $e;
+        } finally {
+            self::assertTrue($listener1);
+            self::assertFalse($listener2);
+        }
+    }
 
-        $this->assertSame($event, $modified);
+    public function testListenersAndStoppedEvent(): void
+    {
+        $event = new StoppableEvent(true);
+        $listener1 = false;
+        $listener2 = false;
+        $dispatcher = $this->prepareDispatcher(
+            static function (object $event) use (&$listener1) {
+                $listener1 = true;
+            },
+            static function (object $event) use (&$listener2) {
+                $listener2 = true;
+            }
+        );
+
+        $dispatcher->dispatch($event);
+
+        self::assertTrue($event->isPropagationStopped());
+        self::assertFalse($listener1);
+        self::assertFalse($listener2);
+    }
+
+    public function testListenersAndStoppableEvent(): void
+    {
+        $event = new StoppableEvent(false);
+        $listener1 = false;
+        $listener2 = false;
+        $dispatcher = $this->prepareDispatcher(
+            static function (object $event) use (&$listener1) {
+                $listener1 = true;
+                $event->setPropagationStopped(true);
+            },
+            static function (object $event) use (&$listener2) {
+                $listener2 = true;
+            }
+        );
+
+        $dispatcher->dispatch($event);
+
+        self::assertTrue($event->isPropagationStopped());
+        self::assertTrue($listener1);
+        self::assertFalse($listener2);
     }
 
     public function testIsClassTriggered(): void
@@ -91,8 +160,8 @@ class SimpleEventDispatcherTest extends TestCase
         $this->assertSame([], $dispatcher->getEvents());
     }
 
-    protected function prepareDispatcher(Closure $dispatcher = null): SimpleEventDispatcher
+    protected function prepareDispatcher(Closure ...$dispatcher): SimpleEventDispatcher
     {
-        return new SimpleEventDispatcher($dispatcher);
+        return new SimpleEventDispatcher(...$dispatcher);
     }
 }
