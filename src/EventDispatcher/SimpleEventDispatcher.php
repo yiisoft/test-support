@@ -11,13 +11,14 @@ use Psr\EventDispatcher\StoppableEventInterface;
 final class SimpleEventDispatcher implements EventDispatcherInterface
 {
     private iterable $listeners;
+
     /** @var object[] */
     private array $events = [];
 
     /**
-     * @param Closure ...$listeners Functions that will handle each event.
+     * @param callable[] ...$listeners Callables that will handle events.
      */
-    public function __construct(Closure ...$listeners)
+    public function __construct(array $listeners)
     {
         $this->listeners = $listeners;
     }
@@ -25,12 +26,14 @@ final class SimpleEventDispatcher implements EventDispatcherInterface
     public function dispatch(object $event): object
     {
         $this->events[] = $event;
-        foreach ($this->listeners as $listener) {
+        foreach ($this->forEvent($event) as $listener) {
             if ($event instanceof StoppableEventInterface && $event->isPropagationStopped()) {
                 return $event;
             }
+
             $listener($event);
         }
+
         return $event;
     }
 
@@ -62,5 +65,21 @@ final class SimpleEventDispatcher implements EventDispatcherInterface
             }
         }
         return false;
+    }
+
+    private function forEvent(object $event): iterable
+    {
+        yield from $this->forClass(get_class($event));
+        yield from $this->forClass(...array_values(class_parents($event)));
+        yield from $this->forClass(...array_values(class_implements($event)));
+    }
+
+    private function forClass(string ...$classNames): iterable
+    {
+        foreach ($classNames as $className) {
+            if (isset($this->listeners[$className])) {
+                yield from $this->listeners[$className];
+            }
+        }
     }
 }
