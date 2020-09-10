@@ -57,13 +57,14 @@ final class SimpleEventDispatcher implements EventDispatcherInterface
         return $this->walkBool(static fn(object $event): bool => $event instanceof $class);
     }
 
-    private function walkBool(Closure $closure)
+    private function walkBool(Closure $closure): bool
     {
         foreach ($this->events as $event) {
             if ($closure($event)) {
                 return true;
             }
         }
+
         return false;
     }
 
