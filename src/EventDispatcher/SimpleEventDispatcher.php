@@ -16,7 +16,7 @@ final class SimpleEventDispatcher implements EventDispatcherInterface
     private array $events = [];
 
     /**
-     * @param callable[] ...$listeners Callables that will handle events.
+     * @param callable[][] ...$listeners Callables that will handle events.
      */
     public function __construct(array $listeners)
     {
