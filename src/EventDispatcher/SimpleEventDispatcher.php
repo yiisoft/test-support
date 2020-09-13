@@ -39,22 +39,33 @@ final class SimpleEventDispatcher implements EventDispatcherInterface
         return $this->events;
     }
 
-    public function isObjectTriggered(object $event): bool
+    public function isObjectTriggered(object $event, int $times = null): bool
     {
-        return (in_array($event, $this->events, true));
+        return $this->processBoolResult(static fn(object $e): bool => $e === $event, $times);
     }
 
-    public function isClassTriggered(string $class): bool
+    public function isClassTriggered(string $class, int $times = null): bool
     {
-        return $this->walkBool(static fn(object $event): bool => get_class($event) === $class);
+        return $this->processBoolResult(static fn(object $event): bool => get_class($event) === $class, $times);
     }
 
-    public function isInstanceOfTriggered(string $class): bool
+    public function isInstanceOfTriggered(string $class, int $times = null): bool
     {
-        return $this->walkBool(static fn(object $event): bool => $event instanceof $class);
+        return $this->processBoolResult(static fn(object $event): bool => $event instanceof $class, $times);
     }
 
-    private function walkBool(Closure $closure): bool
+    private function processBoolResult(Closure $closure, ?int $times)
+    {
+        if ($times < 0) {
+            throw new \InvalidArgumentException('The $times argument cannot be less than zero.');
+        }
+        if ($times === null) {
+            return $this->hasEvent($closure);
+        }
+        return $times === $this->calcEvent($closure);
+    }
+
+    private function hasEvent(Closure $closure): bool
     {
         foreach ($this->events as $event) {
             if ($closure($event)) {
@@ -62,5 +73,16 @@ final class SimpleEventDispatcher implements EventDispatcherInterface
             }
         }
         return false;
+    }
+
+    private function calcEvent(Closure $closure): int
+    {
+        $count = 0;
+        foreach ($this->events as $event) {
+            if ($closure($event)) {
+                ++$count;
+            }
+        }
+        return $count;
     }
 }
