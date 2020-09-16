@@ -8,6 +8,7 @@ use Closure;
 use DateTime;
 use DateTimeImmutable;
 use DateTimeInterface;
+use InvalidArgumentException;
 use RuntimeException;
 use Yiisoft\Test\Support\EventDispatcher\SimpleEventDispatcher;
 use PHPUnit\Framework\TestCase;
@@ -104,6 +105,15 @@ class SimpleEventDispatcherTest extends TestCase
         self::assertFalse($listener2);
     }
 
+    public function testCheckEventTriggeredBadTimesArgument(): void
+    {
+        $dispatcher = $this->prepareDispatcher();
+
+        $this->expectException(InvalidArgumentException::class);
+
+        $dispatcher->isClassTriggered(DateTimeImmutable::class, -1);
+    }
+
     public function testIsClassTriggered(): void
     {
         $event = new DateTimeImmutable();
@@ -114,17 +124,54 @@ class SimpleEventDispatcherTest extends TestCase
         $this->assertTrue($dispatcher->isClassTriggered(DateTimeImmutable::class));
         $this->assertFalse($dispatcher->isClassTriggered(DateTimeInterface::class));
     }
+    public function testIsClassTriggeredMultiple(): void
+    {
+        $event = new DateTimeImmutable();
+        $dispatcher = $this->prepareDispatcher();
 
-    public function testIsInstanceOfTriggered(): void
+        $dispatcher->dispatch($event);
+        $dispatcher->dispatch($event);
+
+        $this->assertTrue($dispatcher->isClassTriggered(DateTimeImmutable::class, 2));
+    }
+    public function testIsClassTriggeredMultipleFail(): void
     {
         $event = new DateTimeImmutable();
         $dispatcher = $this->prepareDispatcher();
 
         $dispatcher->dispatch($event);
 
+        $this->assertFalse($dispatcher->isClassTriggered(DateTimeImmutable::class, 2));
+    }
+
+    public function testIsInstanceOfTriggered(): void
+    {
+        $dispatcher = $this->prepareDispatcher();
+
+        $dispatcher->dispatch(new DateTimeImmutable());
+
         $this->assertTrue($dispatcher->isInstanceOfTriggered(DateTimeImmutable::class));
         $this->assertTrue($dispatcher->isInstanceOfTriggered(DateTimeInterface::class));
         $this->assertFalse($dispatcher->isInstanceOfTriggered(DateTime::class));
+    }
+    public function testIsInstanceOfTriggeredMultiple(): void
+    {
+        $dispatcher = $this->prepareDispatcher();
+
+        $dispatcher->dispatch(new DateTimeImmutable());
+        $dispatcher->dispatch(new DateTimeImmutable());
+
+        $this->assertTrue($dispatcher->isInstanceOfTriggered(DateTimeImmutable::class, 2));
+        $this->assertTrue($dispatcher->isInstanceOfTriggered(DateTimeInterface::class, 2));
+    }
+    public function testIsInstanceOfTriggeredMultipleFail(): void
+    {
+        $dispatcher = $this->prepareDispatcher();
+
+        $dispatcher->dispatch(new DateTimeImmutable());
+
+        $this->assertFalse($dispatcher->isInstanceOfTriggered(DateTimeImmutable::class, 2));
+        $this->assertFalse($dispatcher->isInstanceOfTriggered(DateTimeInterface::class, 2));
     }
 
     public function testIsObjectTriggered(): void
@@ -137,6 +184,25 @@ class SimpleEventDispatcherTest extends TestCase
 
         $this->assertTrue($dispatcher->isObjectTriggered($event));
         $this->assertFalse($dispatcher->isObjectTriggered($notEvent));
+    }
+    public function testIsObjectTriggeredMultiple(): void
+    {
+        $event = new DateTimeImmutable();
+        $dispatcher = $this->prepareDispatcher();
+
+        $dispatcher->dispatch($event);
+        $dispatcher->dispatch($event);
+
+        $this->assertTrue($dispatcher->isObjectTriggered($event, 2));
+    }
+    public function testIsObjectTriggeredMultipleFail(): void
+    {
+        $event = new DateTimeImmutable();
+        $dispatcher = $this->prepareDispatcher();
+
+        $dispatcher->dispatch($event);
+
+        $this->assertFalse($dispatcher->isObjectTriggered($event, 2));
     }
 
     public function testGetEvents(): void
