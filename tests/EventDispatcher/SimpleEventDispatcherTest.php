@@ -9,6 +9,7 @@ use DateTime;
 use DateTimeImmutable;
 use DateTimeInterface;
 use InvalidArgumentException;
+use PHPUnit\Framework\ExpectationFailedException;
 use RuntimeException;
 use Yiisoft\Test\Support\EventDispatcher\SimpleEventDispatcher;
 use PHPUnit\Framework\TestCase;
@@ -224,6 +225,42 @@ class SimpleEventDispatcherTest extends TestCase
         $dispatcher = $this->prepareDispatcher();
 
         $this->assertSame([], $dispatcher->getEvents());
+    }
+
+    public function testAssertionSimple(): void
+    {
+        $dispatcher = $this->prepareDispatcher();
+        $dispatcher->expectsEvent(DateTime::class, 1);
+        $dispatcher->dispatch(new DateTime());
+        $dispatcher->checkExpectations();
+    }
+
+    public function testAssertionSimpleTwice(): void
+    {
+        $dispatcher = $this->prepareDispatcher();
+        $dispatcher->expectsEvent(DateTime::class, 2);
+        $dispatcher->dispatch(new DateTime());
+        $dispatcher->dispatch(new DateTime());
+        $dispatcher->checkExpectations();
+    }
+
+    public function testAssertionExtendable(): void
+    {
+        $dispatcher = $this->prepareDispatcher();
+        $dispatcher->expectsEvent(DateTime::class, 1);
+        $dispatcher->expectsEvent(DateTimeInterface::class, 1);
+        $dispatcher->dispatch(new DateTime());
+        $dispatcher->checkExpectations();
+    }
+
+    public function testAssertionFail(): void
+    {
+        $dispatcher = $this->prepareDispatcher();
+        $dispatcher->expectsEvent(DateTime::class, 1);
+        $dispatcher->dispatch(new StoppableEvent());
+
+        $this->expectException(ExpectationFailedException::class);
+        $dispatcher->checkExpectations();
     }
 
     protected function prepareDispatcher(Closure ...$dispatcher): SimpleEventDispatcher

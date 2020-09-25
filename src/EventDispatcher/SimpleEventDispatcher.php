@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Yiisoft\Test\Support\EventDispatcher;
 
 use Closure;
+use PHPUnit\Framework\Assert;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\EventDispatcher\StoppableEventInterface;
 
@@ -13,6 +14,7 @@ final class SimpleEventDispatcher implements EventDispatcherInterface
     private iterable $listeners;
     /** @var object[] */
     private array $events = [];
+    private array $expectations = [];
 
     /**
      * @param Closure ...$listeners Functions that will handle each event.
@@ -54,7 +56,30 @@ final class SimpleEventDispatcher implements EventDispatcherInterface
         return $this->processBoolResult(static fn(object $event): bool => $event instanceof $class, $times);
     }
 
-    private function processBoolResult(Closure $closure, ?int $times)
+    public function expectsEvent(string $eventClass, int $times): void
+    {
+        $this->expectations[$eventClass] = $times;
+    }
+
+    public function checkExpectations(): void
+    {
+        foreach ($this->expectations as $eventName => $timesExpected) {
+            $timesActual = 0;
+            foreach ($this->events as $event) {
+                if ($event instanceof $eventName) {
+                    $timesActual++;
+                }
+            }
+
+            Assert::assertEquals(
+                $timesExpected,
+                $timesActual,
+                "Event $eventName is expected to be called $timesExpected time(s), but it was actually called $timesActual times(s)"
+            );
+        }
+    }
+
+    private function processBoolResult(Closure $closure, ?int $times): bool
     {
         if ($times < 0) {
             throw new \InvalidArgumentException('The $times argument cannot be less than zero.');
