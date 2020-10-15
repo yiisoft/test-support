@@ -21,7 +21,7 @@ The package is intended to simplify the process of testing application elements 
 The package could be installed with composer:
 
 ```bash
-composer install yiisoft/test-support --dev
+composer require yiisoft/test-support --dev
 ```
 
 ## Unit testing
