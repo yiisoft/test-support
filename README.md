@@ -42,8 +42,8 @@ The package tests are checked with [Infection](https://infection.github.io/) mut
 
 ## Static analysis
 
-The code is statically analyzed with [Phan](https://github.com/phan/phan/wiki). To run static analysis:
+The code is statically analyzed with [Psalm](https://psalm.dev/). To run static analysis:
 
-```bash
-./vendor/bin/phan
+```php
+./vendor/bin/psalm
 ```

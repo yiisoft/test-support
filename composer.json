@@ -24,8 +24,8 @@
     },
     "require-dev": {
         "infection/infection": "^0.17.3",
-        "phan/phan": "^3.2",
-        "phpunit/phpunit": "^9.3"
+        "phpunit/phpunit": "^9.3",
+        "vimeo/psalm": "^4.0"
     },
     "autoload": {
         "psr-4": {
