@@ -20,18 +20,18 @@ final class SimpleContainer implements ContainerInterface
     public function __construct(array $definitions = [], Closure $factory = null)
     {
         $this->definitions = $definitions;
-        $this->factory = $factory ?? static function (string $id) { throw new NotFoundException($id); };
+        $this->factory = $factory ?? static function (string $id): void { throw new NotFoundException($id); };
     }
 
     public function get($id)
     {
         if (!array_key_exists($id, $this->definitions)) {
-            $this->definitions[$id] = ($this->factory)($id); // @phan-suppress-current-line PhanTypeVoidAssignment
+            $this->definitions[$id] = ($this->factory)($id);
         }
         return $this->definitions[$id];
     }
 
-    public function has($id)
+    public function has($id): bool
     {
         if (array_key_exists($id, $this->definitions)) {
             return true;
@@ -39,7 +39,7 @@ final class SimpleContainer implements ContainerInterface
         try {
             $this->get($id);
             return true;
-        } catch (\Throwable $e) { // @phan-suppress-current-line PhanUnusedVariableCaughtException
+        } catch (\Throwable $e) {
             return false;
         }
     }
