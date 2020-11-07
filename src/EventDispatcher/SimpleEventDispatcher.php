@@ -10,7 +10,8 @@ use Psr\EventDispatcher\StoppableEventInterface;
 
 final class SimpleEventDispatcher implements EventDispatcherInterface
 {
-    private iterable $listeners;
+    /** @var array<int, Closure>  */
+    private array $listeners;
     /** @var object[] */
     private array $events = [];
 
@@ -54,7 +55,7 @@ final class SimpleEventDispatcher implements EventDispatcherInterface
         return $this->processBoolResult(static fn(object $event): bool => $event instanceof $class, $times);
     }
 
-    private function processBoolResult(Closure $closure, ?int $times)
+    private function processBoolResult(Closure $closure, ?int $times): bool
     {
         if ($times < 0) {
             throw new \InvalidArgumentException('The $times argument cannot be less than zero.');

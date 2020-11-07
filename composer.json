@@ -23,9 +23,9 @@
         "psr/event-dispatcher": "^1.0"
     },
     "require-dev": {
-        "infection/infection": "^0.17.3",
-        "phpunit/phpunit": "^9.3",
-        "vimeo/psalm": "^4.0"
+        "infection/infection": "^0.20",
+        "phpunit/phpunit": "^9.4",
+        "vimeo/psalm": "^4.1"
     },
     "autoload": {
         "psr-4": {
@@ -46,7 +46,7 @@
         "test": [
             "phpunit --colors=always",
             "infection --no-progress",
-            "phan --no-progress-bar"
+            "psalm"
         ]
     },
     "config": {
