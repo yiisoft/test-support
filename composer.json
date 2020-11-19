@@ -23,10 +23,9 @@
         "psr/event-dispatcher": "^1.0"
     },
     "require-dev": {
-        "infection/infection": "^0.20",
-        "phpunit/phpunit": "^9.3",
-        "vimeo/psalm": "^4.1",
-        "phan/phan": "^3.0"
+        "phpunit/phpunit": "^9.4",
+        "roave/infection-static-analysis-plugin": "^1.4",
+        "vimeo/psalm": "^4.1"
     },
     "autoload": {
         "psr-4": {
