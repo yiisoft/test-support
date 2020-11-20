@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Yiisoft\Test\Support\Tests\Container;
 
+use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
 use Psr\Container\NotFoundExceptionInterface;
-use PHPUnit\Framework\TestCase;
 
 abstract class BaseContainerTest extends TestCase
 {
@@ -16,6 +16,7 @@ abstract class BaseContainerTest extends TestCase
 
         $this->assertSame('bar', $container->get('foo'));
     }
+
     public function testGetNotFound()
     {
         $container = $this->createContainer(['foo' => 'bar']);
@@ -31,12 +32,14 @@ abstract class BaseContainerTest extends TestCase
 
         $this->assertTrue($container->has('foo'));
     }
+
     public function testHasNo()
     {
         $container = $this->createContainer(['foo' => 'bar']);
 
         $this->assertFalse($container->has('baz'));
     }
+
     public function testHasNullValue()
     {
         $container = $this->createContainer(['foo' => null]);

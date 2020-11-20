@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Yiisoft\Test\Support\Tests\Container\Exception;
 
-use Yiisoft\Test\Support\Container\Exception\NotFoundException;
 use PHPUnit\Framework\TestCase;
+use Yiisoft\Test\Support\Container\Exception\NotFoundException;
 
 final class NotFoundExceptionTest extends TestCase
 {

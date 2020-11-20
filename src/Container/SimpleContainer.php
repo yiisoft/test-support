@@ -15,12 +15,14 @@ final class SimpleContainer implements ContainerInterface
 
     /**
      * @param array $definitions
-     * @param null|Closure $factory Should be closure that works like ContainerInterface::get(string $id): mixed
+     * @param Closure|null $factory Should be closure that works like ContainerInterface::get(string $id): mixed
      */
     public function __construct(array $definitions = [], Closure $factory = null)
     {
         $this->definitions = $definitions;
-        $this->factory = $factory ?? static function (string $id): void { throw new NotFoundException($id); };
+        $this->factory = $factory ?? static function (string $id): void {
+            throw new NotFoundException($id);
+        };
     }
 
     public function get($id)

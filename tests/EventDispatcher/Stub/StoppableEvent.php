@@ -14,10 +14,12 @@ class StoppableEvent implements StoppableEventInterface
     {
         $this->propagationStopped = $propagationStopped;
     }
+
     public function setPropagationStopped(bool $value): void
     {
         $this->propagationStopped = $value;
     }
+
     public function isPropagationStopped(): bool
     {
         return $this->propagationStopped;
