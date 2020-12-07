@@ -6,23 +6,17 @@ namespace Yiisoft\Test\Support\SimpleCache;
 
 use DateInterval;
 use DateTime;
-use Generator;
 use Psr\SimpleCache\CacheInterface;
 use Traversable;
 use Yiisoft\Test\Support\SimpleCache\Exception\InvalidArgumentException;
 
-/**
- * ArrayCache provides caching for the current request only by storing the values in an array.
- *
- * See {@see \Psr\SimpleCache\CacheInterface} for common cache operations that ArrayCache supports.
- */
-final class MemorySimpleCache implements CacheInterface
+abstract class MemorySimpleCache implements CacheInterface
 {
-    private const EXPIRATION_INFINITY = 0;
-    private const EXPIRATION_EXPIRED = -1;
+    protected const EXPIRATION_INFINITY = 0;
+    protected const EXPIRATION_EXPIRED = -1;
 
     /** @var array<string, array<int, mixed>> */
-    private array $cache = [];
+    protected array $cache = [];
     public bool $returnOnDelete = true;
 
     public function __construct(array $cacheData = [])

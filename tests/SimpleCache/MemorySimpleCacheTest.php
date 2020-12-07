@@ -4,19 +4,18 @@ declare(strict_types=1);
 
 namespace Yiisoft\Test\Support\Tests\SimpleCache;
 
-
 use DateInterval;
 use PHPUnit\Framework\TestCase;
 use Psr\SimpleCache\InvalidArgumentException;
 use ReflectionException;
 use TypeError;
-use Yiisoft\Test\Support\SimpleCache\MemorySimpleCache;
+use Yiisoft\Test\Support\SimpleCache\ExtendedSimpleCache;
 
-class MemorySimpleCacheTest extends TestCase
+abstract class MemorySimpleCacheTest extends TestCase
 {
-    protected function createCacheInstance(): MemorySimpleCache
+    protected function createCacheInstance(array $data = []): ExtendedSimpleCache
     {
-        return new MemorySimpleCache();
+        return new ExtendedSimpleCache($data);
     }
 
     // public function testExpire(): void
@@ -226,25 +225,13 @@ class MemorySimpleCacheTest extends TestCase
 
     // /**
     //  * @dataProvider dataProviderNormalizeTtl
-    //  *
-    //  * @param mixed $ttl
-    //  * @param mixed $expectedResult
-    //  *
-    //  * @throws ReflectionException
     //  */
     // public function testNormalizeTtl($ttl, $expectedResult): void
     // {
-    //     $cache = new MemorySimpleCache();
+    //     $cache = new ExtendedSimpleCache();
     //     $this->assertSameExceptObject($expectedResult, $this->invokeMethod($cache, 'normalizeTtl', [$ttl]));
     // }
     //
-    // /**
-    //  * Data provider for {@see testNormalizeTtl()}
-    //  *
-    //  * @return array test data
-    //  * @throws \Exception
-    //  *
-    //  */
     // public function dataProviderNormalizeTtl(): array
     // {
     //     return [
@@ -271,7 +258,7 @@ class MemorySimpleCacheTest extends TestCase
     //         MockHelper::$mock_time = \time();
     //         $expected = MockHelper::$mock_time + $ttl;
     //     }
-    //     $cache = new MemorySimpleCache();
+    //     $cache = new ExtendedSimpleCache();
     //     $this->assertSameExceptObject($expected, $this->invokeMethod($cache, 'ttlToExpiration', [$ttl]));
     // }
     //
@@ -436,7 +423,7 @@ class MemorySimpleCacheTest extends TestCase
     /**
      * This function configures given cache to match some expectations
      */
-    private function prepare(MemorySimpleCache $cache): void
+    private function prepare(ExtendedSimpleCache $cache): void
     {
         $cache->clear();
 
