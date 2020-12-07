@@ -1,0 +1,206 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Yiisoft\Test\Support\SimpleCache;
+
+use DateInterval;
+use DateTime;
+use Generator;
+use Psr\SimpleCache\CacheInterface;
+use Traversable;
+use Yiisoft\Test\Support\SimpleCache\Exception\InvalidArgumentException;
+
+/**
+ * ArrayCache provides caching for the current request only by storing the values in an array.
+ *
+ * See {@see \Psr\SimpleCache\CacheInterface} for common cache operations that ArrayCache supports.
+ */
+final class MemorySimpleCache implements CacheInterface
+{
+    private const EXPIRATION_INFINITY = 0;
+    private const EXPIRATION_EXPIRED = -1;
+
+    /** @var array<string, array<int, mixed>> */
+    private array $cache = [];
+    public bool $returnOnDelete = true;
+
+    public function __construct(array $cacheData = [])
+    {
+        $this->setMultiple($cacheData);
+    }
+
+    public function get($key, $default = null)
+    {
+        $this->validateKey($key);
+        if (array_key_exists($key, $this->cache) && !$this->isExpired($key)) {
+            /** @psalm-var mixed $value */
+            $value = $this->cache[$key][0];
+            if (is_object($value)) {
+                $value = clone $value;
+            }
+
+            return $value;
+        }
+
+        return $default;
+    }
+
+    public function set($key, $value, $ttl = null): bool
+    {
+        $this->validateKey($key);
+        $expiration = $this->ttlToExpiration($ttl);
+        if ($expiration < 0) {
+            return $this->delete($key);
+        }
+        if (is_object($value)) {
+            $value = clone $value;
+        }
+        $this->cache[$key] = [$value, $expiration];
+        return true;
+    }
+
+    public function delete($key): bool
+    {
+        $this->validateKey($key);
+        unset($this->cache[$key]);
+        return $this->returnOnDelete;
+    }
+
+    public function clear(): bool
+    {
+        $this->cache = [];
+        return true;
+    }
+
+    /**
+     * @param iterable $keys
+     * @param mixed $default
+     *
+     * @return Generator<array-key, mixed>
+     */
+    public function getMultiple($keys, $default = null): Generator
+    {
+        $keys = $this->iterableToArray($keys);
+        $this->validateKeys($keys);
+        /** @var array-key $key */
+        foreach ($keys as $key) {
+            /** @psalm-var mixed $value */
+            $value = $this->get((string)$key, $default);
+            yield $key => $value;
+        }
+    }
+
+    public function setMultiple($values, $ttl = null): bool
+    {
+        $values = $this->iterableToArray($values);
+        $this->validateKeysOfValues($values);
+        /** @psalm-var mixed $value */
+        foreach ($values as $key => $value) {
+            $this->set((string)$key, $value, $ttl);
+        }
+        return true;
+    }
+
+    public function deleteMultiple($keys): bool
+    {
+        $keys = $this->iterableToArray($keys);
+        $this->validateKeys($keys);
+        foreach ($keys as $key) {
+            assert(is_string($key));
+            $this->delete($key);
+        }
+        return $this->returnOnDelete;
+    }
+
+    public function has($key): bool
+    {
+        $this->validateKey($key);
+        return isset($this->cache[$key]) && !$this->isExpired($key);
+    }
+
+    /**
+     * Checks whether item is expired or not
+     */
+    private function isExpired(string $key): bool
+    {
+        return $this->cache[$key][1] !== 0 && $this->cache[$key][1] <= time();
+    }
+
+    /**
+     * Converts TTL to expiration
+     *
+     * @param DateInterval|int|null $ttl
+     *
+     * @return int
+     */
+    private function ttlToExpiration($ttl): int
+    {
+        $ttl = $this->normalizeTtl($ttl);
+
+        if ($ttl === null) {
+            $expiration = self::EXPIRATION_INFINITY;
+        } elseif ($ttl <= 0) {
+            $expiration = self::EXPIRATION_EXPIRED;
+        } else {
+            $expiration = $ttl + time();
+        }
+
+        return $expiration;
+    }
+
+    /**
+     * Normalizes cache TTL handling strings and {@see DateInterval} objects.
+     *
+     * @param DateInterval|int|string|null $ttl raw TTL.
+     *
+     * @return int|null TTL value as UNIX timestamp or null meaning infinity
+     */
+    private function normalizeTtl($ttl): ?int
+    {
+        if ($ttl instanceof DateInterval) {
+            return (new DateTime('@0'))->add($ttl)->getTimestamp();
+        }
+
+        if (is_string($ttl)) {
+            return (int)$ttl;
+        }
+
+        return $ttl;
+    }
+
+    /**
+     * Converts iterable to array. If provided value is not iterable it throws an InvalidArgumentException
+     */
+    private function iterableToArray(iterable $iterable): array
+    {
+        return $iterable instanceof Traversable ? iterator_to_array($iterable) : (array)$iterable;
+    }
+
+    /**
+     * @param mixed $key
+     */
+    private function validateKey($key): void
+    {
+        if (!\is_string($key) || strpbrk($key, '{}()/\@:')) {
+            throw new InvalidArgumentException('Invalid key value.');
+        }
+    }
+
+    /**
+     * @param mixed[] $keys
+     */
+    private function validateKeys(array $keys): void
+    {
+        /** @psalm-var mixed $key */
+        foreach ($keys as $key) {
+            $this->validateKey($key);
+        }
+    }
+
+    private function validateKeysOfValues(array $values): void
+    {
+        $keys = array_map('strval', array_keys($values));
+        $this->validateKeys($keys);
+    }
+}
