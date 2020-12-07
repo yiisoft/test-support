@@ -30,9 +30,13 @@ final class MemorySimpleCache implements CacheInterface
         $this->setMultiple($cacheData);
     }
 
+    /**
+     * @return mixed
+     */
     public function get($key, $default = null)
     {
         $this->validateKey($key);
+        /** @psalm-var string $key */
         if (array_key_exists($key, $this->cache) && !$this->isExpired($key)) {
             /** @psalm-var mixed $value */
             $value = $this->cache[$key][0];
@@ -49,6 +53,7 @@ final class MemorySimpleCache implements CacheInterface
     public function set($key, $value, $ttl = null): bool
     {
         $this->validateKey($key);
+        /** @psalm-var string $key */
         $expiration = $this->ttlToExpiration($ttl);
         if ($expiration < 0) {
             return $this->delete($key);
@@ -63,6 +68,7 @@ final class MemorySimpleCache implements CacheInterface
     public function delete($key): bool
     {
         $this->validateKey($key);
+        /** @psalm-var string $key */
         unset($this->cache[$key]);
         return $this->returnOnDelete;
     }
@@ -74,30 +80,30 @@ final class MemorySimpleCache implements CacheInterface
     }
 
     /**
-     * @param iterable $keys
-     * @param mixed $default
-     *
-     * @return Generator<array-key, mixed>
+     * @return mixed[]
      */
-    public function getMultiple($keys, $default = null): Generator
+    public function getMultiple($keys, $default = null): iterable
     {
         $keys = $this->iterableToArray($keys);
         $this->validateKeys($keys);
-        /** @var array-key $key */
+        /** @psalm-var string[] $keys */
+        $result = [];
         foreach ($keys as $key) {
-            /** @psalm-var mixed $value */
-            $value = $this->get((string)$key, $default);
-            yield $key => $value;
+            /** @psalm-var mixed */
+            $result[$key] = $this->get($key, $default);
         }
+        return $result;
     }
 
     public function setMultiple($values, $ttl = null): bool
     {
         $values = $this->iterableToArray($values);
         $this->validateKeysOfValues($values);
-        /** @psalm-var mixed $value */
+        /**
+         * @psalm-var mixed $value
+         */
         foreach ($values as $key => $value) {
-            $this->set((string)$key, $value, $ttl);
+            $this->set((string) $key, $value, $ttl);
         }
         return true;
     }
@@ -106,8 +112,8 @@ final class MemorySimpleCache implements CacheInterface
     {
         $keys = $this->iterableToArray($keys);
         $this->validateKeys($keys);
+        /** @var string[] $keys */
         foreach ($keys as $key) {
-            assert(is_string($key));
             $this->delete($key);
         }
         return $this->returnOnDelete;
@@ -116,6 +122,7 @@ final class MemorySimpleCache implements CacheInterface
     public function has($key): bool
     {
         $this->validateKey($key);
+        /** @psalm-var string $key */
         return isset($this->cache[$key]) && !$this->isExpired($key);
     }
 
@@ -170,11 +177,16 @@ final class MemorySimpleCache implements CacheInterface
     }
 
     /**
+     * @param mixed $iterable
+     *
      * Converts iterable to array. If provided value is not iterable it throws an InvalidArgumentException
      */
-    private function iterableToArray(iterable $iterable): array
+    private function iterableToArray($iterable): array
     {
-        return $iterable instanceof Traversable ? iterator_to_array($iterable) : (array)$iterable;
+        if (!is_iterable($iterable)) {
+            throw new InvalidArgumentException(sprintf("Iterable is expected, got %s.", gettype($iterable)));
+        }
+        return $iterable instanceof Traversable ? iterator_to_array($iterable) : $iterable;
     }
 
     /**
