@@ -82,7 +82,17 @@ final class Action
     }
 
     /**
-     * @param $key
+     * @param mixed $key
+     * @param mixed $value
+     * @param mixed $ttl
+     */
+    public static function createSetMultipleAction($key, $value, $ttl): self
+    {
+        return new self(self::SET, $key, $value, $ttl);
+    }
+
+    /**
+     * @param mixed $key
      */
     public static function createDeleteAction($key): self
     {

@@ -5,12 +5,13 @@ declare(strict_types=1);
 namespace Yiisoft\Test\Support\Tests\SimpleCache;
 
 use Yiisoft\Test\Support\SimpleCache\MemorySimpleCache;
+use Yiisoft\Test\Support\SimpleCache\SimpleCacheActionLogger;
 
-final class MemorySimpleCacheTest extends BaseSimpleCacheTest
+final class SimpleCacheActionLoggerTest extends BaseSimpleCacheTest
 {
-    protected function createCacheInstance(array $data = []): MemorySimpleCache
+    protected function createCacheInstance(array $data = []): SimpleCacheActionLogger
     {
-        return new MemorySimpleCache($data);
+        return new SimpleCacheActionLogger(new MemorySimpleCache(), $data);
     }
 
     public function testInitialData(): void
@@ -20,13 +21,5 @@ final class MemorySimpleCacheTest extends BaseSimpleCacheTest
 
         $this->assertSame('bar', $cache->get('foo'));
         $this->assertSame('value', $cache->get('key'));
-    }
-
-    public function testGetValues(): void
-    {
-        $data = ['foo' => 'bar', 'key' => 'value'];
-        $cache = $this->createCacheInstance($data);
-
-        $this->assertSame($data, $cache->getValues());
     }
 }

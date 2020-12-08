@@ -10,7 +10,7 @@ use Psr\SimpleCache\CacheInterface;
 use Traversable;
 use Yiisoft\Test\Support\SimpleCache\Exception\InvalidArgumentException;
 
-abstract class MemorySimpleCache implements CacheInterface
+final class MemorySimpleCache implements CacheInterface
 {
     protected const EXPIRATION_INFINITY = 0;
     protected const EXPIRATION_EXPIRED = -1;
@@ -118,6 +118,21 @@ abstract class MemorySimpleCache implements CacheInterface
         $this->validateKey($key);
         /** @psalm-var string $key */
         return isset($this->cache[$key]) && !$this->isExpired($key);
+    }
+
+    /**
+     * Get stored data
+     *
+     * @return array<array-key, mixed>
+     */
+    public function getValues(): array
+    {
+        $result = [];
+        foreach ($this->cache as $key => $value) {
+            /** @psalm-var mixed */
+            $result[$key] = $value[0];
+        }
+        return $result;
     }
 
     /**
