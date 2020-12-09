@@ -8,6 +8,7 @@ use DateInterval;
 use PHPUnit\Framework\TestCase;
 use Psr\SimpleCache\CacheInterface;
 use Psr\SimpleCache\InvalidArgumentException;
+use function is_object;
 
 abstract class BaseSimpleCacheTest extends TestCase
 {

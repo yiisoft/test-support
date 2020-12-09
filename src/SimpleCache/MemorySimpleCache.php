@@ -9,6 +9,9 @@ use DateTime;
 use Psr\SimpleCache\CacheInterface;
 use Traversable;
 use Yiisoft\Test\Support\SimpleCache\Exception\InvalidArgumentException;
+use function array_key_exists;
+use function is_object;
+use function is_string;
 
 final class MemorySimpleCache implements CacheInterface
 {
@@ -203,7 +206,7 @@ final class MemorySimpleCache implements CacheInterface
      */
     private function validateKey($key): void
     {
-        if (!\is_string($key) || $key === '' || strpbrk($key, '{}()/\\@:')) {
+        if (!is_string($key) || strpbrk($key, '{}()/\@:')) {
             throw new InvalidArgumentException('Invalid key value.');
         }
     }

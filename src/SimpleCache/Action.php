@@ -18,7 +18,7 @@ final class Action
     public const CLEAR = 'clear';
     public const HAS = 'has';
 
-    /** @var TAction  */
+    /** @var TAction */
     private string $action;
     /** @var TKey */
     private $key;
