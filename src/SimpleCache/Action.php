@@ -66,6 +66,14 @@ final class Action
     }
 
     /**
+     * @return TTtl
+     */
+    public function getTtl()
+    {
+        return $this->ttl;
+    }
+
+    /**
      * @param mixed $key
      */
     public static function createGetAction($key): self
@@ -87,16 +95,6 @@ final class Action
      * @param mixed $ttl
      */
     public static function createSetAction($key, $value, $ttl): self
-    {
-        return new self(self::SET, $key, $value, $ttl);
-    }
-
-    /**
-     * @param mixed $key
-     * @param mixed $value
-     * @param mixed $ttl
-     */
-    public static function createSetMultipleAction($key, $value, $ttl): self
     {
         return new self(self::SET, $key, $value, $ttl);
     }
