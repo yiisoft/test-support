@@ -4,6 +4,12 @@ declare(strict_types=1);
 
 namespace Yiisoft\Test\Support\SimpleCache;
 
+/**
+ * @template TAction as string
+ * @template TKey as mixed
+ * @template TValue as mixed
+ * @template TTtl as mixed
+ */
 final class Action
 {
     public const GET = 'get';
@@ -12,19 +18,20 @@ final class Action
     public const CLEAR = 'clear';
     public const HAS = 'has';
 
+    /** @var TAction  */
     private string $action;
-    /** @var mixed */
+    /** @var TKey */
     private $key;
-    /** @var mixed */
+    /** @var TValue */
     private $value;
-    /** @var mixed */
+    /** @var TTtl */
     private $ttl;
 
     /**
-     * @param string $action
-     * @param mixed $key
-     * @param mixed $value
-     * @param mixed $ttl
+     * @param TAction $action
+     * @param TKey $key
+     * @param TValue $value
+     * @param TTtl $ttl
      */
     private function __construct(string $action, $key = null, $value = null, $ttl = null)
     {
@@ -34,13 +41,16 @@ final class Action
         $this->ttl = $ttl;
     }
 
+    /**
+     * @return TAction
+     */
     public function getAction(): string
     {
         return $this->action;
     }
 
     /**
-     * @return mixed
+     * @return TKey
      */
     public function getKey()
     {
@@ -48,7 +58,7 @@ final class Action
     }
 
     /**
-     * @return mixed
+     * @return TValue
      */
     public function getValue()
     {

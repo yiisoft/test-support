@@ -14,16 +14,15 @@ use Yiisoft\Test\Support\SimpleCache\Exception\InvalidArgumentException;
 final class SimpleCacheActionLogger implements CacheInterface
 {
     /** @var Action[] */
-    private array $actions = [];
-    /** @psalm-var TCacheService */
+    private array $actions;
+    /** @var TCacheService */
     private CacheInterface $cacheService;
 
     /**
      * SimpleCacheActionLogger constructor.
      *
      * @param array $cacheData
-     * @param CacheInterface $cacheService
-     * @psalm-param TCacheService $cacheService
+     * @param TCacheService $cacheService
      */
     public function __construct(CacheInterface $cacheService, array $cacheData = [])
     {
@@ -92,6 +91,9 @@ final class SimpleCacheActionLogger implements CacheInterface
         return $this->cacheService->deleteMultiple($keys);
     }
 
+    /**
+     * @return Action[]
+     */
     public function getActions(): array
     {
         return $this->actions;
@@ -100,7 +102,7 @@ final class SimpleCacheActionLogger implements CacheInterface
     /**
      * @return array<int, array{0: string, 1: mixed}>
      */
-    public function getShortActions(): array
+    public function getActionKeyList(): array
     {
         $result = [];
         foreach ($this->actions as $action) {
@@ -110,8 +112,7 @@ final class SimpleCacheActionLogger implements CacheInterface
     }
 
     /**
-     * @return CacheInterface
-     * @psalm-return TCacheService
+     * @return TCacheService
      */
     public function getCacheService(): CacheInterface
     {

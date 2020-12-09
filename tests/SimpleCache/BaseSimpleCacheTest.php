@@ -13,23 +13,6 @@ abstract class BaseSimpleCacheTest extends TestCase
 {
     abstract protected function createCacheInstance(): CacheInterface;
 
-    // public function testExpire(): void
-    // {
-    //     $cache = $this->createCacheInstance();
-    //     $cache->clear();
-    //
-    //     MockHelper::$mock_time = \time();
-    //     $this->assertTrue($cache->set('expire_test', 'expire_test', 2));
-    //
-    //     MockHelper::$mock_time++;
-    //     $this->assertTrue($cache->has('expire_test'));
-    //     $this->assertSameExceptObject('expire_test', $cache->get('expire_test'));
-    //
-    //     MockHelper::$mock_time++;
-    //     $this->assertFalse($cache->has('expire_test'));
-    //     $this->assertNull($cache->get('expire_test'));
-    // }
-
     /**
      * @dataProvider dataProvider
      */
@@ -190,9 +173,7 @@ abstract class BaseSimpleCacheTest extends TestCase
 
         $cache->deleteMultiple($keys);
 
-        $emptyData = array_map(static function ($v) {
-            return null;
-        }, $data);
+        $emptyData = array_map(static fn ($v) => null, $data);
 
         $this->assertSame($emptyData, $cache->getMultiple($keys));
     }
@@ -217,54 +198,6 @@ abstract class BaseSimpleCacheTest extends TestCase
 
         $this->assertFalse($cache->has('b'));
     }
-
-    // /**
-    //  * @dataProvider dataProviderNormalizeTtl
-    //  */
-    // public function testNormalizeTtl($ttl, $expectedResult): void
-    // {
-    //     $cache = new ExtendedSimpleCache();
-    //     $this->assertSameExceptObject($expectedResult, $this->invokeMethod($cache, 'normalizeTtl', [$ttl]));
-    // }
-    //
-    // public function dataProviderNormalizeTtl(): array
-    // {
-    //     return [
-    //         [123, 123],
-    //         ['123', 123],
-    //         [null, null],
-    //         [0, 0],
-    //         [new DateInterval('PT6H8M'), 6 * 3600 + 8 * 60],
-    //         [new DateInterval('P2Y4D'), 2 * 365 * 24 * 3600 + 4 * 24 * 3600],
-    //     ];
-    // }
-
-    // /**
-    //  * @dataProvider ttlToExpirationProvider
-    //  *
-    //  * @param mixed $ttl
-    //  * @param mixed $expected
-    //  *
-    //  * @throws ReflectionException
-    //  */
-    // public function testTtlToExpiration($ttl, $expected): void
-    // {
-    //     if ($expected === 'calculate_expiration') {
-    //         MockHelper::$mock_time = \time();
-    //         $expected = MockHelper::$mock_time + $ttl;
-    //     }
-    //     $cache = new ExtendedSimpleCache();
-    //     $this->assertSameExceptObject($expected, $this->invokeMethod($cache, 'ttlToExpiration', [$ttl]));
-    // }
-    //
-    // public function ttlToExpirationProvider(): array
-    // {
-    //     return [
-    //         [3, 'calculate_expiration'],
-    //         [null, 0],
-    //         [-5, -1],
-    //     ];
-    // }
 
     /**
      * @dataProvider iterableProvider
