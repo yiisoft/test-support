@@ -18,9 +18,12 @@ final class MemorySimpleCache implements CacheInterface
     protected const EXPIRATION_INFINITY = 0;
     protected const EXPIRATION_EXPIRED = -1;
 
+    public bool $returnOnSet = true;
+    public bool $returnOnDelete = true;
+    public bool $returnOnClear = true;
+
     /** @var array<string, array<int, mixed>> */
     protected array $cache = [];
-    public bool $returnOnDelete = true;
 
     public function __construct(array $cacheData = [])
     {
@@ -59,7 +62,7 @@ final class MemorySimpleCache implements CacheInterface
             $value = clone $value;
         }
         $this->cache[$key] = [$value, $expiration];
-        return true;
+        return $this->returnOnSet;
     }
 
     public function delete($key): bool
@@ -73,7 +76,7 @@ final class MemorySimpleCache implements CacheInterface
     public function clear(): bool
     {
         $this->cache = [];
-        return true;
+        return $this->returnOnClear;
     }
 
     /**
@@ -102,7 +105,7 @@ final class MemorySimpleCache implements CacheInterface
         foreach ($values as $key => $value) {
             $this->set((string) $key, $value, $ttl);
         }
-        return true;
+        return $this->returnOnSet;
     }
 
     public function deleteMultiple($keys): bool
