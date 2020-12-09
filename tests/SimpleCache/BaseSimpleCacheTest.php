@@ -128,11 +128,12 @@ abstract class BaseSimpleCacheTest extends TestCase
 
         $data = $this->getDataProviderData();
 
-        $cache->setMultiple($data, $ttl);
+        $result = $cache->setMultiple($data, $ttl);
 
         foreach ($data as $key => $value) {
             $this->assertEquals($value, $cache->get((string)$key));
         }
+        $this->assertTrue($result);
     }
 
     /**
@@ -171,11 +172,12 @@ abstract class BaseSimpleCacheTest extends TestCase
 
         $this->assertEquals($data, $cache->getMultiple($keys));
 
-        $cache->deleteMultiple($keys);
+        $result = $cache->deleteMultiple($keys);
 
         $emptyData = array_map(static fn ($v) => null, $data);
 
         $this->assertSame($emptyData, $cache->getMultiple($keys));
+        $this->assertTrue($result);
     }
 
     public function testZeroAndNegativeTtl()
@@ -275,13 +277,6 @@ abstract class BaseSimpleCacheTest extends TestCase
         $cache->delete(1);
     }
 
-    public function testGetMultipleInvalidKeys(): void
-    {
-        $this->expectException(InvalidArgumentException::class);
-        $cache = $this->createCacheInstance();
-        $cache->getMultiple([true]);
-    }
-
     public function testGetMultipleInvalidKeysNotIterable(): void
     {
         $this->expectException(InvalidArgumentException::class);
@@ -294,13 +289,6 @@ abstract class BaseSimpleCacheTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $cache = $this->createCacheInstance();
         $cache->setMultiple(1);
-    }
-
-    public function testDeleteMultipleInvalidKeys(): void
-    {
-        $this->expectException(InvalidArgumentException::class);
-        $cache = $this->createCacheInstance();
-        $cache->deleteMultiple([true]);
     }
 
     public function testDeleteMultipleInvalidKeysNotIterable(): void
@@ -335,6 +323,126 @@ abstract class BaseSimpleCacheTest extends TestCase
             'string_with_number_key' => ['111', 11],
             'string_with_number_key_1' => ['022', 22],
         ];
+    }
+
+    public function incorrectKeyProvider(): array
+    {
+        return [
+            [''],
+            ['{key}'],
+            ['(key)'],
+            ['root/child'],
+            ['root\\child'],
+            ['group@item'],
+            ['group:item'],
+        ];
+    }
+
+    /**
+     * @dataProvider incorrectKeyProvider
+     *
+     * @param mixed $key
+     */
+    public function testSetMethodKeyChecking($key): void
+    {
+        $cache = $this->createCacheInstance();
+
+        $this->expectException(InvalidArgumentException::class);
+
+        $cache->set($key, 'value');
+    }
+
+    /**
+     * @dataProvider incorrectKeyProvider
+     *
+     * @param mixed $key
+     */
+    public function testGetMethodKeyChecking($key): void
+    {
+        $cache = $this->createCacheInstance();
+
+        $this->expectException(InvalidArgumentException::class);
+
+        $cache->get($key);
+    }
+
+    /**
+     * @dataProvider incorrectKeyProvider
+     *
+     * @param mixed $key
+     */
+    public function testHasMethodKeyChecking($key): void
+    {
+        $cache = $this->createCacheInstance();
+
+        $this->expectException(InvalidArgumentException::class);
+
+        $cache->has($key);
+    }
+
+    /**
+     * @dataProvider incorrectKeyProvider
+     *
+     * @param mixed $key
+     */
+    public function testDeleteMethodKeyChecking($key): void
+    {
+        $cache = $this->createCacheInstance();
+
+        $this->expectException(InvalidArgumentException::class);
+
+        $cache->delete($key);
+    }
+
+    /**
+     * @dataProvider incorrectKeyProvider
+     *
+     * @param mixed $key
+     */
+    public function testSetMultipleMethodKeyChecking($key): void
+    {
+        $cache = $this->createCacheInstance();
+
+        $this->expectException(InvalidArgumentException::class);
+
+        try {
+            $cache->setMultiple(['key' => 'normal-value', $key => 'value']);
+        } finally {
+            $this->assertFalse($cache->has('key'));
+        }
+    }
+
+    /**
+     * @dataProvider incorrectKeyProvider
+     *
+     * @param mixed $key
+     */
+    public function testGetMultipleMethodKeyChecking($key): void
+    {
+        $cache = $this->createCacheInstance();
+
+        $this->expectException(InvalidArgumentException::class);
+
+        $cache->getMultiple([$key]);
+    }
+
+    /**
+     * @dataProvider incorrectKeyProvider
+     *
+     * @param mixed $key
+     */
+    public function testDeleteMultipleMethodKeyChecking($key): void
+    {
+        $cache = $this->createCacheInstance();
+        $cache->set('normal-key', 'normal-value');
+
+        $this->expectException(InvalidArgumentException::class);
+
+        try {
+            $cache->deleteMultiple(['normal-key', $key, 'normal-key']);
+        } finally {
+            $this->assertTrue($cache->has('normal-key'));
+        }
     }
 
     private function getDataProviderData($keyPrefix = ''): array

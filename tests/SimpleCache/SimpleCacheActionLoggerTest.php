@@ -52,6 +52,33 @@ final class SimpleCacheActionLoggerTest extends BaseSimpleCacheTest
         ], $actions);
     }
 
+    public function testActionLoggingOrder(): void
+    {
+        $cache = $this->createCacheInstance();
+        $cache->setMultiple(['foo' => 'bar', 'key' => 'value']);
+        $cache->getMultiple(['foo', 'bar']);
+        $cache->deleteMultiple(['foo', 'bar']);
+        $cache->get('fiz');
+        $cache->set('foo', 'baz');
+        $cache->delete('foo');
+        $cache->clear();
+
+        $actions = $cache->getActionKeyList();
+
+        $this->assertSame([
+            [Action::SET, 'foo'],
+            [Action::SET, 'key'],
+            [Action::GET, 'foo'],
+            [Action::GET, 'bar'],
+            [Action::DELETE, 'foo'],
+            [Action::DELETE, 'bar'],
+            [Action::GET, 'fiz'],
+            [Action::SET, 'foo'],
+            [Action::DELETE, 'foo'],
+            [Action::CLEAR, null],
+        ], $actions);
+    }
+
     public function testInitialData(): void
     {
         $data = ['foo' => 'bar', 'key' => 'value'];
