@@ -282,11 +282,11 @@ abstract class BaseSimpleCacheTest extends TestCase
     public function iterableProvider(): array
     {
         return [
-            'array'             => [
+            'array' => [
                 ['a' => 1, 'b' => 2,],
                 ['a' => 1, 'b' => 2,],
             ],
-            'ArrayIterator'     => [
+            'ArrayIterator' => [
                 ['a' => 1, 'b' => 2,],
                 new \ArrayIterator(['a' => 1, 'b' => 2,]),
             ],
@@ -299,7 +299,7 @@ abstract class BaseSimpleCacheTest extends TestCase
                     }
                 },
             ],
-            'generator'         => [
+            'generator' => [
                 ['a' => 1, 'b' => 2,],
                 (static function () {
                     yield 'a' => 1;

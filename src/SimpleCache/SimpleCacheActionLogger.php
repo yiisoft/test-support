@@ -126,7 +126,7 @@ final class SimpleCacheActionLogger implements CacheInterface
     private function iterableToArray($iterable): array
     {
         if (!is_iterable($iterable)) {
-            throw new InvalidArgumentException(sprintf("Iterable is expected, got %s.", gettype($iterable)));
+            throw new InvalidArgumentException(sprintf('Iterable is expected, got %s.', gettype($iterable)));
         }
         return $iterable instanceof Traversable ? iterator_to_array($iterable) : $iterable;
     }
