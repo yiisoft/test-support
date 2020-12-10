@@ -17,13 +17,10 @@ The package is intended to simplify the process of testing application elements 
 [![static analysis](https://github.com/yiisoft/test-support/workflows/static%20analysis/badge.svg)](https://github.com/yiisoft/test-support/actions?query=workflow%3A%22static+analysis%22)
 [![type-coverage](https://shepherd.dev/github/yiisoft/test-support/coverage.svg)](https://shepherd.dev/github/yiisoft/test-support)
 
-## Installation
+### Documentation
 
-The package could be installed with composer:
-
-```bash
-composer require yiisoft/test-support --dev
-```
+- [English](docs/en/README.md)
+- [Russian](docs/ru/README.md)
 
 ### Unit testing
 

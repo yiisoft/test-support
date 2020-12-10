@@ -30,9 +30,6 @@ final class MemorySimpleCache implements CacheInterface
         $this->setMultiple($cacheData);
     }
 
-    /**
-     * @return mixed
-     */
     public function get($key, $default = null)
     {
         $this->validateKey($key);
