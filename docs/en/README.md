@@ -43,7 +43,7 @@ Listeners should decide, should they process the event or not, as `SimpleEventDi
 for matching an event to a listener.
 Simultaneously, the dispatcher is PSR-compliant and consider `StoppableEventInterface`.
 
-If your code sent as event to `SimpleEventDispatcher`, then in tests you can check this using the following methods:
+If your code sent an event to `SimpleEventDispatcher`, then in tests you can check this using the following methods:
 
 - `isObjectTriggered::isObjectTriggered(object $event, int $times = null)` — Exact `$event` object was triggered.
 - `isClassTriggered::isClassTriggered(string $class, int $times = null)` — Event of `$class` class was triggered .
