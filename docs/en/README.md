@@ -46,7 +46,7 @@ Simultaneously, the dispatcher is PSR-compliant and consider `StoppableEventInte
 If your code sent an event to `SimpleEventDispatcher`, then in tests you can check this using the following methods:
 
 - `isObjectTriggered::isObjectTriggered(object $event, int $times = null)` — Exact `$event` object was triggered.
-- `isClassTriggered::isClassTriggered(string $class, int $times = null)` — Event of `$class` class was triggered .
+- `isClassTriggered::isClassTriggered(string $class, int $times = null)` — Event of `$class` class was triggered.
 - `isInstanceOfTriggered::isInstanceOfTriggered(string $class, int $times = null)` — Event with `$class` interface was triggered.
 
 2nd parameter `$times`, is responsible for checking how many times the event has been called.
