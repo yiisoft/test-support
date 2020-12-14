@@ -41,7 +41,7 @@ The `SimpleEventDispatcher` class is offered as an implementation of `EventDispa
 You can pass any number of closure-listeners to the `SimpleEventDispatcher` constructor. 
 Listeners should decide, should they process the event or not, as `SimpleEventDispatcher` does not contain complex logic 
 for matching an event to a listener.
-simultaneously, the dispatcher is PSR-compliant and consider `StoppableEventInterface`.
+Simultaneously, the dispatcher is PSR-compliant and consider `StoppableEventInterface`.
 
 If your code sent as event to `SimpleEventDispatcher`, then in tests you can check this using the following methods:
 
