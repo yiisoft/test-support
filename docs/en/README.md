@@ -18,7 +18,7 @@ composer require yiisoft/test-support --dev
 
 The `SimpleContainer` class is offered as an implementation of `ContainerInterface`. 
 
-This is simple dependency container, the configuration for which you pass in the constructor.
+This is simple dependency container, the definitions configuration for which you pass in the constructor.
 Despite the simplicity, container is flexible: 2nd parameter of the constructor accepts a Closure.
 This Closure will be called to get 'default' value, if the requested value is not found if the configuration:
 
