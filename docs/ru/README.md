@@ -29,6 +29,7 @@ $container = new SimpleContainer(
     fn (string $id) => $id === 'bar' ? 'Bar' : 'Not found'
 );
 $foo = $container->get('foo'); // Foo
+$foo = $container->get('bar'); // Bar
 $baz = $container->get('baz'); // Not found
 ```
 
