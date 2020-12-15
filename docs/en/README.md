@@ -34,7 +34,7 @@ $baz = $container->get('baz'); // Not found
 
 The `SimpleEventDispatcher` is a test-specific event dispatcher. You can pass any number of closure-listeners to its  constructor. SimpleEventDispatcher` does not contain any complex logic for matching an event to a listener. Every listener should decide by itself if it processes an event or not. The dispatcher is PSR-compliant and works with `StoppableEventInterface`.
 
-If your code sent an event to `SimpleEventDispatcher`, then in tests you can check this using the following methods:
+You can test for events sent to `SimpleEventDispatcher` using the following methods:
 
 - `isObjectTriggered::isObjectTriggered(object $event, int $times = null)` — Exact `$event` object was triggered.
 - `isClassTriggered::isClassTriggered(string $class, int $times = null)` — Event of `$class` class was triggered.
