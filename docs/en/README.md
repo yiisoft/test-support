@@ -53,7 +53,7 @@ The `SimpleCacheInterface` interface is implemented by two classes:
 
 ### MemorySimpleCache
 
-The `MemorySimpleCache` class does not use external storage, to store cached values.
+The `MemorySimpleCache` class does not use external storage to store cached values.
 Values are stored in the array property of the object itself and will be destroyed along with the object.
 Use `MemorySimpleCache` in the simple cases when you do not need to keep track of the history of cache access. 
 
