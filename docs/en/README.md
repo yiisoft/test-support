@@ -3,7 +3,7 @@
 Some components of the application codebase rely on services implementing [PSR-interfaces](https://www.php-fig.org/psr/).
 In order to test such components, the developer often has to write his own stripped or extended realizations 
 of similar PSR implementations in test environment.
-Test Support package provide ready-to-use implementations of some PSR interfaces, intended solely to help test your code.
+Test Support package provides ready-to-use implementations of some PSR interfaces, intended solely to help testing your code.
 
 
 ## Installation
