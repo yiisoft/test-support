@@ -15,11 +15,8 @@ composer require yiisoft/test-support --dev
 
 ## Container Interface [PSR-11](https://github.com/php-fig/container)
 
-The `SimpleContainer` class is offered as an implementation of `ContainerInterface`. 
-
-This is simple dependency container, the definitions configuration for which you pass in the constructor.
-Despite the simplicity, container is flexible: 2nd parameter of the constructor accepts a Closure.
-This Closure will be called to get 'default' value, if the requested value is not found if the configuration:
+The `SimpleContainer` is a simple dependency container accepting the definitions configuration as the constructor argument. Despite the simplicity, container is flexible: 2nd parameter of the constructor accepts a Closure.
+This Closure will be called to get "default" value if the requested value is not found if the configuration:
 
 ```php
 use Yiisoft\Test\Support\Container\SimpleContainer;
