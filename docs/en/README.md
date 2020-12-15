@@ -54,8 +54,8 @@ The `SimpleCacheInterface` interface is implemented by two classes:
 ### MemorySimpleCache
 
 The `MemorySimpleCache` class does not use external storage, to store cached values.
-Values stores in the array in the object itself and will be destroyed along with the object.
-Use `MemorySimpleCache` in the simple cases, when you dont need to keep track the history of calls to the cache. 
+Values are stored in the array property of the object itself and will be destroyed along with the object.
+Use `MemorySimpleCache` in the simple cases when you do not need to keep track of the history of cache access. 
 
 For caching errors simulation, in the public properties `returnOnSet`, `returnOnDelete` and `returnOnClear`
 you can define return values for the corresponding methods of the `SimpleCacheInterface`.
