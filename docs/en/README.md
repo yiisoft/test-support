@@ -70,7 +70,7 @@ For example, when the testing service is supposed to resend the value to the cac
 use Yiisoft\Test\Support\SimpleCache;
 
 $cache = new SimpleCache\MemorySimpleCache();
-//MemorySimpleCache::set() method will be returning false, which corresponds to an error, accourding to PSR
+//MemorySimpleCache::set() method will return false, which is an error according to PSR
 $cache->returnOnSet = false;
 
 $cacheLogger = new SimpleCache\SimpleCacheActionLogger($cache);
