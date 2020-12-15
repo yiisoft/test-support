@@ -36,12 +36,7 @@ $baz = $container->get('baz'); // Not found
 
 ## Event Dispatcher [PSR-14](https://github.com/php-fig/event-dispatcher)
 
-The `SimpleEventDispatcher` class is offered as an implementation of `EventDispatcherInterface`.
-
-You can pass any number of closure-listeners to the `SimpleEventDispatcher` constructor. 
-Listeners should decide, should they process the event or not, as `SimpleEventDispatcher` does not contain complex logic 
-for matching an event to a listener.
-Simultaneously, the dispatcher is PSR-compliant and consider `StoppableEventInterface`.
+The `SimpleEventDispatcher` is a test-specific event dispatcher. You can pass any number of closure-listeners to its  constructor. SimpleEventDispatcher` does not contain any complex logic for matching an event to a listener. Every listener should decide by itself if it processes an event or not. The dispatcher is PSR-compliant and works with `StoppableEventInterface`.
 
 If your code sent an event to `SimpleEventDispatcher`, then in tests you can check this using the following methods:
 
