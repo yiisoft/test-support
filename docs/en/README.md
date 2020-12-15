@@ -57,8 +57,7 @@ The `MemorySimpleCache` class does not use external storage, to store cached val
 Values are stored in the array property of the object itself and will be destroyed along with the object.
 Use `MemorySimpleCache` in the simple cases when you do not need to keep track of the history of cache access. 
 
-For caching errors simulation, in the public properties `returnOnSet`, `returnOnDelete` and `returnOnClear`
-you can define return values for the corresponding methods of the `SimpleCacheInterface`.
+You can simulate cache errors by setting public properties `returnOnSet`, `returnOnDelete` and `returnOnClear`. These define values returned by the corresponding methods of the `SimpleCacheInterface`.
  
 ### SimpleCacheActionLogger
 
