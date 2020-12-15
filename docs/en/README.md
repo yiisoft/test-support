@@ -63,8 +63,8 @@ You can simulate cache errors by setting public properties `returnOnSet`, `retur
 
 The `SimpleCacheActionLogger` class is a decorator for `SimpleCacheInterface`. It remembers all cache calls even if they are invalid such as when the key contains invalid characters, or is not a string at all. 
 
-Use decorator when it's not enough to test the cache state before and after code execution.
-For example, when the testing service supposed to resend the value to the cache after the first failed attempt.  
+Use the decorator when it is not enough to test the cache state before and after code execution.
+For example, when the testing service is supposed to resend the value to the cache after the first failed attempt.
 
 ```php
 use Yiisoft\Test\Support\SimpleCache;
