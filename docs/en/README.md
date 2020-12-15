@@ -61,8 +61,7 @@ You can simulate cache errors by setting public properties `returnOnSet`, `retur
  
 ### SimpleCacheActionLogger
 
-The `SimpleCacheActionLogger` class is the decorator for `SimpleCacheInterface`, intermediary, that remembers all passed 
-commands, even if they are invalid (the key contains invalid characters, or is not string at all, for example). 
+The `SimpleCacheActionLogger` class is a decorator for `SimpleCacheInterface`. It remembers all cache calls even if they are invalid such as when the key contains invalid characters, or is not a string at all. 
 
 Use decorator when it's not enough to test the cache state before and after code execution.
 For example, when the testing service supposed to resend the value to the cache after the first failed attempt.  
