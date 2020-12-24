@@ -6,7 +6,9 @@ namespace Yiisoft\Test\Support\Container;
 
 use Closure;
 use Psr\Container\ContainerInterface;
+use Throwable;
 use Yiisoft\Test\Support\Container\Exception\NotFoundException;
+use function array_key_exists;
 
 final class SimpleContainer implements ContainerInterface
 {
@@ -41,7 +43,7 @@ final class SimpleContainer implements ContainerInterface
         try {
             $this->get($id);
             return true;
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             return false;
         }
     }

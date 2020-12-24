@@ -15,8 +15,6 @@
         "irc": "irc://irc.freenode.net/yii",
         "source": "https://github.com/yiisoft/test-support"
     },
-    "minimum-stability": "dev",
-    "prefer-stable": true,
     "require": {
         "php": "^7.4|^8.0",
         "psr/container": "^1.0",
@@ -37,11 +35,6 @@
     "autoload-dev": {
         "psr-4": {
             "Yiisoft\\Test\\Support\\Tests\\": "tests"
-        }
-    },
-    "extra": {
-        "branch-alias": {
-            "dev-master": "3.0.x-dev"
         }
     },
     "scripts": {
