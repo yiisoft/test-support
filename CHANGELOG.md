@@ -3,7 +3,7 @@
 
 ## 1.1.1 under development
 
-- Enh #24: Add `SimpleEventDispatcher::getClassesEvents()` that return classes of dispatched events (vjik)
+- Enh #24: Add `SimpleEventDispatcher::getEventClasses()` that return classes of dispatched events (vjik)
 
 ## 1.1.0 February 22, 2021
 
