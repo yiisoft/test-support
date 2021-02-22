@@ -1,6 +1,6 @@
 # Yii Test Support Change Log
 
-## 1.0.1 under development
+## 1.1.0 February 22, 2021
 
 - Enh #23: Add `SimpleEventDispatcher::clearEvents()` that clear all events in event dispatcher (vjik)
 
