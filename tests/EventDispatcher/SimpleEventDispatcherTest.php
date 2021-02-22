@@ -232,6 +232,15 @@ class SimpleEventDispatcherTest extends TestCase
         $this->assertSame([], $dispatcher->getEvents());
     }
 
+    public function testClear(): void
+    {
+        $dispatcher = $this->prepareDispatcher();
+        $dispatcher->dispatch(new DateTimeImmutable());
+        $dispatcher->clearEvents();
+
+        self::assertEmpty($dispatcher->getEvents());
+    }
+
     protected function prepareDispatcher(Closure ...$dispatcher): SimpleEventDispatcher
     {
         return new SimpleEventDispatcher(...$dispatcher);

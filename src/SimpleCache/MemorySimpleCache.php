@@ -77,6 +77,9 @@ final class MemorySimpleCache implements CacheInterface
     }
 
     /**
+     * @param iterable $keys
+     * @param mixed $default
+     *
      * @return mixed[]
      */
     public function getMultiple($keys, $default = null): iterable
@@ -92,6 +95,10 @@ final class MemorySimpleCache implements CacheInterface
         return $result;
     }
 
+    /**
+     * @param iterable $values
+     * @param DateInterval|int|null $ttl
+     */
     public function setMultiple($values, $ttl = null): bool
     {
         $values = $this->iterableToArray($values);
