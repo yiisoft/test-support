@@ -7,12 +7,14 @@ namespace Yiisoft\Test\Support\EventDispatcher;
 use Closure;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\EventDispatcher\StoppableEventInterface;
+
 use function get_class;
 
 final class SimpleEventDispatcher implements EventDispatcherInterface
 {
-    /** @var array<int, Closure>  */
+    /** @var array<int, Closure> */
     private array $listeners;
+
     /** @var object[] */
     private array $events = [];
 
@@ -39,6 +41,11 @@ final class SimpleEventDispatcher implements EventDispatcherInterface
     public function getEvents(): array
     {
         return $this->events;
+    }
+
+    public function clearEvents(): void
+    {
+        $this->events = [];
     }
 
     public function isObjectTriggered(object $event, int $times = null): bool
