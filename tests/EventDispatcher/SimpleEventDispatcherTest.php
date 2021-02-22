@@ -226,7 +226,7 @@ class SimpleEventDispatcherTest extends TestCase
         $this->assertSame([$event1, $event2, $event3], $dispatcher->getEvents());
     }
 
-    public function testGetClassesEvents(): void
+    public function testGetEventClasses(): void
     {
         $dispatcher = $this->prepareDispatcher();
 
@@ -238,7 +238,7 @@ class SimpleEventDispatcherTest extends TestCase
             stdClass::class,
             DateTimeImmutable::class,
             DateTime::class,
-        ], $dispatcher->getClassesEvents());
+        ], $dispatcher->getEventClasses());
     }
 
     public function testGetEmptyEvents(): void

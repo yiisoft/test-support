@@ -43,7 +43,7 @@ final class SimpleEventDispatcher implements EventDispatcherInterface
         return $this->events;
     }
 
-    public function getClassesEvents(): array
+    public function getEventClasses(): array
     {
         return array_map(
             static fn ($event) => get_class($event),
