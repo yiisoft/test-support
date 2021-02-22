@@ -97,7 +97,7 @@ final class MemorySimpleCache implements CacheInterface
 
     /**
      * @param iterable $values
-     * @param null|int|DateInterval $ttl
+     * @param DateInterval|int|null $ttl
      */
     public function setMultiple($values, $ttl = null): bool
     {
