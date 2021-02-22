@@ -15,7 +15,10 @@ final class SimpleEventDispatcher implements EventDispatcherInterface
     /** @var array<int, Closure> */
     private array $listeners;
 
-    /** @var object[] */
+    /**
+     * @var object[]
+     * @psalm-var list<object>
+     */
     private array $events = [];
 
     /**
@@ -38,17 +41,21 @@ final class SimpleEventDispatcher implements EventDispatcherInterface
         return $event;
     }
 
+    /**
+     * @return object[]
+     * @psalm-return list<object>
+     */
     public function getEvents(): array
     {
         return $this->events;
     }
 
+    /**
+     * @psalm-return list<class-string>
+     */
     public function getEventClasses(): array
     {
-        return array_map(
-            static fn ($event) => get_class($event),
-            $this->events
-        );
+        return array_map('\get_class', $this->events);
     }
 
     public function clearEvents(): void
