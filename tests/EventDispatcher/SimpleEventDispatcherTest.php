@@ -8,7 +8,6 @@ use Closure;
 use DateTime;
 use DateTimeImmutable;
 use DateTimeInterface;
-use DateTimeZone;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
