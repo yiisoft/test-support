@@ -11,6 +11,7 @@ use DateTimeInterface;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
+use stdClass;
 use Yiisoft\Test\Support\EventDispatcher\SimpleEventDispatcher;
 use Yiisoft\Test\Support\Tests\EventDispatcher\Stub\StoppableEvent;
 
@@ -223,6 +224,21 @@ class SimpleEventDispatcherTest extends TestCase
         $dispatcher->dispatch($event3);
 
         $this->assertSame([$event1, $event2, $event3], $dispatcher->getEvents());
+    }
+
+    public function testGetEventClasses(): void
+    {
+        $dispatcher = $this->prepareDispatcher();
+
+        $dispatcher->dispatch(new stdClass());
+        $dispatcher->dispatch(new DateTimeImmutable());
+        $dispatcher->dispatch(new DateTime());
+
+        self::assertSame([
+            stdClass::class,
+            DateTimeImmutable::class,
+            DateTime::class,
+        ], $dispatcher->getEventClasses());
     }
 
     public function testGetEmptyEvents(): void
