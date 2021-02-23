@@ -1,6 +1,11 @@
 # Yii Test Support Change Log
 
 
+## 1.2.1 under development
+
+- no changes in this release.
+
+
 ## 1.2.0 February 23, 2021
 
 - Enh #24: Add `SimpleEventDispatcher::getEventClasses()` that return classes of dispatched events (vjik)
