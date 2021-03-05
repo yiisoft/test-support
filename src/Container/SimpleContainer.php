@@ -29,6 +29,7 @@ final class SimpleContainer implements ContainerInterface
 
     public function get($id)
     {
+        $this->checkIdType($id);
         if (!array_key_exists($id, $this->definitions)) {
             $this->definitions[$id] = ($this->factory)($id);
         }
@@ -37,6 +38,7 @@ final class SimpleContainer implements ContainerInterface
 
     public function has($id): bool
     {
+        $this->checkIdType($id);
         if (array_key_exists($id, $this->definitions)) {
             return true;
         }
@@ -46,5 +48,12 @@ final class SimpleContainer implements ContainerInterface
         } catch (Throwable $e) {
             return false;
         }
+    }
+
+    /**
+     * This method added only for best compatibility with behavior of psr/container >=1.1
+     */
+    private function checkIdType(string $id): void
+    {
     }
 }
