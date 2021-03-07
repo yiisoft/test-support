@@ -3,8 +3,7 @@
 
 ## 1.2.1 under development
 
-- no changes in this release.
-
+- Enh #26: Support PSR Container v2.0 (roxblnfk)
 
 ## 1.2.0 February 23, 2021
 
