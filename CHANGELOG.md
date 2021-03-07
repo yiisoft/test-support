@@ -1,7 +1,7 @@
 # Yii Test Support Change Log
 
 
-## 1.2.1 March 05, 2021
+## 1.2.1 under development
 
 - Enh #26: Support PSR Container v2.0 (roxblnfk)
 
