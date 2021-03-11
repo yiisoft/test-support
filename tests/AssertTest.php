@@ -10,7 +10,7 @@ use Yiisoft\Test\Support\Assert;
 
 final class AssertTest extends TestCase
 {
-    public function dataAssertEqualIgnoringLineEndings(): array
+    public function dataAssertEqualStringsIgnoringLineEndings(): array
     {
         return [
             'lf-crlf' => ["a\nb", "a\r\nb"],
@@ -26,14 +26,14 @@ final class AssertTest extends TestCase
     }
 
     /**
-     * @dataProvider dataAssertEqualIgnoringLineEndings
+     * @dataProvider dataAssertEqualStringsIgnoringLineEndings
      */
-    public function testAssertEqualIgnoringLineEndings(string $expected, string $actual): void
+    public function testAssertEqualStringsIgnoringLineEndings(string $expected, string $actual): void
     {
-        Assert::assertEqualIgnoringLineEndings($expected, $actual);
+        Assert::assertEqualStringsIgnoringLineEndings($expected, $actual);
     }
 
-    public function dataNotAssertEqualIgnoringLineEndings(): array
+    public function dataNotAssertEqualStringsIgnoringLineEndings(): array
     {
         return [
             ["a\nb", 'ab'],
@@ -43,12 +43,12 @@ final class AssertTest extends TestCase
     }
 
     /**
-     * @dataProvider dataNotAssertEqualIgnoringLineEndings
+     * @dataProvider dataNotAssertEqualStringsIgnoringLineEndings
      */
-    public function testNotAssertEqualIgnoringLineEndings(string $expected, string $actual): void
+    public function testNotAssertEqualStringsIgnoringLineEndings(string $expected, string $actual): void
     {
         $this->expectException(ExpectationFailedException::class);
-        Assert::assertEqualIgnoringLineEndings($expected, $actual);
+        Assert::assertEqualStringsIgnoringLineEndings($expected, $actual);
     }
 
     public function dataAssertStringContainsStringIgnoringLineEndings(): array

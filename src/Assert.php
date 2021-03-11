@@ -15,8 +15,11 @@ final class Assert
      * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
      * @throws ExpectationFailedException
      */
-    public static function assertEqualIgnoringLineEndings(string $expected, string $actual, string $message = ''): void
-    {
+    public static function assertEqualStringsIgnoringLineEndings(
+        string $expected,
+        string $actual,
+        string $message = ''
+    ): void {
         $expected = self::normalizeLineEndings($expected);
         $actual = self::normalizeLineEndings($actual);
 
