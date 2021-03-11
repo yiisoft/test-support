@@ -34,7 +34,7 @@ final class Assert
     ): void {
         $needle = self::normalizeLineEndings($needle);
         $haystack = self::normalizeLineEndings($haystack);
-        
+
         PhpUnitAssert::assertStringContainsString($needle, $haystack, $message);
     }
 
