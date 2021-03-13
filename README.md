@@ -26,7 +26,7 @@ The package is intended to simplify the process of testing application elements 
 The package could be installed with composer:
 
 ```shell
-composer require yiisoft/test-support --prefer-dist
+composer require yiisoft/test-support --dev --prefer-dist
 ```
 
 ## Documentation
