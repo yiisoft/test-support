@@ -1,9 +1,9 @@
 # Yii Test Support Change Log
 
 
-## 1.2.2 under development
+## 1.3.0 under development
 
-- no changes in this release.
+- Enh #29: Add `SimpleLogger` class, which is an implementation of `LoggerInterface` (devanych)
 
 ## 1.2.1 March 07, 2021
 

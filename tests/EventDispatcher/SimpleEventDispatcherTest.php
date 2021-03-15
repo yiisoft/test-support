@@ -15,7 +15,7 @@ use stdClass;
 use Yiisoft\Test\Support\EventDispatcher\SimpleEventDispatcher;
 use Yiisoft\Test\Support\Tests\EventDispatcher\Stub\StoppableEvent;
 
-class SimpleEventDispatcherTest extends TestCase
+final class SimpleEventDispatcherTest extends TestCase
 {
     public function testListeners(): void
     {

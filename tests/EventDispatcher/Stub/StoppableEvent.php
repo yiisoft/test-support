@@ -6,7 +6,7 @@ namespace Yiisoft\Test\Support\Tests\EventDispatcher\Stub;
 
 use Psr\EventDispatcher\StoppableEventInterface;
 
-class StoppableEvent implements StoppableEventInterface
+final class StoppableEvent implements StoppableEventInterface
 {
     private bool $propagationStopped;
 
