@@ -15,7 +15,33 @@ composer require yiisoft/test-support --dev
 
 ## Logger Interface [PSR-3](https://github.com/php-fig/log)
 
-Пакет предоставляет `SimpleLogger` в качестве
+Пакет предоставляет класс `SimpleLogger`, являющийся реализацией `LoggerInterface`.
+
+Экземпляр `SimpleLogger` сохраняет все логгируемые сообщения в массив, который уничтожается вместе с самим экземпляром.
+Для получения всех логгируемых сообщений используйте метод `getMessages()`.
+
+```php
+$logger = new Yiisoft\Test\Support\Log\SimpleLogger();
+
+$logger->emergency('Emergency message', ['key' => 'value']);
+$logger->alert('Alert message', ['key' => 'value']);
+$logger->critical('Critical message', ['key' => 'value']);
+$logger->error('Error message', ['key' => 'value']);
+$logger->warning('Warning message', ['key' => 'value']);
+$logger->notice('Notice message', ['key' => 'value']);
+$logger->info('Info message', ['key' => 'value']);
+$logger->debug('Debug message', ['key' => 'value']);
+
+$messages = $logger->getMessages();
+/*
+[
+    ...
+    ['level' => 'error', 'message' => 'Error message', 'context' => ['key' => 'value']];
+    ['level' => 'warning', 'message' => 'Warning message', 'context' => ['key' => 'value']];
+    ...
+];
+*/
+```
 
 ## Container Interface [PSR-11](https://github.com/php-fig/container)
 

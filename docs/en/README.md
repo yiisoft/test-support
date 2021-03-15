@@ -13,6 +13,36 @@ The preferred way to install this package is through [Composer](https://getcompo
 composer require yiisoft/test-support --dev
 ```
 
+## Logger Interface [PSR-3](https://github.com/php-fig/log)
+
+The package provides the `SimpleLogger` class, which is an implementation of `LoggerInterface`.
+
+The `SimpleLogger` instance stores all logged messages in an array, which is destroyed along with the instance itself.
+To get all logged messages, use the `getMessages()` method.
+
+```php
+$logger = new Yiisoft\Test\Support\Log\SimpleLogger();
+
+$logger->emergency('Emergency message', ['key' => 'value']);
+$logger->alert('Alert message', ['key' => 'value']);
+$logger->critical('Critical message', ['key' => 'value']);
+$logger->error('Error message', ['key' => 'value']);
+$logger->warning('Warning message', ['key' => 'value']);
+$logger->notice('Notice message', ['key' => 'value']);
+$logger->info('Info message', ['key' => 'value']);
+$logger->debug('Debug message', ['key' => 'value']);
+
+$messages = $logger->getMessages();
+/*
+[
+    ...
+    ['level' => 'error', 'message' => 'Error message', 'context' => ['key' => 'value']];
+    ['level' => 'warning', 'message' => 'Warning message', 'context' => ['key' => 'value']];
+    ...
+];
+*/
+```
+
 ## Container Interface [PSR-11](https://github.com/php-fig/container)
 
 The `SimpleContainer` is a simple dependency container accepting the definitions configuration as the constructor argument. Despite the simplicity, container is flexible: 2nd parameter of the constructor accepts a Closure.
