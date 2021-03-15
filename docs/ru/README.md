@@ -13,6 +13,10 @@
 composer require yiisoft/test-support --dev
 ```
 
+## Logger Interface [PSR-3](https://github.com/php-fig/log)
+
+Пакет предоставляет `SimpleLogger` в качестве
+
 ## Container Interface [PSR-11](https://github.com/php-fig/container)
 
 В качестве реализации `ContainerInterface` предлагается класс `SimpleContainer`.
