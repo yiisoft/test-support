@@ -38,6 +38,12 @@
             "Yiisoft\\Test\\Support\\Tests\\": "tests"
         }
     },
+    "provide": {
+        "psr/container-implementation": "1.0",
+        "psr/event-dispatcher-implementation": "1.0",
+        "psr/log-implementation": "1.0",
+        "psr/simple-cache-implementation": "1.0"
+    },
     "scripts": {
         "test": "phpunit --testdox --no-interaction",
         "test-watch": "phpunit-watcher watch"

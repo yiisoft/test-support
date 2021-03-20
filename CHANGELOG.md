@@ -3,7 +3,7 @@
 
 ## 1.3.1 under development
 
-- no changes in this release.
+- Bug #: Fix virtual packages were not provided (samdark)
 
 
 ## 1.3.0 March 15, 2021
