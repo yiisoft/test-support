@@ -1,10 +1,8 @@
 # Yii Test Support Change Log
 
-
 ## 1.3.1 under development
 
-- no changes in this release.
-
+- Enh #31: Add `SimpleContainer` as 2nd parameter in container factory closure (vjik) 
 
 ## 1.3.0 March 15, 2021
 

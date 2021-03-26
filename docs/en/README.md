@@ -53,7 +53,7 @@ use Yiisoft\Test\Support\Container\SimpleContainer;
 
 $container = new SimpleContainer(
     ['foo' => 'Foo'],
-    fn (string $id) => $id === 'bar' ? 'Bar' : 'Not found'
+    fn (string $id, SimpleContainer $container) => $id === 'bar' ? 'Bar' : 'Not found'
 );
 $foo = $container->get('foo'); // Foo
 $foo = $container->get('bar'); // Bar
