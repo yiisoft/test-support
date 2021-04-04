@@ -29,6 +29,13 @@ The package could be installed with composer:
 composer require yiisoft/test-support --dev --prefer-dist
 ```
 
+In case you need to satisfy PSR virtual packages (`*-implementation` requirements), add the following to `require-dev`
+as well:
+
+```shell
+"yiisoft/psr-dummy-provider": "1.0"
+```
+
 ## Documentation
 
 - [English](docs/en/README.md)
