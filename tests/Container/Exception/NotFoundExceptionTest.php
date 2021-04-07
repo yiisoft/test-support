@@ -16,7 +16,7 @@ final class NotFoundExceptionTest extends TestCase
         $exception = new NotFoundException(self::DEFAULT_ID);
 
         $this->assertSame(0, $exception->getCode());
-        $this->assertSame('No definition for ' . self::DEFAULT_ID . '.', $exception->getMessage());
+        $this->assertSame('No definition or class found for "' . self::DEFAULT_ID . '".', $exception->getMessage());
         $this->assertNull($exception->getPrevious());
     }
 

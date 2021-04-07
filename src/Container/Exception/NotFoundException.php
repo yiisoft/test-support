@@ -14,7 +14,7 @@ final class NotFoundException extends Exception implements NotFoundExceptionInte
     public function __construct(string $id)
     {
         $this->id = $id;
-        parent::__construct("No definition for {$id}.");
+        parent::__construct("No definition or class found for \"$id\".");
     }
 
     public function getId(): string
