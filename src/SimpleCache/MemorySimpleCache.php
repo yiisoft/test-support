@@ -33,7 +33,6 @@ final class MemorySimpleCache implements CacheInterface
     public function get($key, $default = null)
     {
         $this->validateKey($key);
-        /** @psalm-var string $key */
         if (array_key_exists($key, $this->cache) && !$this->isExpired($key)) {
             /** @psalm-var mixed $value */
             $value = $this->cache[$key][0];
@@ -50,7 +49,6 @@ final class MemorySimpleCache implements CacheInterface
     public function set($key, $value, $ttl = null): bool
     {
         $this->validateKey($key);
-        /** @psalm-var string $key */
         $expiration = $this->ttlToExpiration($ttl);
         if ($expiration < 0) {
             return $this->delete($key);
@@ -65,7 +63,6 @@ final class MemorySimpleCache implements CacheInterface
     public function delete($key): bool
     {
         $this->validateKey($key);
-        /** @psalm-var string $key */
         unset($this->cache[$key]);
         return $this->returnOnDelete;
     }

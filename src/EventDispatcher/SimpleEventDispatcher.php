@@ -12,7 +12,7 @@ use function get_class;
 
 final class SimpleEventDispatcher implements EventDispatcherInterface
 {
-    /** @var array<int, Closure> */
+    /** @var Closure[] */
     private array $listeners;
 
     /**
