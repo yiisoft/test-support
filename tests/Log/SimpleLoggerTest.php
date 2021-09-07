@@ -65,7 +65,7 @@ final class SimpleLoggerTest extends TestCase
             'closure' => [fn () => 1, Closure::class],
             'object' => [new stdClass(), stdClass::class],
             'stringable-object' => [
-                $stringableObject = new class() {
+                $stringableObject = new class () {
                     public function __toString(): string
                     {
                         return 'Stringable object';
