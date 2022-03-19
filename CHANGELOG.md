@@ -1,7 +1,8 @@
 # Yii Test Support Change Log
 
-## 1.4.0 under development
+## 2.0.0 under development
 
+- Chg #40: Catch only `NotFoundException` instead of `Throwable` in `SimpleContainer::has()` method (vjik)
 - Enh #40: Add custom callback for method `has()` of `SimpleContainer` (vjik)
 
 ## 1.3.0 March 15, 2021
