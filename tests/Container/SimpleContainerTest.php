@@ -57,6 +57,13 @@ final class SimpleContainerTest extends TestCase
         $this->assertSame('foo', $container->get('foo'));
     }
 
+    public function testHasWithCustomFactory(): void
+    {
+        $container = new SimpleContainer([], static fn (string $id) => $id);
+
+        $this->assertTrue($container->has('foo'));
+    }
+
     public function testHasFromCustomClosure(): void
     {
         $container = new SimpleContainer(

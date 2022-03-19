@@ -46,8 +46,13 @@ final class SimpleContainer implements ContainerInterface
             };
 
         $this->hasCallback = $hasCallback ??
-            static function (string $id): bool {
-                return false;
+            function (string $id): bool {
+                try {
+                    $this->get($id);
+                    return true;
+                } catch (NotFoundException $e) {
+                    return false;
+                }
             };
     }
 
