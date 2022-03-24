@@ -2,7 +2,7 @@
 
 ## 1.4.0 under development
 
-- Fix #40: Catch only `NotFoundException` instead of `Throwable` in `SimpleContainer::has()` method (vjik)
+- Bug #40: Catch only `NotFoundException` instead of `Throwable` in `SimpleContainer::has()` method (vjik)
 - Enh #40: Add custom callback for method `has()` of `SimpleContainer` (vjik)
 
 ## 1.3.0 March 15, 2021
