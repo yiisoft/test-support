@@ -182,7 +182,9 @@ final class MemorySimpleCache implements CacheInterface
     private function normalizeTtl($ttl): ?int
     {
         if ($ttl instanceof DateInterval) {
-            return (new DateTime('@0'))->add($ttl)->getTimestamp();
+            return (new DateTime('@0'))
+                ->add($ttl)
+                ->getTimestamp();
         }
 
         if (is_string($ttl)) {
