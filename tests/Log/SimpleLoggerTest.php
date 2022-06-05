@@ -113,6 +113,10 @@ final class SimpleLoggerTest extends TestCase
      */
     public function testPsrLogInterfaceMethods($message, string $expected): void
     {
+        if (PHP_VERSION_ID >= 80000) {
+            $this->markTestSkipped('Test is not supported in PHP >= 8.0');
+        }
+
         $levels = [
             LogLevel::EMERGENCY,
             LogLevel::ALERT,
