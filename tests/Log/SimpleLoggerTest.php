@@ -146,6 +146,9 @@ final class SimpleLoggerTest extends TestCase
 
     public function testLogWithResourceMessage(): void
     {
+        if (PHP_VERSION_ID >= 80000) {
+            $this->markTestSkipped('Test is not supported in PHP >= 8.0');
+        }
         $resource = fopen('php://memory', 'r');
         $this->logger->info($resource);
         $messages = $this->logger->getMessages();
