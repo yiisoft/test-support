@@ -1,8 +1,8 @@
 # Yii Test Support Change Log
 
-## 1.4.1 under development
+## 2.0.0 under development
 
-- Enh #43: Add support for `2.0`, `3.0` versions of `psr/log` (rustamwin)
+- Chg #43: Raise the minimum `psr/log` version to `^2.0|^3.0` and the minimum PHP version to 8.0 (@rustamwin)
 
 ## 1.4.0 March 24, 2022
 
