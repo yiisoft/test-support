@@ -4,16 +4,12 @@ declare(strict_types=1);
 
 namespace Yiisoft\Test\Support\Tests\Log;
 
-use Closure;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\InvalidArgumentException;
 use Psr\Log\LogLevel;
 use RuntimeException;
 use stdClass;
 use Yiisoft\Test\Support\Log\SimpleLogger;
-
-use function fclose;
-use function fopen;
 
 final class SimpleLoggerTest extends TestCase
 {
