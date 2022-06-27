@@ -9,6 +9,7 @@ use DateTime;
 use Psr\SimpleCache\CacheInterface;
 use Traversable;
 use Yiisoft\Test\Support\SimpleCache\Exception\InvalidArgumentException;
+
 use function array_key_exists;
 use function is_object;
 use function is_string;
@@ -30,7 +31,7 @@ final class MemorySimpleCache implements CacheInterface
         $this->setMultiple($cacheData);
     }
 
-    public function get($key, $default = null)
+    public function get(string $key, mixed $default = null): mixed
     {
         $this->validateKey($key);
         if (array_key_exists($key, $this->cache) && !$this->isExpired($key)) {
@@ -46,7 +47,7 @@ final class MemorySimpleCache implements CacheInterface
         return $default;
     }
 
-    public function set($key, $value, $ttl = null): bool
+    public function set(string $key, mixed $value, null|int|DateInterval $ttl = null): bool
     {
         $this->validateKey($key);
         $expiration = $this->ttlToExpiration($ttl);
@@ -60,7 +61,7 @@ final class MemorySimpleCache implements CacheInterface
         return $this->returnOnSet;
     }
 
-    public function delete($key): bool
+    public function delete(string $key): bool
     {
         $this->validateKey($key);
         unset($this->cache[$key]);
@@ -73,13 +74,7 @@ final class MemorySimpleCache implements CacheInterface
         return $this->returnOnClear;
     }
 
-    /**
-     * @param iterable $keys
-     * @param mixed $default
-     *
-     * @return mixed[]
-     */
-    public function getMultiple($keys, $default = null): iterable
+    public function getMultiple(iterable $keys, mixed $default = null): iterable
     {
         $keys = $this->iterableToArray($keys);
         $this->validateKeys($keys);
@@ -92,11 +87,7 @@ final class MemorySimpleCache implements CacheInterface
         return $result;
     }
 
-    /**
-     * @param iterable $values
-     * @param DateInterval|int|null $ttl
-     */
-    public function setMultiple($values, $ttl = null): bool
+    public function setMultiple(iterable $values, null|int|DateInterval $ttl = null): bool
     {
         $values = $this->iterableToArray($values);
         $this->validateKeysOfValues($values);
@@ -109,7 +100,7 @@ final class MemorySimpleCache implements CacheInterface
         return $this->returnOnSet;
     }
 
-    public function deleteMultiple($keys): bool
+    public function deleteMultiple(iterable $keys): bool
     {
         $keys = $this->iterableToArray($keys);
         $this->validateKeys($keys);
@@ -120,7 +111,7 @@ final class MemorySimpleCache implements CacheInterface
         return $this->returnOnDelete;
     }
 
-    public function has($key): bool
+    public function has(string $key): bool
     {
         $this->validateKey($key);
         /** @psalm-var string $key */

@@ -4,10 +4,14 @@ declare(strict_types=1);
 
 namespace Yiisoft\Test\Support\Tests\SimpleCache;
 
+use ArrayIterator;
 use DateInterval;
+use IteratorAggregate;
 use PHPUnit\Framework\TestCase;
 use Psr\SimpleCache\CacheInterface;
 use Psr\SimpleCache\InvalidArgumentException;
+use stdClass;
+
 use function is_object;
 
 abstract class BaseSimpleCacheTest extends TestCase
@@ -224,14 +228,14 @@ abstract class BaseSimpleCacheTest extends TestCase
             ],
             'ArrayIterator' => [
                 ['a' => 1, 'b' => 2,],
-                new \ArrayIterator(['a' => 1, 'b' => 2,]),
+                new ArrayIterator(['a' => 1, 'b' => 2,]),
             ],
             'IteratorAggregate' => [
                 ['a' => 1, 'b' => 2,],
-                new class () implements \IteratorAggregate {
-                    public function getIterator()
+                new class () implements IteratorAggregate {
+                    public function getIterator(): ArrayIterator
                     {
-                        return new \ArrayIterator(['a' => 1, 'b' => 2,]);
+                        return new ArrayIterator(['a' => 1, 'b' => 2,]);
                     }
                 },
             ],
@@ -257,58 +261,9 @@ abstract class BaseSimpleCacheTest extends TestCase
         $this->assertSame(['b' => 2], $cache->getMultiple(['b']));
     }
 
-    public function testGetInvalidKey(): void
-    {
-        $this->expectException(InvalidArgumentException::class);
-        $cache = $this->createCacheInstance();
-        $cache->get(1);
-    }
-
-    public function testSetInvalidKey(): void
-    {
-        $this->expectException(InvalidArgumentException::class);
-        $cache = $this->createCacheInstance();
-        $cache->set(1, 1);
-    }
-
-    public function testDeleteInvalidKey(): void
-    {
-        $this->expectException(InvalidArgumentException::class);
-        $cache = $this->createCacheInstance();
-        $cache->delete(1);
-    }
-
-    public function testGetMultipleInvalidKeysNotIterable(): void
-    {
-        $this->expectException(InvalidArgumentException::class);
-        $cache = $this->createCacheInstance();
-        $cache->getMultiple(1);
-    }
-
-    public function testSetMultipleInvalidKeysNotIterable(): void
-    {
-        $this->expectException(InvalidArgumentException::class);
-        $cache = $this->createCacheInstance();
-        $cache->setMultiple(1);
-    }
-
-    public function testDeleteMultipleInvalidKeysNotIterable(): void
-    {
-        $this->expectException(InvalidArgumentException::class);
-        $cache = $this->createCacheInstance();
-        $cache->deleteMultiple(1);
-    }
-
-    public function testHasInvalidKey(): void
-    {
-        $this->expectException(InvalidArgumentException::class);
-        $cache = $this->createCacheInstance();
-        $cache->has(1);
-    }
-
     public function dataProvider(): array
     {
-        $object = new \stdClass();
+        $object = new stdClass();
         $object->test_field = 'test_value';
         return [
             'integer' => ['test_integer', 1],
