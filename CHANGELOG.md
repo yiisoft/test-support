@@ -1,5 +1,9 @@
 # Yii Test Support Change Log
 
+## 3.0.1 under development
+
+- no changes in this release.
+
 ## 3.0.0 June 29, 2022
 
 - Chg #45: Update `psr/simple-cache` version to `^2.0|^3.0` (@vjik)
