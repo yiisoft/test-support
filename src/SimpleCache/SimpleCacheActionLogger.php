@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Yiisoft\Test\Support\SimpleCache;
 
+use DateInterval;
 use Psr\SimpleCache\CacheInterface;
 use Traversable;
-use Yiisoft\Test\Support\SimpleCache\Exception\InvalidArgumentException;
 
 /**
  * @template TCacheService as CacheInterface
@@ -19,9 +19,8 @@ final class SimpleCacheActionLogger implements CacheInterface
     private CacheInterface $cacheService;
 
     /**
-     * SimpleCacheActionLogger constructor.
+     * `SimpleCacheActionLogger` constructor.
      *
-     * @param array $cacheData
      * @param TCacheService $cacheService
      */
     public function __construct(CacheInterface $cacheService, array $cacheData = [])
@@ -31,19 +30,19 @@ final class SimpleCacheActionLogger implements CacheInterface
         $this->actions = [];
     }
 
-    public function get($key, $default = null)
+    public function get(string $key, mixed $default = null): mixed
     {
         $this->actions[] = Action::createGetAction($key);
         return $this->cacheService->get($key, $default);
     }
 
-    public function delete($key): bool
+    public function delete(string $key): bool
     {
         $this->actions[] = Action::createDeleteAction($key);
         return $this->cacheService->delete($key);
     }
 
-    public function has($key): bool
+    public function has(string $key): bool
     {
         $this->actions[] = Action::createHasAction($key);
         return $this->cacheService->has($key);
@@ -55,23 +54,23 @@ final class SimpleCacheActionLogger implements CacheInterface
         return $this->cacheService->clear();
     }
 
-    public function set($key, $value, $ttl = null): bool
+    public function set(string $key, mixed $value, null|int|DateInterval $ttl = null): bool
     {
         $this->actions[] = Action::createSetAction($key, $value, $ttl);
         return $this->cacheService->set($key, $value, $ttl);
     }
 
-    public function getMultiple($keys, $default = null): iterable
+    public function getMultiple(iterable $keys, mixed $default = null): iterable
     {
         $keys = $this->iterableToArray($keys);
-        /** @psalm-var mixed $key */
+        /** @var mixed $key */
         foreach ($keys as $key) {
             $this->actions[] = Action::createGetAction($key);
         }
         return $this->cacheService->getMultiple($keys, $default);
     }
 
-    public function setMultiple($values, $ttl = null): bool
+    public function setMultiple(iterable $values, null|int|DateInterval $ttl = null): bool
     {
         $values = $this->iterableToArray($values);
         /** @psalm-var mixed $value */
@@ -81,10 +80,10 @@ final class SimpleCacheActionLogger implements CacheInterface
         return $this->cacheService->setMultiple($values, $ttl);
     }
 
-    public function deleteMultiple($keys): bool
+    public function deleteMultiple(iterable $keys): bool
     {
         $keys = $this->iterableToArray($keys);
-        /** @psalm-var mixed $key */
+        /** @var mixed $key */
         foreach ($keys as $key) {
             $this->actions[] = Action::createDeleteAction($key);
         }
@@ -120,15 +119,14 @@ final class SimpleCacheActionLogger implements CacheInterface
     }
 
     /**
-     * @param mixed $iterable
+     * Converts iterable to array.
      *
-     * Converts iterable to array. If provided value is not iterable it throws an InvalidArgumentException
+     * @psalm-template T
+     * @psalm-param iterable<T> $iterable
+     * @psalm-return array<array-key,T>
      */
-    private function iterableToArray($iterable): array
+    private function iterableToArray(iterable $iterable): array
     {
-        if (!is_iterable($iterable)) {
-            throw new InvalidArgumentException(sprintf('Iterable is expected, got %s.', gettype($iterable)));
-        }
         return $iterable instanceof Traversable ? iterator_to_array($iterable) : $iterable;
     }
 }
