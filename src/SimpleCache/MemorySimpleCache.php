@@ -142,13 +142,9 @@ final class MemorySimpleCache implements CacheInterface
     }
 
     /**
-     * Converts TTL to expiration
-     *
-     * @param DateInterval|int|null $ttl
-     *
-     * @return int
+     * Converts TTL to expiration.
      */
-    private function ttlToExpiration($ttl): int
+    private function ttlToExpiration(null|int|DateInterval $ttl): int
     {
         $ttl = $this->normalizeTtl($ttl);
 
@@ -166,11 +162,11 @@ final class MemorySimpleCache implements CacheInterface
     /**
      * Normalizes cache TTL handling strings and {@see DateInterval} objects.
      *
-     * @param DateInterval|int|string|null $ttl raw TTL.
+     * @param DateInterval|int|null $ttl Raw TTL.
      *
-     * @return int|null TTL value as UNIX timestamp or null meaning infinity
+     * @return int|null TTL value as UNIX timestamp or null meaning infinity.
      */
-    private function normalizeTtl($ttl): ?int
+    private function normalizeTtl(null|int|DateInterval $ttl): ?int
     {
         if ($ttl instanceof DateInterval) {
             return (new DateTime('@0'))
@@ -178,30 +174,18 @@ final class MemorySimpleCache implements CacheInterface
                 ->getTimestamp();
         }
 
-        if (is_string($ttl)) {
-            return (int)$ttl;
-        }
-
         return $ttl;
     }
 
     /**
-     * @param mixed $iterable
-     *
-     * Converts iterable to array. If provided value is not iterable it throws an InvalidArgumentException
+     * Converts iterable to array.
      */
-    private function iterableToArray($iterable): array
+    private function iterableToArray(iterable $iterable): array
     {
-        if (!is_iterable($iterable)) {
-            throw new InvalidArgumentException(sprintf('Iterable is expected, got %s.', gettype($iterable)));
-        }
         return $iterable instanceof Traversable ? iterator_to_array($iterable) : $iterable;
     }
 
-    /**
-     * @param mixed $key
-     */
-    private function validateKey($key): void
+    private function validateKey(mixed $key): void
     {
         if (!is_string($key) || $key === '' || strpbrk($key, '{}()/\@:')) {
             throw new InvalidArgumentException('Invalid key value.');
