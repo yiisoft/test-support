@@ -8,8 +8,6 @@ use Closure;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\EventDispatcher\StoppableEventInterface;
 
-use function get_class;
-
 final class SimpleEventDispatcher implements EventDispatcherInterface
 {
     /** @var Closure[] */
