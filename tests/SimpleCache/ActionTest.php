@@ -21,10 +21,8 @@ final class ActionTest extends TestCase
 
     /**
      * @dataProvider mixedValueProvider
-     *
-     * @param mixed $mixed
      */
-    public function testCreateGetAction($mixed): void
+    public function testCreateGetAction(mixed $mixed): void
     {
         $action = Action::createGetAction($mixed);
 
@@ -34,10 +32,8 @@ final class ActionTest extends TestCase
 
     /**
      * @dataProvider mixedValueProvider
-     *
-     * @param mixed $mixed
      */
-    public function testCreateHasAction($mixed): void
+    public function testCreateHasAction(mixed $mixed): void
     {
         $action = Action::createHasAction($mixed);
 
@@ -47,10 +43,8 @@ final class ActionTest extends TestCase
 
     /**
      * @dataProvider mixedValueProvider
-     *
-     * @param mixed $mixed
      */
-    public function testCreateSetAction($mixed): void
+    public function testCreateSetAction(mixed $mixed): void
     {
         $action = Action::createSetAction($mixed, $mixed, $mixed);
 
@@ -71,10 +65,8 @@ final class ActionTest extends TestCase
 
     /**
      * @dataProvider mixedValueProvider
-     *
-     * @param mixed $mixed
      */
-    public function testCreateDeleteAction($mixed): void
+    public function testCreateDeleteAction(mixed $mixed): void
     {
         $action = Action::createDeleteAction($mixed);
 

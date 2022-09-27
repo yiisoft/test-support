@@ -64,10 +64,8 @@ final class SimpleLoggerTest extends TestCase
 
     /**
      * @dataProvider invalidMessageLevelProvider
-     *
-     * @param mixed $level
      */
-    public function testGetLevelNameThrowExceptionForInvalidMessageLevel($level): void
+    public function testGetLevelNameThrowExceptionForInvalidMessageLevel(mixed $level): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->logger->log($level, 'message');
@@ -96,10 +94,6 @@ final class SimpleLoggerTest extends TestCase
 
     /**
      * @dataProvider parseMessageProvider
-     *
-     * @param string $message
-     * @param array $context
-     * @param string $expected
      */
     public function testParseMessage(string $message, array $context, string $expected): void
     {

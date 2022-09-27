@@ -12,8 +12,6 @@ use function array_key_exists;
 
 final class SimpleContainer implements ContainerInterface
 {
-    private array $definitions;
-
     /**
      * @psalm-var Closure(string)
      */
@@ -25,7 +23,6 @@ final class SimpleContainer implements ContainerInterface
     private Closure $hasCallback;
 
     /**
-     * @param array $definitions
      * @param Closure|null $factory Should be closure that works like ContainerInterface::get(string $id): mixed
      * @param Closure|null $hasCallback Should be closure that works like ContainerInterface::has(string $id): bool
      *
@@ -33,12 +30,10 @@ final class SimpleContainer implements ContainerInterface
      * @psalm-param Closure(string):bool $hasCallback
      */
     public function __construct(
-        array $definitions = [],
+        private array $definitions = [],
         ?Closure $factory = null,
         ?Closure $hasCallback = null
     ) {
-        $this->definitions = $definitions;
-
         $this->factory = $factory ??
             /** @return mixed */
             static function (string $id) {
@@ -50,7 +45,7 @@ final class SimpleContainer implements ContainerInterface
                 try {
                     $this->get($id);
                     return true;
-                } catch (NotFoundException $e) {
+                } catch (NotFoundException) {
                     return false;
                 }
             };

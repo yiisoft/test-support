@@ -70,7 +70,7 @@ final class SimpleEventDispatcher implements EventDispatcherInterface
 
     public function isClassTriggered(string $class, int $times = null): bool
     {
-        return $this->processBoolResult(static fn (object $event): bool => get_class($event) === $class, $times);
+        return $this->processBoolResult(static fn (object $event): bool => $event::class === $class, $times);
     }
 
     public function isInstanceOfTriggered(string $class, int $times = null): bool

@@ -9,11 +9,8 @@ use Psr\Container\NotFoundExceptionInterface;
 
 final class NotFoundException extends Exception implements NotFoundExceptionInterface
 {
-    private string $id;
-
-    public function __construct(string $id)
+    public function __construct(private string $id)
     {
-        $this->id = $id;
         parent::__construct("No definition or class found for \"$id\".");
     }
 
