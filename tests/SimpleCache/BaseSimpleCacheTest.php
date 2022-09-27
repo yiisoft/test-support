@@ -110,11 +110,8 @@ abstract class BaseSimpleCacheTest extends TestCase
 
     /**
      * @dataProvider dataProvider
-     *
-     * @param scalar $key
-     * @param mixed $value
      */
-    public function testClear($key, $value): void
+    public function testClear(bool|string|int|float $key, mixed $value): void
     {
         $cache = $this->createCacheInstance();
         $this->prepare($cache);
@@ -226,11 +223,11 @@ abstract class BaseSimpleCacheTest extends TestCase
                 ['a' => 1, 'b' => 2,],
                 ['a' => 1, 'b' => 2,],
             ],
-            'ArrayIterator' => [
+            \ArrayIterator::class => [
                 ['a' => 1, 'b' => 2,],
                 new ArrayIterator(['a' => 1, 'b' => 2,]),
             ],
-            'IteratorAggregate' => [
+            \IteratorAggregate::class => [
                 ['a' => 1, 'b' => 2,],
                 new class () implements IteratorAggregate {
                     public function getIterator(): ArrayIterator
@@ -296,10 +293,8 @@ abstract class BaseSimpleCacheTest extends TestCase
 
     /**
      * @dataProvider incorrectKeyProvider
-     *
-     * @param mixed $key
      */
-    public function testSetMethodKeyChecking($key): void
+    public function testSetMethodKeyChecking(mixed $key): void
     {
         $cache = $this->createCacheInstance();
 
@@ -310,10 +305,8 @@ abstract class BaseSimpleCacheTest extends TestCase
 
     /**
      * @dataProvider incorrectKeyProvider
-     *
-     * @param mixed $key
      */
-    public function testGetMethodKeyChecking($key): void
+    public function testGetMethodKeyChecking(mixed $key): void
     {
         $cache = $this->createCacheInstance();
 
@@ -324,10 +317,8 @@ abstract class BaseSimpleCacheTest extends TestCase
 
     /**
      * @dataProvider incorrectKeyProvider
-     *
-     * @param mixed $key
      */
-    public function testHasMethodKeyChecking($key): void
+    public function testHasMethodKeyChecking(mixed $key): void
     {
         $cache = $this->createCacheInstance();
 
@@ -338,10 +329,8 @@ abstract class BaseSimpleCacheTest extends TestCase
 
     /**
      * @dataProvider incorrectKeyProvider
-     *
-     * @param mixed $key
      */
-    public function testDeleteMethodKeyChecking($key): void
+    public function testDeleteMethodKeyChecking(mixed $key): void
     {
         $cache = $this->createCacheInstance();
 
@@ -352,10 +341,8 @@ abstract class BaseSimpleCacheTest extends TestCase
 
     /**
      * @dataProvider incorrectKeyProvider
-     *
-     * @param mixed $key
      */
-    public function testSetMultipleMethodKeyChecking($key): void
+    public function testSetMultipleMethodKeyChecking(mixed $key): void
     {
         $cache = $this->createCacheInstance();
 
@@ -370,10 +357,8 @@ abstract class BaseSimpleCacheTest extends TestCase
 
     /**
      * @dataProvider incorrectKeyProvider
-     *
-     * @param mixed $key
      */
-    public function testGetMultipleMethodKeyChecking($key): void
+    public function testGetMultipleMethodKeyChecking(mixed $key): void
     {
         $cache = $this->createCacheInstance();
 
@@ -384,10 +369,8 @@ abstract class BaseSimpleCacheTest extends TestCase
 
     /**
      * @dataProvider incorrectKeyProvider
-     *
-     * @param mixed $key
      */
-    public function testDeleteMultipleMethodKeyChecking($key): void
+    public function testDeleteMultipleMethodKeyChecking(mixed $key): void
     {
         $cache = $this->createCacheInstance();
         $cache->set('normal-key', 'normal-value');
