@@ -8,11 +8,8 @@ use Psr\EventDispatcher\StoppableEventInterface;
 
 final class StoppableEvent implements StoppableEventInterface
 {
-    private bool $propagationStopped;
-
-    public function __construct(bool $propagationStopped = false)
+    public function __construct(private bool $propagationStopped = false)
     {
-        $this->propagationStopped = $propagationStopped;
     }
 
     public function setPropagationStopped(bool $value): void

@@ -14,20 +14,16 @@ use Traversable;
 final class SimpleCacheActionLogger implements CacheInterface
 {
     /** @var Action[] */
-    private array $actions;
-    /** @var TCacheService */
-    private CacheInterface $cacheService;
+    private array $actions = [];
 
     /**
      * `SimpleCacheActionLogger` constructor.
      *
      * @param TCacheService $cacheService
      */
-    public function __construct(CacheInterface $cacheService, array $cacheData = [])
+    public function __construct(private CacheInterface $cacheService, array $cacheData = [])
     {
-        $this->cacheService = $cacheService;
         $this->cacheService->setMultiple($cacheData);
-        $this->actions = [];
     }
 
     public function get(string $key, mixed $default = null): mixed

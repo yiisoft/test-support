@@ -18,27 +18,14 @@ final class Action
     public const CLEAR = 'clear';
     public const HAS = 'has';
 
-    /** @var TAction */
-    private string $action;
-    /** @var TKey */
-    private $key;
-    /** @var TValue */
-    private $value;
-    /** @var TTtl */
-    private $ttl;
-
     /**
      * @param TAction $action
      * @param TKey $key
      * @param TValue $value
      * @param TTtl $ttl
      */
-    private function __construct(string $action, $key = null, $value = null, $ttl = null)
+    private function __construct(private string $action, private $key = null, private $value = null, private $ttl = null)
     {
-        $this->action = $action;
-        $this->key = $key;
-        $this->value = $value;
-        $this->ttl = $ttl;
     }
 
     /**
@@ -73,36 +60,22 @@ final class Action
         return $this->ttl;
     }
 
-    /**
-     * @param mixed $key
-     */
-    public static function createGetAction($key): self
+    public static function createGetAction(mixed $key): self
     {
         return new self(self::GET, $key);
     }
 
-    /**
-     * @param mixed $key
-     */
-    public static function createHasAction($key): self
+    public static function createHasAction(mixed $key): self
     {
         return new self(self::HAS, $key);
     }
 
-    /**
-     * @param mixed $key
-     * @param mixed $value
-     * @param mixed $ttl
-     */
-    public static function createSetAction($key, $value, $ttl): self
+    public static function createSetAction(mixed $key, mixed $value, mixed $ttl): self
     {
         return new self(self::SET, $key, $value, $ttl);
     }
 
-    /**
-     * @param mixed $key
-     */
-    public static function createDeleteAction($key): self
+    public static function createDeleteAction(mixed $key): self
     {
         return new self(self::DELETE, $key);
     }
