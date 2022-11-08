@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Yiisoft\Test\Support\EventDispatcher;
 
 use Closure;
+use InvalidArgumentException;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\EventDispatcher\StoppableEventInterface;
 
@@ -79,7 +80,7 @@ final class SimpleEventDispatcher implements EventDispatcherInterface
     private function processBoolResult(Closure $closure, ?int $times): bool
     {
         if ($times < 0) {
-            throw new \InvalidArgumentException('The $times argument cannot be less than zero.');
+            throw new InvalidArgumentException('The $times argument cannot be less than zero.');
         }
         if ($times === null) {
             return $this->hasEvent($closure);
