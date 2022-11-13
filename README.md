@@ -26,7 +26,7 @@ The package is intended to simplify the process of testing application elements 
 The package could be installed with composer:
 
 ```shell
-composer require yiisoft/test-support --dev --prefer-dist
+composer require yiisoft/test-support --dev
 ```
 
 In case you need to satisfy PSR virtual packages (`*-implementation` requirements), add the following to `require-dev`

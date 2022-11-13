@@ -21,8 +21,10 @@ final class SimpleCacheActionLogger implements CacheInterface
      *
      * @param TCacheService $cacheService
      */
-    public function __construct(private CacheInterface $cacheService, array $cacheData = [])
-    {
+    public function __construct(
+        private CacheInterface $cacheService,
+        array $cacheData = []
+    ) {
         $this->cacheService->setMultiple($cacheData);
     }
 

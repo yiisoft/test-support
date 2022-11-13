@@ -24,8 +24,12 @@ final class Action
      * @param TValue $value
      * @param TTtl $ttl
      */
-    private function __construct(private string $action, private $key = null, private $value = null, private $ttl = null)
-    {
+    private function __construct(
+        private string $action,
+        private mixed $key = null,
+        private mixed $value = null,
+        private mixed $ttl = null
+    ) {
     }
 
     /**
