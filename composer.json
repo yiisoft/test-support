@@ -4,7 +4,7 @@
     "description": "Supporting tools for testing",
     "keywords": [
         "yii",
-        "tests"
+        "testing"
     ],
     "homepage": "https://www.yiiframework.com/",
     "license": "BSD-3-Clause",
