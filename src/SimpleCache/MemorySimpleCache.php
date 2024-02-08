@@ -35,7 +35,6 @@ final class MemorySimpleCache implements CacheInterface
     {
         $this->validateKey($key);
         if (array_key_exists($key, $this->cache) && !$this->isExpired($key)) {
-            /** @psalm-var mixed $value */
             $value = $this->cache[$key][0];
             if (is_object($value)) {
                 $value = clone $value;
@@ -81,7 +80,6 @@ final class MemorySimpleCache implements CacheInterface
         /** @psalm-var string[] $keys */
         $result = [];
         foreach ($keys as $key) {
-            /** @psalm-var mixed */
             $result[$key] = $this->get($key, $default);
         }
         return $result;
@@ -91,9 +89,6 @@ final class MemorySimpleCache implements CacheInterface
     {
         $values = $this->iterableToArray($values);
         $this->validateKeysOfValues($values);
-        /**
-         * @psalm-var mixed $value
-         */
         foreach ($values as $key => $value) {
             $this->set((string) $key, $value, $ttl);
         }
@@ -127,7 +122,6 @@ final class MemorySimpleCache implements CacheInterface
     {
         $result = [];
         foreach ($this->cache as $key => $value) {
-            /** @psalm-var mixed */
             $result[$key] = $value[0];
         }
         return $result;
@@ -197,7 +191,6 @@ final class MemorySimpleCache implements CacheInterface
      */
     private function validateKeys(array $keys): void
     {
-        /** @psalm-var mixed $key */
         foreach ($keys as $key) {
             $this->validateKey($key);
         }

@@ -61,7 +61,6 @@ final class SimpleCacheActionLogger implements CacheInterface
     public function getMultiple(iterable $keys, mixed $default = null): iterable
     {
         $keys = $this->iterableToArray($keys);
-        /** @var mixed $key */
         foreach ($keys as $key) {
             $this->actions[] = Action::createGetAction($key);
         }
@@ -71,7 +70,6 @@ final class SimpleCacheActionLogger implements CacheInterface
     public function setMultiple(iterable $values, null|int|DateInterval $ttl = null): bool
     {
         $values = $this->iterableToArray($values);
-        /** @psalm-var mixed $value */
         foreach ($values as $key => $value) {
             $this->actions[] = Action::createSetAction($key, $value, $ttl);
         }
@@ -81,7 +79,6 @@ final class SimpleCacheActionLogger implements CacheInterface
     public function deleteMultiple(iterable $keys): bool
     {
         $keys = $this->iterableToArray($keys);
-        /** @var mixed $key */
         foreach ($keys as $key) {
             $this->actions[] = Action::createDeleteAction($key);
         }
