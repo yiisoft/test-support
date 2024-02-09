@@ -2,7 +2,7 @@
 
 ## 3.0.1 under development
 
-- no changes in this release.
+- Enh #70: Add "testing" keyword to composer.json for suggest package to require-dev section (@samdark)
 
 ## 3.0.0 June 29, 2022
 
