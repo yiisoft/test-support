@@ -8,7 +8,7 @@ O pacote Test Support fornece implementações prontas para uso de algumas inter
 
 A forma preferida de instalar este pacote é através do [Composer](https://getcomposer.org/download/):
 
-```bash
+```shell
 composer require yiisoft/test-support --dev
 ```
 

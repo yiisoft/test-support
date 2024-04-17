@@ -8,7 +8,7 @@ Test Support package provides ready-to-use implementations of some PSR interface
 
 The preferred way to install this package is through [Composer](https://getcomposer.org/download/):
 
-```bash
+```shell
 composer require yiisoft/test-support --dev
 ```
 
