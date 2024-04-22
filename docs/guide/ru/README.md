@@ -9,7 +9,7 @@
 
 Предпочтительнее установить этот пакет через [Composer](https://getcomposer.org/download/):
 
-```bash
+```shell
 composer require yiisoft/test-support --dev
 ```
 

@@ -4,12 +4,11 @@ Some components of the application codebase rely on services implementing [PSR-i
 To test such components, the developer often has to write his own tests-sepcific versions of similar PSR implementations.
 Test Support package provides ready-to-use implementations of some PSR interfaces, intended solely to help testing your code.
 
-
 ## Installation
 
 The preferred way to install this package is through [Composer](https://getcomposer.org/download/):
 
-```bash
+```shell
 composer require yiisoft/test-support --dev
 ```
 
@@ -62,7 +61,7 @@ $baz = $container->get('baz'); // Not found
 
 ## Event Dispatcher [PSR-14](https://github.com/php-fig/event-dispatcher)
 
-The `SimpleEventDispatcher` is a test-specific event dispatcher. You can pass any number of closure-listeners to its  constructor. SimpleEventDispatcher` does not contain any complex logic for matching an event to a listener. Every listener should decide by itself if it processes an event or not. The dispatcher is PSR-compliant and works with `StoppableEventInterface`.
+The `SimpleEventDispatcher` is a test-specific event dispatcher. You can pass any number of closure-listeners to its  constructor. `SimpleEventDispatcher` does not contain any complex logic for matching an event to a listener. Every listener should decide by itself if it processes an event or not. The dispatcher is PSR-compliant and works with `StoppableEventInterface`.
 
 You can test for events sent to `SimpleEventDispatcher` using the following methods:
 
@@ -76,7 +75,7 @@ You can test for events sent to `SimpleEventDispatcher` using the following meth
 
 The `SimpleCacheInterface` interface is implemented by two classes:
 
-1. `MemorySimpleCache`, which works similarly to `ArrayCache` from a 
+1. `MemorySimpleCache`, which works similarly to `ArrayCache` from a
 [yiisoft/cache](https://github.com/yiisoft/cache) package, and
 
 2. `SimpleCacheActionLogger`. It stores all commands, sent to `SimpleCacheInterface`.
@@ -85,13 +84,13 @@ The `SimpleCacheInterface` interface is implemented by two classes:
 
 The `MemorySimpleCache` class does not use external storage to store cached values.
 Values are stored in the array property of the object itself and will be destroyed along with the object.
-Use `MemorySimpleCache` in the simple cases when you do not need to keep track of the history of cache access. 
+Use `MemorySimpleCache` in the simple cases when you do not need to keep track of the history of cache access.
 
 You can simulate cache errors by setting public properties `returnOnSet`, `returnOnDelete` and `returnOnClear`. These define values returned by the corresponding methods of the `SimpleCacheInterface`.
- 
+
 ### SimpleCacheActionLogger
 
-The `SimpleCacheActionLogger` class is a decorator for `SimpleCacheInterface`. It remembers all cache calls even if they are invalid such as when the key contains invalid characters, or is not a string at all. 
+The `SimpleCacheActionLogger` class is a decorator for `SimpleCacheInterface`. It remembers all cache calls even if they are invalid such as when the key contains invalid characters, or is not a string at all.
 
 Use the decorator when it is not enough to test the cache state before and after code execution.
 For example, when the testing service is supposed to resend the value to the cache after the first failed attempt.
