@@ -4,14 +4,6 @@ Some components of the application codebase rely on services implementing [PSR-i
 To test such components, the developer often has to write his own tests-sepcific versions of similar PSR implementations.
 Test Support package provides ready-to-use implementations of some PSR interfaces, intended solely to help testing your code.
 
-## Installation
-
-The preferred way to install this package is through [Composer](https://getcomposer.org/download/):
-
-```shell
-composer require yiisoft/test-support --dev
-```
-
 ## Logger Interface [PSR-3](https://github.com/php-fig/log)
 
 The package provides the `SimpleLogger` class, which is an implementation of `LoggerInterface`.
