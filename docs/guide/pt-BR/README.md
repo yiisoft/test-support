@@ -1,16 +1,8 @@
-# Pacote de suporte de teste
+# Test Support
 
 Alguns componentes da base de código do aplicativo dependem de serviços que implementam [interfaces PSR](https://www.php-fig.org/psr/).
 Para testar esses componentes, o desenvolvedor geralmente precisa escrever suas próprias versões específicas de testes de implementação PSR semelhantes.
 O pacote Test Support fornece implementações prontas para uso de algumas interfaces PSR, destinadas exclusivamente a ajudar a testar seu código.
-
-## Instalação
-
-A forma preferida de instalar este pacote é através do [Composer](https://getcomposer.org/download/):
-
-```shell
-composer require yiisoft/test-support --dev
-```
 
 ## Interface do Logger [PSR-3](https://github.com/php-fig/log)
 

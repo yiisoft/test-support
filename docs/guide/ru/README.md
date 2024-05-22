@@ -5,14 +5,6 @@
 однотипные реализации PSR в тестовой среде.
 Пакет Test Support предоставляет готовые реализации некоторых PSR интерфейсов, предназначенные исключительно для помощи в тестировании вашего кода.
 
-## Установка
-
-Предпочтительнее установить этот пакет через [Composer](https://getcomposer.org/download/):
-
-```shell
-composer require yiisoft/test-support --dev
-```
-
 ## Logger Interface [PSR-3](https://github.com/php-fig/log)
 
 Пакет предоставляет класс `SimpleLogger`, являющийся реализацией `LoggerInterface`.
