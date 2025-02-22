@@ -2,7 +2,8 @@
 
 ## 3.0.2 under development
 
-- no changes in this release.
+- Chg #76: Change PHP constraint in `composer.json` to `~8.0.0 || ~8.1.0 || ~8.2.0 || ~8.3.0 || ~8.4.0` (@vjik)
+- Bug #76: Explicitly mark nullable parameters (@vjik)
 
 ## 3.0.1 February 09, 2024
 
