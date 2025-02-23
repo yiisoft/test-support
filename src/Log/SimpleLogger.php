@@ -95,6 +95,10 @@ final class SimpleLogger implements LoggerInterface
      */
     private function parseMessage(string $message, array $context): string
     {
+        /**
+         * @var string We use correct regular expression, so we expect that `preg_replace_callback` always returns
+         * string.
+         */
         return preg_replace_callback('/{([\w.]+)}/', static function (array $matches) use ($context) {
             $placeholderName = $matches[1];
 
