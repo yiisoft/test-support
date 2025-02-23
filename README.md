@@ -6,13 +6,13 @@
     <br>
 </p>
 
-[![Latest Stable Version](https://poser.pugx.org/yiisoft/test-support/v/stable.png)](https://packagist.org/packages/yiisoft/test-support)
-[![Total Downloads](https://poser.pugx.org/yiisoft/test-support/downloads.png)](https://packagist.org/packages/yiisoft/test-support)
-[![Build status](https://github.com/yiisoft/test-support/workflows/build/badge.svg)](https://github.com/yiisoft/test-support/actions?query=workflow%3Abuild)
+[![Latest Stable Version](https://poser.pugx.org/yiisoft/test-support/v)](https://packagist.org/packages/yiisoft/test-support)
+[![Total Downloads](https://poser.pugx.org/yiisoft/test-support/downloads)](https://packagist.org/packages/yiisoft/test-support)
+[![Build status](https://github.com/yiisoft/test-support/actions/workflows/build.yml/badge.svg)](https://github.com/yiisoft/test-support/actions/workflows/build.yml)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/yiisoft/test-support/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/yiisoft/test-support/?branch=master)
 [![Code Coverage](https://scrutinizer-ci.com/g/yiisoft/test-support/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/yiisoft/test-support/?branch=master)
 [![Mutation testing badge](https://img.shields.io/endpoint?style=flat&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2Fyiisoft%2Ftest-support%2Fmaster)](https://dashboard.stryker-mutator.io/reports/github.com/yiisoft/test-support/master)
-[![static analysis](https://github.com/yiisoft/test-support/workflows/static%20analysis/badge.svg)](https://github.com/yiisoft/test-support/actions?query=workflow%3A%22static+analysis%22)
+[![Static analysis](https://github.com/yiisoft/test-support/actions/workflows/static.yml/badge.svg?branch=master)](https://github.com/yiisoft/test-support/actions/workflows/static.yml?query=branch%3Amaster)
 [![type-coverage](https://shepherd.dev/github/yiisoft/test-support/coverage.svg)](https://shepherd.dev/github/yiisoft/test-support)
 
 The package is intended to simplify the process of testing application elements that depend on PSR interfaces.
