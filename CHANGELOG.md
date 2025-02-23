@@ -1,5 +1,9 @@
 # Yii Test Support Change Log
 
+## 3.0.3 under development
+
+- no changes in this release.
+
 ## 3.0.2 February 23, 2025
 
 - Chg #76: Change PHP constraint in `composer.json` to `~8.0.0 || ~8.1.0 || ~8.2.0 || ~8.3.0 || ~8.4.0` (@vjik)
