@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Yiisoft\Test\Support\Tests\Clock;
 
 use DateTimeImmutable;
