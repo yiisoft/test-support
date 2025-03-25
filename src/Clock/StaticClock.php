@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Yiisoft\Test\Support\Clock;
 
 use DateTimeImmutable;
@@ -7,7 +9,6 @@ use Psr\Clock\ClockInterface;
 
 final class StaticClock implements ClockInterface
 {
-
     public function __construct(
         private DateTimeImmutable $now,
     ) {
