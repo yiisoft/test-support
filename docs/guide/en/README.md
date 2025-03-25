@@ -53,7 +53,7 @@ $baz = $container->get('baz'); // Not found
 
 ## Event Dispatcher [PSR-14](https://github.com/php-fig/event-dispatcher)
 
-The `SimpleEventDispatcher` is a test-specific event dispatcher. You can pass any number of closure-listeners to its  constructor. `SimpleEventDispatcher` does not contain any complex logic for matching an event to a listener. Every listener should decide by itself if it processes an event or not. The dispatcher is PSR-compliant and works with `StoppableEventInterface`.
+The `SimpleEventDispatcher` is a test-specific event dispatcher. You can pass any number of closure-listeners to its constructor. `SimpleEventDispatcher` does not contain any complex logic for matching an event to a listener. Every listener should decide by itself if it processes an event or not. The dispatcher is PSR-compliant and works with `StoppableEventInterface`.
 
 You can test for events sent to `SimpleEventDispatcher` using the following methods:
 
@@ -104,4 +104,19 @@ $myService->trySetAction('key', 'value'); // Service tries to cache value 3 time
     [SimpleCache\Action::SET, 'key'],
     [SimpleCache\Action::SET, 'key'],
 ], $cacheLogger->getActionKeyList()); // true. Logger registers 3 tries to set cache
+```
+
+## Static clock [PSR-20](https://www.php-fig.org/psr/psr-20/)
+
+The static clock does not change after being created:
+
+```php
+use Yiisoft\Test\Support\Clock\StaticClock;
+
+$clock = new StaticClock(new DateTimeImmutable());
+echo $clock->now();
+
+sleep(10);
+
+echo $clock->now(); // Same value as above.
 ```

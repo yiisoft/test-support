@@ -2,7 +2,7 @@
 
 ## 3.0.3 under development
 
-- no changes in this release.
+- New #80: Add PSR-20 static clock implementation (@samdark)
 
 ## 3.0.2 February 23, 2025
 
