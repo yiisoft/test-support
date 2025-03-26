@@ -1,7 +1,7 @@
 # Test Support package
 
 Some components of the application codebase rely on services implementing [PSR-interfaces](https://www.php-fig.org/psr/).
-To test such components, the developer often has to write his own tests-sepcific versions of similar PSR implementations.
+To test such components, the developer often has to write his own tests-specific versions of similar PSR implementations.
 Test Support package provides ready-to-use implementations of some PSR interfaces, intended solely to help testing your code.
 
 ## Logger Interface [PSR-3](https://github.com/php-fig/log)
@@ -36,7 +36,9 @@ $messages = $logger->getMessages();
 
 ## Container Interface [PSR-11](https://github.com/php-fig/container)
 
-The `SimpleContainer` is a simple dependency container accepting the definitions configuration as the constructor argument. Despite the simplicity, container is flexible: 2nd parameter of the constructor accepts a Closure.
+The `SimpleContainer` is a simple dependency container
+accepting the definitions configuration as the constructor argument.
+Despite the simplicity, container is flexible: the second parameter of the constructor accepts a Closure.
 This Closure will be called to get "default" value if the requested value is not found if the configuration:
 
 ```php
@@ -53,7 +55,11 @@ $baz = $container->get('baz'); // Not found
 
 ## Event Dispatcher [PSR-14](https://github.com/php-fig/event-dispatcher)
 
-The `SimpleEventDispatcher` is a test-specific event dispatcher. You can pass any number of closure-listeners to its  constructor. `SimpleEventDispatcher` does not contain any complex logic for matching an event to a listener. Every listener should decide by itself if it processes an event or not. The dispatcher is PSR-compliant and works with `StoppableEventInterface`.
+The `SimpleEventDispatcher` is a test-specific event dispatcher.
+You can pass any amount of closure-listeners to its constructor.
+`SimpleEventDispatcher` does not contain any complex logic for matching an event to a listener.
+Every listener should decide by itself if it processes an event or not.
+The dispatcher is PSR-compliant and works with `StoppableEventInterface`.
 
 You can test for events sent to `SimpleEventDispatcher` using the following methods:
 
@@ -78,11 +84,14 @@ The `MemorySimpleCache` class does not use external storage to store cached valu
 Values are stored in the array property of the object itself and will be destroyed along with the object.
 Use `MemorySimpleCache` in the simple cases when you do not need to keep track of the history of cache access.
 
-You can simulate cache errors by setting public properties `returnOnSet`, `returnOnDelete` and `returnOnClear`. These define values returned by the corresponding methods of the `SimpleCacheInterface`.
+You can simulate cache errors by setting public properties `returnOnSet`, `returnOnDelete` and `returnOnClear`.
+These define values returned by the corresponding methods of the `SimpleCacheInterface`.
 
 ### SimpleCacheActionLogger
 
-The `SimpleCacheActionLogger` class is a decorator for `SimpleCacheInterface`. It remembers all cache calls even if they are invalid such as when the key contains invalid characters, or is not a string at all.
+The `SimpleCacheActionLogger` class is a decorator for `SimpleCacheInterface`.
+It remembers all cache calls even if they are invalid,
+such as when the key contains invalid characters, or is not a string at all.
 
 Use the decorator when it is not enough to test the cache state before and after code execution.
 For example, when the testing service is supposed to resend the value to the cache after the first failed attempt.
@@ -91,17 +100,32 @@ For example, when the testing service is supposed to resend the value to the cac
 use Yiisoft\Test\Support\SimpleCache;
 
 $cache = new SimpleCache\MemorySimpleCache();
-//MemorySimpleCache::set() method will return false, which is an error according to PSR
+// MemorySimpleCache::set() method will return false, which is an error, according to PSR.
 $cache->returnOnSet = false;
 
 $cacheLogger = new SimpleCache\SimpleCacheActionLogger($cache);
 $myService = new myService(/* CacheInterface */ $cacheLogger);
 
-$myService->trySetAction('key', 'value'); // Service tries to cache value 3 times
+$myService->trySetAction('key', 'value'); // Service tries to cache value 3 times.
 
 \PHPUnit\Framework\TestCase::assertSame([
     [SimpleCache\Action::SET, 'key'],
     [SimpleCache\Action::SET, 'key'],
     [SimpleCache\Action::SET, 'key'],
-], $cacheLogger->getActionKeyList()); // true. Logger registers 3 tries to set cache
+], $cacheLogger->getActionKeyList()); // true. Logger registers 3 tries to set cache.
+```
+
+## Static clock [PSR-20](https://www.php-fig.org/psr/psr-20/)
+
+The static clock does not change after being created:
+
+```php
+use Yiisoft\Test\Support\Clock\StaticClock;
+
+$clock = new StaticClock(new DateTimeImmutable());
+echo $clock->now();
+
+sleep(10);
+
+echo $clock->now(); // Same value as above.
 ```
