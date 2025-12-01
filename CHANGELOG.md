@@ -1,6 +1,6 @@
 # Yii Test Support Change Log
 
-## 3.0.3 under development
+## 3.1.0 December 01, 2025
 
 - New #80: Add PSR-20 static clock implementation (@samdark)
 - Enh #83: Add PHP 8.5 support (@vjik)
