@@ -1,5 +1,9 @@
 # Yii Test Support Change Log
 
+## 3.1.1 under development
+
+- no changes in this release.
+
 ## 3.1.0 December 01, 2025
 
 - New #80: Add PSR-20 static clock implementation (@samdark)
