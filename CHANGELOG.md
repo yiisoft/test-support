@@ -3,6 +3,7 @@
 ## 3.0.3 under development
 
 - New #80: Add PSR-20 static clock implementation (@samdark)
+- Enh #83: Add PHP 8.5 support (@vjik)
 
 ## 3.0.2 February 23, 2025
 

@@ -18,7 +18,7 @@ The package is intended to simplify the process of testing application elements 
 
 ## Requirements
 
-- PHP 8.0 or higher.
+- PHP 8.0 - 8.5.
 
 ## Installation
 
