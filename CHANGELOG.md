@@ -2,7 +2,7 @@
 
 ## 3.1.1 under development
 
-- New #85: Add `StreamMock` (@vjik)
+- New #85: Add `StringStream` (@vjik)
 
 ## 3.1.0 December 01, 2025
 

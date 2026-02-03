@@ -16,9 +16,9 @@ use function strlen;
  *
  * Allows creating stream instances with configurable behavior for testing HTTP message handling.
  *
- * @psalm-type MetadataClosure = Closure(StreamMock): array<string, mixed>
+ * @psalm-type MetadataClosure = Closure(StringStream): array<string, mixed>
  */
-final class StreamMock implements StreamInterface
+final class StringStream implements StreamInterface
 {
     private bool $closed = false;
     private bool $detached = false;

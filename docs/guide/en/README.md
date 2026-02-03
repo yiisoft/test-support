@@ -130,16 +130,16 @@ sleep(10);
 echo $clock->now(); // Same value as above.
 ```
 
-## Stream mock [PSR-7](https://www.php-fig.org/psr/psr-7/) 
+## String stream [PSR-7](https://www.php-fig.org/psr/psr-7/) 
 
-The `StreamMock` class is a test-specific implementation of `StreamInterface`.
+The `StringStream` class is a test-specific implementation of `StreamInterface`.
 It allows you to create stream instances with configurable behavior for testing HTTP message handling.
 
 ```php
-use Yiisoft\Test\Support\HttpMessage\StreamMock;
+use Yiisoft\Test\Support\HttpMessage\StringStream;
 
 // Create a stream with content
-$stream = new StreamMock('Hello, World!');
+$stream = new StringStream('Hello, World!');
 
 echo $stream; // Hello, World!
 echo $stream->getSize(); // 13
@@ -151,13 +151,13 @@ You can configure stream behavior through constructor parameters:
 
 ```php
 // Create a read-only stream
-$readOnlyStream = new StreamMock('content', writable: false);
+$readOnlyStream = new StringStream('content', writable: false);
 
 // Create a non-seekable stream
-$nonSeekableStream = new StreamMock('content', seekable: false);
+$nonSeekableStream = new StringStream('content', seekable: false);
 
 // Create a stream with custom initial position
-$stream = new StreamMock('Hello', position: 3);
+$stream = new StringStream('Hello', position: 3);
 echo $stream->getContents(); // lo
 ```
 
@@ -165,7 +165,7 @@ Custom metadata can be provided as an array or a closure:
 
 ```php
 // Array metadata
-$stream = new StreamMock(
+$stream = new StringStream(
     'content',
     metadata: [
         'uri' => 'php://memory',
@@ -174,9 +174,9 @@ $stream = new StreamMock(
 );
 
 // Closure metadata (receives the stream instance)
-$stream = new StreamMock(
+$stream = new StringStream(
     'content', 
-    metadata: static fn(StreamMock $s) => [
+    metadata: static fn(StringStream $s) => [
         'size' => $s->getSize(),
         'eof' => $s->eof(),
     ],
@@ -186,7 +186,7 @@ $stream = new StreamMock(
 The stream provides helper methods to check its state:
 
 ```php
-$stream = new StreamMock('content');
+$stream = new StringStream('content');
 
 $stream->isClosed(); // false
 $stream->isDetached(); // false

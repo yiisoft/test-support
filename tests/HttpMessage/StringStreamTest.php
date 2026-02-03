@@ -6,13 +6,13 @@ namespace Yiisoft\Test\Support\Tests\HttpMessage;
 
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
-use Yiisoft\Test\Support\HttpMessage\StreamMock;
+use Yiisoft\Test\Support\HttpMessage\StringStream;
 
-final class StreamMockTest extends TestCase
+final class StringStreamTest extends TestCase
 {
     public function testBase(): void
     {
-        $stream = new StreamMock();
+        $stream = new StringStream();
 
         $this->assertSame(0, $stream->getSize());
         $this->assertSame(0, $stream->getPosition());
@@ -27,7 +27,7 @@ final class StreamMockTest extends TestCase
 
     public function testConstructorWithContent(): void
     {
-        $stream = new StreamMock('Hello, World!');
+        $stream = new StringStream('Hello, World!');
 
         $this->assertSame('Hello, World!', (string) $stream);
         $this->assertSame(13, $stream->getSize());
@@ -35,7 +35,7 @@ final class StreamMockTest extends TestCase
 
     public function testConstructorWithPosition(): void
     {
-        $stream = new StreamMock('Hello', position: 3);
+        $stream = new StringStream('Hello', position: 3);
 
         $this->assertSame(3, $stream->getPosition());
         $this->assertSame('lo', $stream->getContents());
@@ -43,35 +43,35 @@ final class StreamMockTest extends TestCase
 
     public function testConstructorWithReadableFlag(): void
     {
-        $stream = new StreamMock(readable: false);
+        $stream = new StringStream(readable: false);
 
         $this->assertFalse($stream->isReadable());
     }
 
     public function testConstructorWithWritableFlag(): void
     {
-        $stream = new StreamMock(writable: false);
+        $stream = new StringStream(writable: false);
 
         $this->assertFalse($stream->isWritable());
     }
 
     public function testConstructorWithSeekableFlag(): void
     {
-        $stream = new StreamMock(seekable: false);
+        $stream = new StringStream(seekable: false);
 
         $this->assertFalse($stream->isSeekable());
     }
 
     public function testToString(): void
     {
-        $stream = new StreamMock('Test content');
+        $stream = new StringStream('Test content');
 
         $this->assertSame('Test content', (string) $stream);
     }
 
     public function testClose(): void
     {
-        $stream = new StreamMock('content');
+        $stream = new StringStream('content');
 
         $this->assertFalse($stream->isClosed());
 
@@ -85,7 +85,7 @@ final class StreamMockTest extends TestCase
 
     public function testDetach(): void
     {
-        $stream = new StreamMock('content');
+        $stream = new StringStream('content');
 
         $this->assertFalse($stream->isDetached());
 
@@ -98,28 +98,28 @@ final class StreamMockTest extends TestCase
 
     public function testGetSize(): void
     {
-        $stream = new StreamMock('');
+        $stream = new StringStream('');
         $this->assertSame(0, $stream->getSize());
 
-        $stream = new StreamMock('Hello');
+        $stream = new StringStream('Hello');
         $this->assertSame(5, $stream->getSize());
 
-        $stream = new StreamMock('Привет');
+        $stream = new StringStream('Привет');
         $this->assertSame(12, $stream->getSize()); // UTF-8 bytes
     }
 
     public function testTell(): void
     {
-        $stream = new StreamMock('Hello', position: 0);
+        $stream = new StringStream('Hello', position: 0);
         $this->assertSame(0, $stream->tell());
 
-        $stream = new StreamMock('Hello', position: 3);
+        $stream = new StringStream('Hello', position: 3);
         $this->assertSame(3, $stream->tell());
     }
 
     public function testTellThrowsExceptionWhenClosed(): void
     {
-        $stream = new StreamMock('Hello');
+        $stream = new StringStream('Hello');
         $stream->close();
 
         $this->expectException(RuntimeException::class);
@@ -129,19 +129,19 @@ final class StreamMockTest extends TestCase
 
     public function testEof(): void
     {
-        $stream = new StreamMock('Hello', position: 0);
+        $stream = new StringStream('Hello', position: 0);
         $this->assertFalse($stream->eof());
 
-        $stream = new StreamMock('Hello', position: 5);
+        $stream = new StringStream('Hello', position: 5);
         $this->assertTrue($stream->eof());
 
-        $stream = new StreamMock('Hello', position: 10);
+        $stream = new StringStream('Hello', position: 10);
         $this->assertTrue($stream->eof());
     }
 
     public function testEofWhenClosed(): void
     {
-        $stream = new StreamMock('Hello');
+        $stream = new StringStream('Hello');
         $stream->close();
 
         $this->assertTrue($stream->eof());
@@ -149,7 +149,7 @@ final class StreamMockTest extends TestCase
 
     public function testSeekSet(): void
     {
-        $stream = new StreamMock('Hello World');
+        $stream = new StringStream('Hello World');
 
         $stream->seek(5);
         $this->assertSame(5, $stream->getPosition());
@@ -160,7 +160,7 @@ final class StreamMockTest extends TestCase
 
     public function testSeekCur(): void
     {
-        $stream = new StreamMock('Hello World', position: 3);
+        $stream = new StringStream('Hello World', position: 3);
 
         $stream->seek(2, SEEK_CUR);
         $this->assertSame(5, $stream->getPosition());
@@ -171,7 +171,7 @@ final class StreamMockTest extends TestCase
 
     public function testSeekEnd(): void
     {
-        $stream = new StreamMock('Hello World');
+        $stream = new StringStream('Hello World');
 
         $stream->seek(0, SEEK_END);
         $this->assertSame(11, $stream->getPosition());
@@ -182,7 +182,7 @@ final class StreamMockTest extends TestCase
 
     public function testSeekThrowsExceptionWhenNotSeekable(): void
     {
-        $stream = new StreamMock('Hello', seekable: false);
+        $stream = new StringStream('Hello', seekable: false);
 
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Stream is not seekable.');
@@ -191,7 +191,7 @@ final class StreamMockTest extends TestCase
 
     public function testSeekThrowsExceptionWhenClosed(): void
     {
-        $stream = new StreamMock('Hello');
+        $stream = new StringStream('Hello');
         $stream->close();
 
         $this->expectException(RuntimeException::class);
@@ -201,7 +201,7 @@ final class StreamMockTest extends TestCase
 
     public function testSeekThrowsExceptionForInvalidWhence(): void
     {
-        $stream = new StreamMock('Hello');
+        $stream = new StringStream('Hello');
 
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Invalid whence value.');
@@ -210,7 +210,7 @@ final class StreamMockTest extends TestCase
 
     public function testSeekThrowsExceptionForNegativePosition(): void
     {
-        $stream = new StreamMock('Hello');
+        $stream = new StringStream('Hello');
 
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Invalid seek position.');
@@ -219,7 +219,7 @@ final class StreamMockTest extends TestCase
 
     public function testSeekThrowsExceptionForPositionBeyondSize(): void
     {
-        $stream = new StreamMock('Hello');
+        $stream = new StringStream('Hello');
 
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Invalid seek position.');
@@ -228,7 +228,7 @@ final class StreamMockTest extends TestCase
 
     public function testRewind(): void
     {
-        $stream = new StreamMock('Hello', position: 5);
+        $stream = new StringStream('Hello', position: 5);
 
         $stream->rewind();
 
@@ -237,7 +237,7 @@ final class StreamMockTest extends TestCase
 
     public function testWrite(): void
     {
-        $stream = new StreamMock();
+        $stream = new StringStream();
 
         $bytesWritten = $stream->write('Hello');
 
@@ -248,7 +248,7 @@ final class StreamMockTest extends TestCase
 
     public function testWriteAtPosition(): void
     {
-        $stream = new StreamMock('Hello World', position: 6);
+        $stream = new StringStream('Hello World', position: 6);
 
         $stream->write('PHP');
 
@@ -258,7 +258,7 @@ final class StreamMockTest extends TestCase
 
     public function testWriteOverwrite(): void
     {
-        $stream = new StreamMock('AAAAA', position: 0);
+        $stream = new StringStream('AAAAA', position: 0);
 
         $stream->write('BB');
 
@@ -267,7 +267,7 @@ final class StreamMockTest extends TestCase
 
     public function testWriteThrowsExceptionWhenNotWritable(): void
     {
-        $stream = new StreamMock(writable: false);
+        $stream = new StringStream(writable: false);
 
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Stream is not writable.');
@@ -276,7 +276,7 @@ final class StreamMockTest extends TestCase
 
     public function testWriteThrowsExceptionWhenClosed(): void
     {
-        $stream = new StreamMock();
+        $stream = new StringStream();
         $stream->close();
 
         $this->expectException(RuntimeException::class);
@@ -286,7 +286,7 @@ final class StreamMockTest extends TestCase
 
     public function testRead(): void
     {
-        $stream = new StreamMock('Hello World');
+        $stream = new StringStream('Hello World');
 
         $result = $stream->read(5);
 
@@ -296,7 +296,7 @@ final class StreamMockTest extends TestCase
 
     public function testReadFromPosition(): void
     {
-        $stream = new StreamMock('Hello World', position: 6);
+        $stream = new StringStream('Hello World', position: 6);
 
         $result = $stream->read(5);
 
@@ -305,7 +305,7 @@ final class StreamMockTest extends TestCase
 
     public function testReadBeyondContent(): void
     {
-        $stream = new StreamMock('Hi');
+        $stream = new StringStream('Hi');
 
         $result = $stream->read(100);
 
@@ -315,7 +315,7 @@ final class StreamMockTest extends TestCase
 
     public function testReadAtEof(): void
     {
-        $stream = new StreamMock('Hello', position: 5);
+        $stream = new StringStream('Hello', position: 5);
 
         $result = $stream->read(10);
 
@@ -324,7 +324,7 @@ final class StreamMockTest extends TestCase
 
     public function testReadThrowsExceptionWhenNotReadable(): void
     {
-        $stream = new StreamMock('content', readable: false);
+        $stream = new StringStream('content', readable: false);
 
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Stream is not readable.');
@@ -333,7 +333,7 @@ final class StreamMockTest extends TestCase
 
     public function testReadThrowsExceptionWhenClosed(): void
     {
-        $stream = new StreamMock('content');
+        $stream = new StringStream('content');
         $stream->close();
 
         $this->expectException(RuntimeException::class);
@@ -343,7 +343,7 @@ final class StreamMockTest extends TestCase
 
     public function testGetContents(): void
     {
-        $stream = new StreamMock('Hello World');
+        $stream = new StringStream('Hello World');
 
         $result = $stream->getContents();
 
@@ -353,7 +353,7 @@ final class StreamMockTest extends TestCase
 
     public function testGetContentsFromPosition(): void
     {
-        $stream = new StreamMock('Hello World', position: 6);
+        $stream = new StringStream('Hello World', position: 6);
 
         $result = $stream->getContents();
 
@@ -362,7 +362,7 @@ final class StreamMockTest extends TestCase
 
     public function testGetContentsAtEof(): void
     {
-        $stream = new StreamMock('Hello', position: 5);
+        $stream = new StringStream('Hello', position: 5);
 
         $result = $stream->getContents();
 
@@ -371,7 +371,7 @@ final class StreamMockTest extends TestCase
 
     public function testGetMetadataDefault(): void
     {
-        $stream = new StreamMock('Hello');
+        $stream = new StringStream('Hello');
 
         $metadata = $stream->getMetadata();
 
@@ -384,7 +384,7 @@ final class StreamMockTest extends TestCase
 
     public function testGetMetadataDefaultAtEof(): void
     {
-        $stream = new StreamMock('Hello', position: 5);
+        $stream = new StringStream('Hello', position: 5);
 
         $metadata = $stream->getMetadata();
 
@@ -393,7 +393,7 @@ final class StreamMockTest extends TestCase
 
     public function testGetMetadataWithKey(): void
     {
-        $stream = new StreamMock('Hello');
+        $stream = new StringStream('Hello');
 
         $this->assertFalse($stream->getMetadata('eof'));
         $this->assertTrue($stream->getMetadata('seekable'));
@@ -402,7 +402,7 @@ final class StreamMockTest extends TestCase
 
     public function testGetMetadataWhenClosed(): void
     {
-        $stream = new StreamMock('Hello');
+        $stream = new StringStream('Hello');
         $stream->close();
 
         $this->assertSame([], $stream->getMetadata());
@@ -416,7 +416,7 @@ final class StreamMockTest extends TestCase
             'mode' => 'r+',
             'custom' => 'value',
         ];
-        $stream = new StreamMock('Hello', metadata: $customMetadata);
+        $stream = new StringStream('Hello', metadata: $customMetadata);
 
         $metadata = $stream->getMetadata();
 
@@ -428,10 +428,10 @@ final class StreamMockTest extends TestCase
 
     public function testGetMetadataWithClosureMetadata(): void
     {
-        $stream = new StreamMock(
+        $stream = new StringStream(
             'Hello',
             position: 2,
-            metadata: static fn(StreamMock $s) => [
+            metadata: static fn(StringStream $s) => [
                 'position' => $s->getPosition(),
                 'size' => $s->getSize(),
             ],
@@ -446,7 +446,7 @@ final class StreamMockTest extends TestCase
 
     public function testIsReadableWhenClosed(): void
     {
-        $stream = new StreamMock();
+        $stream = new StringStream();
         $stream->close();
 
         $this->assertFalse($stream->isReadable());
@@ -454,7 +454,7 @@ final class StreamMockTest extends TestCase
 
     public function testIsWritableWhenClosed(): void
     {
-        $stream = new StreamMock();
+        $stream = new StringStream();
         $stream->close();
 
         $this->assertFalse($stream->isWritable());
@@ -462,7 +462,7 @@ final class StreamMockTest extends TestCase
 
     public function testIsSeekableWhenClosed(): void
     {
-        $stream = new StreamMock();
+        $stream = new StringStream();
         $stream->close();
 
         $this->assertFalse($stream->isSeekable());
@@ -470,7 +470,7 @@ final class StreamMockTest extends TestCase
 
     public function testMultipleReadOperations(): void
     {
-        $stream = new StreamMock('Hello World');
+        $stream = new StringStream('Hello World');
 
         $this->assertSame('Hello', $stream->read(5));
         $this->assertSame(' ', $stream->read(1));
@@ -480,7 +480,7 @@ final class StreamMockTest extends TestCase
 
     public function testReadWriteCombination(): void
     {
-        $stream = new StreamMock('Hello World');
+        $stream = new StringStream('Hello World');
 
         $stream->read(6);
         $stream->write('PHP');
@@ -490,7 +490,7 @@ final class StreamMockTest extends TestCase
 
     public function testSeekReadCombination(): void
     {
-        $stream = new StreamMock('Hello World');
+        $stream = new StringStream('Hello World');
 
         $stream->seek(6);
         $result = $stream->read(5);
