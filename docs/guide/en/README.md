@@ -129,3 +129,69 @@ sleep(10);
 
 echo $clock->now(); // Same value as above.
 ```
+
+## Stream mock [PSR-7](https://www.php-fig.org/psr/psr-7/) 
+
+The `StreamMock` class is a test-specific implementation of `StreamInterface`.
+It allows you to create stream instances with configurable behavior for testing HTTP message handling.
+
+```php
+use Yiisoft\Test\Support\HttpMessage\StreamMock;
+
+// Create a stream with content
+$stream = new StreamMock('Hello, World!');
+
+echo $stream; // Hello, World!
+echo $stream->getSize(); // 13
+echo $stream->read(5); // Hello
+echo $stream->getContents(); // , World!
+```
+
+You can configure stream behavior through constructor parameters:
+
+```php
+// Create a read-only stream
+$readOnlyStream = new StreamMock('content', writable: false);
+
+// Create a non-seekable stream
+$nonSeekableStream = new StreamMock('content', seekable: false);
+
+// Create a stream with custom initial position
+$stream = new StreamMock('Hello', position: 3);
+echo $stream->getContents(); // lo
+```
+
+Custom metadata can be provided as an array or a closure:
+
+```php
+// Array metadata
+$stream = new StreamMock(
+    'content',
+    metadata: [
+        'uri' => 'php://memory',
+        'mode' => 'r+',
+    ],
+);
+
+// Closure metadata (receives the stream instance)
+$stream = new StreamMock(
+    'content', 
+    metadata: static fn(StreamMock $s) => [
+        'size' => $s->getSize(),
+        'eof' => $s->eof(),
+    ],
+);
+```
+
+The stream provides helper methods to check its state:
+
+```php
+$stream = new StreamMock('content');
+
+$stream->isClosed(); // false
+$stream->isDetached(); // false
+$stream->getPosition(); // 0
+
+$stream->close();
+$stream->isClosed(); // true
+```
