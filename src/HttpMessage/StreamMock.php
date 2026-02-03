@@ -29,7 +29,7 @@ final class StreamMock implements StreamInterface
      * @param bool $readable Whether the stream is readable.
      * @param bool $writable Whether the stream is writable.
      * @param bool $seekable Whether the stream is seekable.
-     * @param Closure|array|null $metadata Custom metadata as an array or a closure that receives
+     * @param array|Closure|null $metadata Custom metadata as an array or a closure that receives
      * the stream instance and returns an array.
      *
      * @psalm-param MetadataClosure|array|null $metadata
