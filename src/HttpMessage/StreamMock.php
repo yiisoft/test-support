@@ -12,6 +12,10 @@ use function is_array;
 use function strlen;
 
 /**
+ * A test-specific implementation of PSR-7 stream.
+ *
+ * Allows creating stream instances with configurable behavior for testing HTTP message handling.
+ *
  * @psalm-type MetadataClosure = Closure(StreamMock): array<string, mixed>
  */
 final class StreamMock implements StreamInterface
@@ -20,6 +24,14 @@ final class StreamMock implements StreamInterface
     private bool $detached = false;
 
     /**
+     * @param string $content Initial stream content.
+     * @param int $position Initial position of the stream pointer.
+     * @param bool $readable Whether the stream is readable.
+     * @param bool $writable Whether the stream is writable.
+     * @param bool $seekable Whether the stream is seekable.
+     * @param Closure|array|null $metadata Custom metadata as an array or a closure that receives
+     * the stream instance and returns an array.
+     *
      * @psalm-param MetadataClosure|array|null $metadata
      */
     public function __construct(
@@ -37,16 +49,25 @@ final class StreamMock implements StreamInterface
         return $this->content;
     }
 
+    /**
+     * Checks whether the stream has been closed.
+     */
     public function isClosed(): bool
     {
         return $this->closed;
     }
 
+    /**
+     * Checks whether the stream has been detached.
+     */
     public function isDetached(): bool
     {
         return $this->detached;
     }
 
+    /**
+     * Returns the current position of the stream pointer.
+     */
     public function getPosition(): int
     {
         return $this->position;
