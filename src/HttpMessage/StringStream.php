@@ -159,7 +159,7 @@ final class StringStream implements StreamInterface
         $this->content = substr($this->content, 0, $this->position)
             . $string
             . substr($this->content, $this->position + $size);
-        $this->position += $size;
+        $this->position = min($this->position + $size, $this->getContentSize());
 
         return $size;
     }

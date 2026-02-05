@@ -69,6 +69,22 @@ final class StringStreamTest extends TestCase
         $this->assertSame('Test content', (string) $stream);
     }
 
+    public function testToStringWhenClosed(): void
+    {
+        $stream = new StringStream('Test content');
+        $stream->close();
+
+        $this->assertSame('Test content', (string) $stream);
+    }
+
+    public function testToStringWhenDetached(): void
+    {
+        $stream = new StringStream('Test content');
+        $stream->detach();
+
+        $this->assertSame('Test content', (string) $stream);
+    }
+
     public function testClose(): void
     {
         $stream = new StringStream('content');
@@ -235,6 +251,25 @@ final class StringStreamTest extends TestCase
         $this->assertSame(0, $stream->getPosition());
     }
 
+    public function testRewindThrowsExceptionWhenNotSeekable(): void
+    {
+        $stream = new StringStream('Hello', seekable: false);
+
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Stream is not seekable.');
+        $stream->rewind();
+    }
+
+    public function testRewindThrowsExceptionWhenClosed(): void
+    {
+        $stream = new StringStream('Hello');
+        $stream->close();
+
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Stream is closed.');
+        $stream->rewind();
+    }
+
     public function testWrite(): void
     {
         $stream = new StringStream();
@@ -263,6 +298,28 @@ final class StringStreamTest extends TestCase
         $stream->write('BB');
 
         $this->assertSame('BBAAA', (string) $stream);
+    }
+
+    public function testWriteAtEndOfContent(): void
+    {
+        $stream = new StringStream('Hello', position: 5);
+
+        $bytesWritten = $stream->write(' World');
+
+        $this->assertSame(6, $bytesWritten);
+        $this->assertSame('Hello World', (string) $stream);
+        $this->assertSame(11, $stream->getPosition());
+    }
+
+    public function testWriteBeyondContent(): void
+    {
+        $stream = new StringStream('Hi', position: 10);
+
+        $bytesWritten = $stream->write('!');
+
+        $this->assertSame(1, $bytesWritten);
+        $this->assertSame('Hi!', (string) $stream);
+        $this->assertSame(3, $stream->getPosition());
     }
 
     public function testWriteThrowsExceptionWhenNotWritable(): void
@@ -367,6 +424,25 @@ final class StringStreamTest extends TestCase
         $result = $stream->getContents();
 
         $this->assertSame('', $result);
+    }
+
+    public function testGetContentsThrowsExceptionWhenNotReadable(): void
+    {
+        $stream = new StringStream('content', readable: false);
+
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Stream is not readable.');
+        $stream->getContents();
+    }
+
+    public function testGetContentsThrowsExceptionWhenClosed(): void
+    {
+        $stream = new StringStream('content');
+        $stream->close();
+
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Stream is closed.');
+        $stream->getContents();
     }
 
     public function testGetMetadataDefault(): void
