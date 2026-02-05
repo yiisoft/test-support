@@ -175,7 +175,7 @@ $stream = new StringStream(
 
 // Closure metadata (receives the stream instance)
 $stream = new StringStream(
-    'content', 
+    'content',
     metadata: static fn(StringStream $s) => [
         'size' => $s->getSize(),
         'eof' => $s->eof(),
