@@ -186,6 +186,10 @@ final class StringStream implements StreamInterface
             throw new RuntimeException('Stream is closed.');
         }
 
+        if ($length < 0) {
+            throw new RuntimeException('Length cannot be negative.');
+        }
+
         if ($this->position >= $this->getContentSize()) {
             return '';
         }

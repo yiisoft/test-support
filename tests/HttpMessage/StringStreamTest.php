@@ -399,6 +399,15 @@ final class StringStreamTest extends TestCase
         $stream->read(5);
     }
 
+    public function testReadThrowsExceptionForNegativeLength(): void
+    {
+        $stream = new StringStream('content');
+
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Length cannot be negative.');
+        $stream->read(-1);
+    }
+
     public function testGetContents(): void
     {
         $stream = new StringStream('Hello World');
