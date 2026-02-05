@@ -130,7 +130,7 @@ sleep(10);
 echo $clock->now(); // Same value as above.
 ```
 
-## String stream [PSR-7](https://www.php-fig.org/psr/psr-7/) 
+## String stream [PSR-7](https://www.php-fig.org/psr/psr-7/)
 
 The `StringStream` class is a test-specific implementation of `StreamInterface`.
 It allows you to create stream instances with configurable behavior for testing HTTP message handling.
