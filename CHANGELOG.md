@@ -2,7 +2,7 @@
 
 ## 3.1.1 under development
 
-- no changes in this release.
+- New #85: Add `StringStream` (@vjik)
 
 ## 3.1.0 December 01, 2025
 
