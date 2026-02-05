@@ -1,6 +1,6 @@
 # Yii Test Support Change Log
 
-## 3.1.1 under development
+## 3.2.0 February 05, 2026
 
 - New #85: Add `StringStream` (@vjik)
 
