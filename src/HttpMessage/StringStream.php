@@ -7,6 +7,7 @@ namespace Yiisoft\Test\Support\HttpMessage;
 use Closure;
 use Psr\Http\Message\StreamInterface;
 use RuntimeException;
+use LogicException;
 
 use function is_array;
 use function strlen;
@@ -42,6 +43,12 @@ final class StringStream implements StreamInterface
         private bool $seekable = true,
         private Closure|array|null $metadata = null,
     ) {
+        $size = strlen($this->content);
+        if ($this->position < 0 || $this->position > $size) {
+            throw new LogicException(
+                sprintf('Position %d is out of valid range [0, %d].', $this->position, $size)
+            );
+        }
     }
 
     public function __toString(): string

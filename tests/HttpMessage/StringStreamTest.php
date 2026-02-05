@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Yiisoft\Test\Support\Tests\HttpMessage;
 
+use LogicException;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
 use Yiisoft\Test\Support\HttpMessage\StringStream;
@@ -60,6 +61,20 @@ final class StringStreamTest extends TestCase
         $stream = new StringStream(seekable: false);
 
         $this->assertFalse($stream->isSeekable());
+    }
+
+    public function testConstructorThrowsExceptionForNegativePosition(): void
+    {
+        $this->expectException(LogicException::class);
+        $this->expectExceptionMessage('Position -1 is out of valid range [0, 5].');
+        new StringStream('Hello', position: -1);
+    }
+
+    public function testConstructorThrowsExceptionForPositionBeyondContent(): void
+    {
+        $this->expectException(LogicException::class);
+        $this->expectExceptionMessage('Position 10 is out of valid range [0, 5].');
+        new StringStream('Hello', position: 10);
     }
 
     public function testToString(): void
@@ -149,9 +164,6 @@ final class StringStreamTest extends TestCase
         $this->assertFalse($stream->eof());
 
         $stream = new StringStream('Hello', position: 5);
-        $this->assertTrue($stream->eof());
-
-        $stream = new StringStream('Hello', position: 10);
         $this->assertTrue($stream->eof());
     }
 
@@ -309,17 +321,6 @@ final class StringStreamTest extends TestCase
         $this->assertSame(6, $bytesWritten);
         $this->assertSame('Hello World', (string) $stream);
         $this->assertSame(11, $stream->getPosition());
-    }
-
-    public function testWriteBeyondContent(): void
-    {
-        $stream = new StringStream('Hi', position: 10);
-
-        $bytesWritten = $stream->write('!');
-
-        $this->assertSame(1, $bytesWritten);
-        $this->assertSame('Hi!', (string) $stream);
-        $this->assertSame(3, $stream->getPosition());
     }
 
     public function testWriteThrowsExceptionWhenNotWritable(): void
