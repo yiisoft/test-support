@@ -26,7 +26,7 @@ final class SimpleContainer implements ContainerInterface
      * @param Closure|null $factory Should be closure that works like ContainerInterface::get(string $id): mixed
      * @param Closure|null $hasCallback Should be closure that works like ContainerInterface::has(string $id): bool
      *
-     * @psalm-param Closure(string) $factory
+     * @psalm-param Closure(string):mixed $factory
      * @psalm-param Closure(string):bool $hasCallback
      */
     public function __construct(
@@ -35,7 +35,7 @@ final class SimpleContainer implements ContainerInterface
         ?Closure $hasCallback = null,
     ) {
         $this->factory = $factory
-            ?? static function (string $id): bool {
+            ?? static function (string $id): mixed {
                 throw new NotFoundException($id);
             };
 
