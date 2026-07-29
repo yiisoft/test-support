@@ -3,8 +3,7 @@
 ## 3.2.1 under development
 
 - no changes in this release.
-- Enh #XX: Replace StyleCI with PHP CS Fixer (@vjik)
-- Enh #XX: Explicitly import functions and constants in "use" section.
+- Enh #98: Explicitly import functions and constants in "use" section (@vjik)
 
 ## 3.2.0 February 05, 2026
 
