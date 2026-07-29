@@ -35,8 +35,7 @@ final class SimpleContainer implements ContainerInterface
         ?Closure $hasCallback = null,
     ) {
         $this->factory = $factory
-            /** @return mixed */
-            ?? static function (string $id) {
+            ?? static function (string $id): bool {
                 throw new NotFoundException($id);
             };
 
