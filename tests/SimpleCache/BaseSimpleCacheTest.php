@@ -16,8 +16,6 @@ use function is_object;
 
 abstract class BaseSimpleCacheTest extends TestCase
 {
-    abstract protected function createCacheInstance(): CacheInterface;
-
     /**
      * @dataProvider dataProvider
      */
@@ -133,7 +131,7 @@ abstract class BaseSimpleCacheTest extends TestCase
         $result = $cache->setMultiple($data, $ttl);
 
         foreach ($data as $key => $value) {
-            $this->assertEquals($value, $cache->get((string)$key));
+            $this->assertEquals($value, $cache->get((string) $key));
         }
         $this->assertTrue($result);
     }
@@ -176,7 +174,7 @@ abstract class BaseSimpleCacheTest extends TestCase
 
         $result = $cache->deleteMultiple($keys);
 
-        $emptyData = array_map(static fn ($v) => null, $data);
+        $emptyData = array_map(static fn($v) => null, $data);
 
         $this->assertSame($emptyData, $cache->getMultiple($keys));
         $this->assertTrue($result);
@@ -229,7 +227,7 @@ abstract class BaseSimpleCacheTest extends TestCase
             ],
             'IteratorAggregate' => [
                 ['a' => 1, 'b' => 2,],
-                new class () implements IteratorAggregate {
+                new class implements IteratorAggregate {
                     public function getIterator(): ArrayIterator
                     {
                         return new ArrayIterator(['a' => 1, 'b' => 2,]);
@@ -383,6 +381,8 @@ abstract class BaseSimpleCacheTest extends TestCase
             $this->assertTrue($cache->has('normal-key'));
         }
     }
+
+    abstract protected function createCacheInstance(): CacheInterface;
 
     private function getDataProviderData($keyPrefix = ''): array
     {

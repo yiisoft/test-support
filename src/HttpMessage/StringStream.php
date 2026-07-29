@@ -11,6 +11,11 @@ use LogicException;
 
 use function is_array;
 use function strlen;
+use function sprintf;
+
+use const SEEK_CUR;
+use const SEEK_END;
+use const SEEK_SET;
 
 /**
  * A test-specific implementation of PSR-7 stream.
@@ -46,7 +51,7 @@ final class StringStream implements StreamInterface
         $size = strlen($this->content);
         if ($this->position < 0 || $this->position > $size) {
             throw new LogicException(
-                sprintf('Position %d is out of valid range [0, %d].', $this->position, $size)
+                sprintf('Position %d is out of valid range [0, %d].', $this->position, $size),
             );
         }
     }

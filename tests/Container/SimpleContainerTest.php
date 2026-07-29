@@ -51,7 +51,7 @@ final class SimpleContainerTest extends TestCase
     {
         $container = new SimpleContainer(
             [],
-            static fn (string $id) => $id
+            static fn(string $id) => $id,
         );
 
         $this->assertSame('foo', $container->get('foo'));
@@ -59,7 +59,7 @@ final class SimpleContainerTest extends TestCase
 
     public function testHasWithCustomFactory(): void
     {
-        $container = new SimpleContainer([], static fn (string $id) => $id);
+        $container = new SimpleContainer([], static fn(string $id) => $id);
 
         $this->assertTrue($container->has('foo'));
     }
@@ -68,8 +68,8 @@ final class SimpleContainerTest extends TestCase
     {
         $container = new SimpleContainer(
             [],
-            static fn (string $id) => $id,
-            static fn (string $id): bool => true,
+            static fn(string $id) => $id,
+            static fn(string $id): bool => true,
         );
 
         $this->assertTrue($container->has('foo'));
@@ -79,7 +79,7 @@ final class SimpleContainerTest extends TestCase
     {
         $container = new SimpleContainer(
             ['foo' => 'foo'],
-            static fn (string $id) => 'bar'
+            static fn(string $id) => 'bar',
         );
 
         $this->assertSame('foo', $container->get('foo'));

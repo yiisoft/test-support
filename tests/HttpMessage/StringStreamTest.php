@@ -9,6 +9,9 @@ use PHPUnit\Framework\TestCase;
 use RuntimeException;
 use Yiisoft\Test\Support\HttpMessage\StringStream;
 
+use const SEEK_CUR;
+use const SEEK_END;
+
 final class StringStreamTest extends TestCase
 {
     public function testBase(): void

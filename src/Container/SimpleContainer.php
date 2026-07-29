@@ -32,16 +32,16 @@ final class SimpleContainer implements ContainerInterface
     public function __construct(
         private array $definitions = [],
         ?Closure $factory = null,
-        ?Closure $hasCallback = null
+        ?Closure $hasCallback = null,
     ) {
-        $this->factory = $factory ??
+        $this->factory = $factory
             /** @return mixed */
-            static function (string $id) {
+            ?? static function (string $id) {
                 throw new NotFoundException($id);
             };
 
-        $this->hasCallback = $hasCallback ??
-            function (string $id): bool {
+        $this->hasCallback = $hasCallback
+            ?? function (string $id): bool {
                 try {
                     $this->get($id);
                     return true;

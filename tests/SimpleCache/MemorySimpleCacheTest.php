@@ -8,11 +8,6 @@ use Yiisoft\Test\Support\SimpleCache\MemorySimpleCache;
 
 final class MemorySimpleCacheTest extends BaseSimpleCacheTest
 {
-    protected function createCacheInstance(array $data = []): MemorySimpleCache
-    {
-        return new MemorySimpleCache($data);
-    }
-
     public function testInitialData(): void
     {
         $data = ['foo' => 'bar', 'key' => 'value'];
@@ -28,5 +23,10 @@ final class MemorySimpleCacheTest extends BaseSimpleCacheTest
         $cache = $this->createCacheInstance($data);
 
         $this->assertSame($data, $cache->getValues());
+    }
+
+    protected function createCacheInstance(array $data = []): MemorySimpleCache
+    {
+        return new MemorySimpleCache($data);
     }
 }

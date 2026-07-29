@@ -15,6 +15,7 @@ use function implode;
 use function is_string;
 use function preg_replace_callback;
 use function sprintf;
+use function in_array;
 
 final class SimpleLogger implements LoggerInterface
 {
@@ -53,7 +54,7 @@ final class SimpleLogger implements LoggerInterface
         if (!is_string($level)) {
             throw new InvalidArgumentException(sprintf(
                 'The log message level must be a string, %s provided.',
-                gettype($level)
+                gettype($level),
             ));
         }
 
@@ -61,11 +62,11 @@ final class SimpleLogger implements LoggerInterface
             throw new InvalidArgumentException(sprintf(
                 'Invalid log message level "%s" provided. The following values are supported: "%s".',
                 $level,
-                implode('", "', self::LEVELS)
+                implode('", "', self::LEVELS),
             ));
         }
 
-        $message = $this->parseMessage((string)$message, $context);
+        $message = $this->parseMessage((string) $message, $context);
 
         $this->messages[] = ['level' => $level, 'message' => $message, 'context' => $context];
     }
