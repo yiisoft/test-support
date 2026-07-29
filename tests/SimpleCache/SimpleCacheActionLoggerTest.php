@@ -11,11 +11,6 @@ use Yiisoft\Test\Support\SimpleCache\SimpleCacheActionLogger;
 
 final class SimpleCacheActionLoggerTest extends BaseSimpleCacheTest
 {
-    protected function createCacheInstance(array $data = []): SimpleCacheActionLogger
-    {
-        return new SimpleCacheActionLogger(new MemorySimpleCache(), $data);
-    }
-
     public function testGetCacheService(): void
     {
         $cache = $this->createCacheInstance();
@@ -86,5 +81,10 @@ final class SimpleCacheActionLoggerTest extends BaseSimpleCacheTest
 
         $this->assertSame('bar', $cache->get('foo'));
         $this->assertSame('value', $cache->get('key'));
+    }
+
+    protected function createCacheInstance(array $data = []): SimpleCacheActionLogger
+    {
+        return new SimpleCacheActionLogger(new MemorySimpleCache(), $data);
     }
 }

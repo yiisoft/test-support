@@ -23,7 +23,7 @@ final class SimpleCacheActionLogger implements CacheInterface
      */
     public function __construct(
         private CacheInterface $cacheService,
-        array $cacheData = []
+        array $cacheData = [],
     ) {
         $this->cacheService->setMultiple($cacheData);
     }
@@ -52,7 +52,7 @@ final class SimpleCacheActionLogger implements CacheInterface
         return $this->cacheService->clear();
     }
 
-    public function set(string $key, mixed $value, null|int|DateInterval $ttl = null): bool
+    public function set(string $key, mixed $value, int|DateInterval|null $ttl = null): bool
     {
         $this->actions[] = Action::createSetAction($key, $value, $ttl);
         return $this->cacheService->set($key, $value, $ttl);
@@ -67,7 +67,7 @@ final class SimpleCacheActionLogger implements CacheInterface
         return $this->cacheService->getMultiple($keys, $default);
     }
 
-    public function setMultiple(iterable $values, null|int|DateInterval $ttl = null): bool
+    public function setMultiple(iterable $values, int|DateInterval|null $ttl = null): bool
     {
         $values = $this->iterableToArray($values);
         foreach ($values as $key => $value) {

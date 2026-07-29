@@ -46,7 +46,7 @@ final class MemorySimpleCache implements CacheInterface
         return $default;
     }
 
-    public function set(string $key, mixed $value, null|int|DateInterval $ttl = null): bool
+    public function set(string $key, mixed $value, int|DateInterval|null $ttl = null): bool
     {
         $this->validateKey($key);
         $expiration = $this->ttlToExpiration($ttl);
@@ -85,7 +85,7 @@ final class MemorySimpleCache implements CacheInterface
         return $result;
     }
 
-    public function setMultiple(iterable $values, null|int|DateInterval $ttl = null): bool
+    public function setMultiple(iterable $values, int|DateInterval|null $ttl = null): bool
     {
         $values = $this->iterableToArray($values);
         $this->validateKeysOfValues($values);
@@ -138,7 +138,7 @@ final class MemorySimpleCache implements CacheInterface
     /**
      * Converts TTL to expiration.
      */
-    private function ttlToExpiration(null|int|DateInterval $ttl): int
+    private function ttlToExpiration(int|DateInterval|null $ttl): int
     {
         $ttl = $this->normalizeTtl($ttl);
 
@@ -160,7 +160,7 @@ final class MemorySimpleCache implements CacheInterface
      *
      * @return int|null TTL value as UNIX timestamp or null meaning infinity.
      */
-    private function normalizeTtl(null|int|DateInterval $ttl): ?int
+    private function normalizeTtl(int|DateInterval|null $ttl): ?int
     {
         if ($ttl instanceof DateInterval) {
             return (new DateTime('@0'))

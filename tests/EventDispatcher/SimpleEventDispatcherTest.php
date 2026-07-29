@@ -14,6 +14,7 @@ use RuntimeException;
 use stdClass;
 use Yiisoft\Test\Support\EventDispatcher\SimpleEventDispatcher;
 use Yiisoft\Test\Support\Tests\EventDispatcher\Stub\StoppableEvent;
+use Throwable;
 
 final class SimpleEventDispatcherTest extends TestCase
 {
@@ -28,7 +29,7 @@ final class SimpleEventDispatcherTest extends TestCase
             },
             static function (object $param) use (&$listener2, $event) {
                 $listener2 = $param === $event;
-            }
+            },
         );
 
         $dispatcher->dispatch($event);
@@ -49,13 +50,13 @@ final class SimpleEventDispatcherTest extends TestCase
             },
             static function (object $param) use (&$listener2, $event) {
                 $listener2 = $param === $event;
-            }
+            },
         );
 
         $this->expectException(RuntimeException::class);
         try {
             $dispatcher->dispatch($event);
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             throw $e;
         } finally {
             self::assertTrue($listener1);
@@ -74,7 +75,7 @@ final class SimpleEventDispatcherTest extends TestCase
             },
             static function (object $event) use (&$listener2) {
                 $listener2 = true;
-            }
+            },
         );
 
         $dispatcher->dispatch($event);
@@ -96,7 +97,7 @@ final class SimpleEventDispatcherTest extends TestCase
             },
             static function (object $event) use (&$listener2) {
                 $listener2 = true;
-            }
+            },
         );
 
         $dispatcher->dispatch($event);

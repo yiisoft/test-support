@@ -57,7 +57,7 @@ final class SimpleLoggerTest extends TestCase
             'bool' => [true],
             'null' => [null],
             'array' => [[]],
-            'closure' => [fn () => null],
+            'closure' => [fn() => null],
             'object' => [new stdClass()],
         ];
     }

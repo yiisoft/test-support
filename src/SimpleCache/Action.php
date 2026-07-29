@@ -28,9 +28,8 @@ final class Action
         private string $action,
         private mixed $key = null,
         private mixed $value = null,
-        private mixed $ttl = null
-    ) {
-    }
+        private mixed $ttl = null,
+    ) {}
 
     /**
      * @return TAction

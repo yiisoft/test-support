@@ -64,17 +64,17 @@ final class SimpleEventDispatcher implements EventDispatcherInterface
 
     public function isObjectTriggered(object $event, ?int $times = null): bool
     {
-        return $this->processBoolResult(static fn (object $e): bool => $e === $event, $times);
+        return $this->processBoolResult(static fn(object $e): bool => $e === $event, $times);
     }
 
     public function isClassTriggered(string $class, ?int $times = null): bool
     {
-        return $this->processBoolResult(static fn (object $event): bool => $event::class === $class, $times);
+        return $this->processBoolResult(static fn(object $event): bool => $event::class === $class, $times);
     }
 
     public function isInstanceOfTriggered(string $class, ?int $times = null): bool
     {
-        return $this->processBoolResult(static fn (object $event): bool => $event instanceof $class, $times);
+        return $this->processBoolResult(static fn(object $event): bool => $event instanceof $class, $times);
     }
 
     private function processBoolResult(Closure $closure, ?int $times): bool
