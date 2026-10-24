@@ -3,6 +3,7 @@
 ## 3.2.1 under development
 
 - Enh #98: Explicitly import functions and constants in "use" section (@vjik)
+- Enh #103: Narrow `StringStream::getSize()` return type to `int` (@vjik)
 
 ## 3.2.0 February 05, 2026
 

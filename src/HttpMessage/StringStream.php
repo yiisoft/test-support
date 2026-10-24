@@ -97,7 +97,7 @@ final class StringStream implements StreamInterface
         return null;
     }
 
-    public function getSize(): ?int
+    public function getSize(): int
     {
         return $this->getContentSize();
     }
