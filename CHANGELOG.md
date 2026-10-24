@@ -1,5 +1,9 @@
 # Yii Test Support Change Log
 
+## 3.2.2 under development
+
+- no changes in this release.
+
 ## 3.2.1 October 24, 2026
 
 - Enh #103: Narrow `StringStream::getSize()` return type to `int` (@vjik)
