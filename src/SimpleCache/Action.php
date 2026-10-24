@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Yiisoft\Test\Support\SimpleCache;
 
 /**
- * @template TAction as string
- * @template TKey as mixed
- * @template TValue as mixed
- * @template TTtl as mixed
+ * @template-covariant TAction as string
+ * @template-covariant TKey as mixed
+ * @template-covariant TValue as mixed
+ * @template-covariant TTtl as mixed
  */
 final class Action
 {
@@ -63,26 +63,41 @@ final class Action
         return $this->ttl;
     }
 
+    /**
+     * @return Action<'get', mixed, null, null>
+     */
     public static function createGetAction(mixed $key): self
     {
         return new self(self::GET, $key);
     }
 
+    /**
+     * @return Action<'has', mixed, null, null>
+     */
     public static function createHasAction(mixed $key): self
     {
         return new self(self::HAS, $key);
     }
 
+    /**
+     * @return Action<'set', mixed, mixed, mixed>
+     */
     public static function createSetAction(mixed $key, mixed $value, mixed $ttl): self
     {
         return new self(self::SET, $key, $value, $ttl);
     }
 
+    /**
+     * @return Action<'delete', mixed, null, null>
+     */
     public static function createDeleteAction(mixed $key): self
     {
         return new self(self::DELETE, $key);
     }
 
+    /**
+     * @return Action<'clear', null, null, null>
+     */
     public static function createClearAction(): self
     {
         return new self(self::CLEAR);

@@ -13,13 +13,16 @@ use Traversable;
  */
 final class SimpleCacheActionLogger implements CacheInterface
 {
-    /** @var Action[] */
+    /**
+     * @var list<Action<string, mixed, mixed, mixed>>
+     */
     private array $actions = [];
 
     /**
      * `SimpleCacheActionLogger` constructor.
      *
      * @param TCacheService $cacheService
+     * @param mixed[] $cacheData
      */
     public function __construct(
         private CacheInterface $cacheService,
@@ -67,6 +70,9 @@ final class SimpleCacheActionLogger implements CacheInterface
         return $this->cacheService->getMultiple($keys, $default);
     }
 
+    /**
+     * @param iterable<mixed> $values
+     */
     public function setMultiple(iterable $values, int|DateInterval|null $ttl = null): bool
     {
         $values = $this->iterableToArray($values);
@@ -86,7 +92,7 @@ final class SimpleCacheActionLogger implements CacheInterface
     }
 
     /**
-     * @return Action[]
+     * @return list<Action<string, mixed, mixed, mixed>>
      */
     public function getActions(): array
     {
@@ -116,9 +122,9 @@ final class SimpleCacheActionLogger implements CacheInterface
     /**
      * Converts iterable to array.
      *
-     * @psalm-template T
-     * @psalm-param iterable<T> $iterable
-     * @psalm-return array<array-key,T>
+     * @template T
+     * @param iterable<T> $iterable
+     * @return array<array-key, T>
      */
     private function iterableToArray(iterable $iterable): array
     {

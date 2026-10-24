@@ -22,7 +22,7 @@ use const SEEK_SET;
  *
  * Allows creating stream instances with configurable behavior for testing HTTP message handling.
  *
- * @psalm-type MetadataClosure = Closure(StringStream): array<string, mixed>
+ * @phpstan-type MetadataClosure = Closure(StringStream): array<string, mixed>
  */
 final class StringStream implements StreamInterface
 {
@@ -35,10 +35,8 @@ final class StringStream implements StreamInterface
      * @param bool $readable Whether the stream is readable.
      * @param bool $writable Whether the stream is writable.
      * @param bool $seekable Whether the stream is seekable.
-     * @param array|Closure|null $metadata Custom metadata as an array or a closure that receives
+     * @param MetadataClosure|array<string, mixed>|null $metadata Custom metadata as an array or a closure that receives
      * the stream instance and returns an array.
-     *
-     * @psalm-param MetadataClosure|array|null $metadata
      */
     public function __construct(
         private string $content = '',

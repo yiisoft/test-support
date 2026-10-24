@@ -26,6 +26,9 @@ final class MemorySimpleCache implements CacheInterface
     /** @var array<string, array<int, mixed>> */
     protected array $cache = [];
 
+    /**
+     * @param mixed[] $cacheData
+     */
     public function __construct(array $cacheData = [])
     {
         $this->setMultiple($cacheData);
@@ -77,7 +80,7 @@ final class MemorySimpleCache implements CacheInterface
     {
         $keys = $this->iterableToArray($keys);
         $this->validateKeys($keys);
-        /** @psalm-var string[] $keys */
+        /** @var string[] $keys */
         $result = [];
         foreach ($keys as $key) {
             $result[$key] = $this->get($key, $default);
@@ -85,6 +88,9 @@ final class MemorySimpleCache implements CacheInterface
         return $result;
     }
 
+    /**
+     * @param iterable<mixed> $values
+     */
     public function setMultiple(iterable $values, int|DateInterval|null $ttl = null): bool
     {
         $values = $this->iterableToArray($values);
@@ -109,7 +115,7 @@ final class MemorySimpleCache implements CacheInterface
     public function has(string $key): bool
     {
         $this->validateKey($key);
-        /** @psalm-var string $key */
+        /** @var string $key */
         return isset($this->cache[$key]) && !$this->isExpired($key);
     }
 
@@ -173,6 +179,10 @@ final class MemorySimpleCache implements CacheInterface
 
     /**
      * Converts iterable to array.
+     *
+     * @template T
+     * @param iterable<T> $iterable
+     * @return array<array-key, T>
      */
     private function iterableToArray(iterable $iterable): array
     {
@@ -196,6 +206,9 @@ final class MemorySimpleCache implements CacheInterface
         }
     }
 
+    /**
+     * @param mixed[] $values
+     */
     private function validateKeysOfValues(array $values): void
     {
         $keys = array_map('strval', array_keys($values));
