@@ -1,11 +1,11 @@
 # Yii Test Support Change Log
 
-## 3.2.1 under development
+## 3.2.1 October 24, 2026
 
-- Enh #98: Explicitly import functions and constants in "use" section (@vjik)
-- Enh #106: Add PHP 8.6 support (@vjik)
-- Bug #104: Don't replace placeholders in `SimpleLogger` with context values that can't be converted to string (@vjik)
 - Enh #103: Narrow `StringStream::getSize()` return type to `int` (@vjik)
+- Enh #106: Add PHP 8.6 support (@vjik)
+- Enh #98: Explicitly import functions and constants in "use" section (@vjik)
+- Bug #104: Don't replace placeholders in `SimpleLogger` with context values that can't be converted to string (@vjik)
 
 ## 3.2.0 February 05, 2026
 
