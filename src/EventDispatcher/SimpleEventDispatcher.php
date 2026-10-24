@@ -15,8 +15,7 @@ final class SimpleEventDispatcher implements EventDispatcherInterface
     private array $listeners;
 
     /**
-     * @var object[]
-     * @psalm-var list<object>
+     * @var list<object>
      */
     private array $events = [];
 
@@ -41,8 +40,7 @@ final class SimpleEventDispatcher implements EventDispatcherInterface
     }
 
     /**
-     * @return object[]
-     * @psalm-return list<object>
+     * @return list<object>
      */
     public function getEvents(): array
     {
@@ -50,7 +48,7 @@ final class SimpleEventDispatcher implements EventDispatcherInterface
     }
 
     /**
-     * @psalm-return list<class-string>
+     * @return list<class-string>
      */
     public function getEventClasses(): array
     {

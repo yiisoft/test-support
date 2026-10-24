@@ -37,7 +37,7 @@ final class SimpleLogger implements LoggerInterface
     ];
 
     /**
-     * @var array[] The log messages.
+     * @var list<array{level: string, message: string, context: mixed[]}> The log messages.
      */
     private array $messages = [];
 
@@ -48,7 +48,7 @@ final class SimpleLogger implements LoggerInterface
      *
      * @param mixed $level The log message level.
      * @param string|Stringable $message The log message.
-     * @param array $context The log message context.
+     * @param mixed[] $context The log message context.
      */
     public function log(mixed $level, string|Stringable $message, array $context = []): void
     {
@@ -75,7 +75,7 @@ final class SimpleLogger implements LoggerInterface
     /**
      * Returns all log messages.
      *
-     * @return array[] All log messages.
+     * @return list<array{level: string, message: string, context: mixed[]}> All log messages.
      */
     public function getMessages(): array
     {
@@ -87,13 +87,9 @@ final class SimpleLogger implements LoggerInterface
      * where foo will be replaced by the context data in key "foo".
      *
      * @param string $message Raw log message.
-     * @param array $context Message context.
+     * @param mixed[] $context Message context.
      *
      * @return string Parsed message.
-     *
-     * @psalm-suppress MixedArgumentTypeCoercion
-     * @psalm-suppress MixedArrayOffset
-     * @psalm-suppress MixedAssignment
      */
     private function parseMessage(string $message, array $context): string
     {

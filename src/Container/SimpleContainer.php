@@ -13,21 +13,19 @@ use function array_key_exists;
 final class SimpleContainer implements ContainerInterface
 {
     /**
-     * @psalm-var Closure(string)
+     * @var Closure(string): mixed
      */
     private Closure $factory;
 
     /**
-     * @psalm-var Closure(string): bool
+     * @var Closure(string): bool
      */
     private Closure $hasCallback;
 
     /**
-     * @param Closure|null $factory Should be closure that works like ContainerInterface::get(string $id): mixed
-     * @param Closure|null $hasCallback Should be closure that works like ContainerInterface::has(string $id): bool
-     *
-     * @psalm-param Closure(string):mixed $factory
-     * @psalm-param Closure(string):bool $hasCallback
+     * @param array<string, mixed> $definitions
+     * @param (Closure(string): mixed)|null $factory Should be closure that works like ContainerInterface::get(string $id): mixed
+     * @param (Closure(string): bool)|null $hasCallback Should be closure that works like ContainerInterface::has(string $id): bool
      */
     public function __construct(
         private array $definitions = [],
