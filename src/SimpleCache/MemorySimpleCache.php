@@ -80,7 +80,6 @@ final class MemorySimpleCache implements CacheInterface
     {
         $keys = $this->iterableToArray($keys);
         $this->validateKeys($keys);
-        /** @var string[] $keys */
         $result = [];
         foreach ($keys as $key) {
             $result[$key] = $this->get($key, $default);
@@ -105,7 +104,6 @@ final class MemorySimpleCache implements CacheInterface
     {
         $keys = $this->iterableToArray($keys);
         $this->validateKeys($keys);
-        /** @var string[] $keys */
         foreach ($keys as $key) {
             $this->delete($key);
         }
@@ -115,7 +113,6 @@ final class MemorySimpleCache implements CacheInterface
     public function has(string $key): bool
     {
         $this->validateKey($key);
-        /** @var string $key */
         return isset($this->cache[$key]) && !$this->isExpired($key);
     }
 
