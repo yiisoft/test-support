@@ -12,6 +12,7 @@ use Stringable;
 
 use function gettype;
 use function implode;
+use function is_scalar;
 use function is_string;
 use function preg_replace_callback;
 use function sprintf;
@@ -103,8 +104,9 @@ final class SimpleLogger implements LoggerInterface
         return preg_replace_callback('/{([\w.]+)}/', static function (array $matches) use ($context) {
             $placeholderName = $matches[1];
 
-            if (isset($context[$placeholderName])) {
-                return (string) $context[$placeholderName];
+            $value = $context[$placeholderName] ?? null;
+            if (is_scalar($value) || $value instanceof Stringable) {
+                return (string) $value;
             }
 
             return $matches[0];
