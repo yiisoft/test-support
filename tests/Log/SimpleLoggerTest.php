@@ -89,6 +89,16 @@ final class SimpleLoggerTest extends TestCase
                 [],
                 'has {foo} placeholder',
             ],
+            [
+                'has {foo} placeholder',
+                ['foo' => ['some']],
+                'has {foo} placeholder',
+            ],
+            [
+                'has {foo} placeholder',
+                ['foo' => new stdClass()],
+                'has {foo} placeholder',
+            ],
         ];
     }
 

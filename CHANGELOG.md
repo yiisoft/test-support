@@ -3,6 +3,7 @@
 ## 3.2.1 under development
 
 - Enh #98: Explicitly import functions and constants in "use" section (@vjik)
+- Bug #104: Don't replace placeholders in `SimpleLogger` with context values that can't be converted to string (@vjik)
 
 ## 3.2.0 February 05, 2026
 
